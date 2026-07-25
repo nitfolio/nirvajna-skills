@@ -41,8 +41,8 @@ it directly.
 
 ### Claude.ai / Cowork
 
-Upload `codebase-kt.skill` (or zip the folder) in Settings → Capabilities → Skills. Then upload the
-repo you want to explore as a zip in the conversation.
+Zip this folder (or package it as a `.skill` file) and upload it in Settings → Capabilities → Skills.
+Then upload the repo you want to explore as a zip in the conversation.
 
 ### Verify it's installed
 

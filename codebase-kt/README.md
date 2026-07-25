@@ -54,7 +54,7 @@ Ask: *"what skills do you have available?"* — `codebase-kt` should be listed.
 
 Open a session in the repo you want to learn, and say any of:
 
-```
+```text
 help me understand this repo
 where do I start with this codebase
 walk me through this project
@@ -80,7 +80,7 @@ Claude skips the question and starts.
 
 Every turn has the same shape, and covers **exactly one stage**:
 
-```
+```text
 DISCOVER  → gather real evidence from the repo
 EXPLAIN   → teach what it found, with file:line citations
 ASSESS    → redraw the map: what's lit now, what's still dark
@@ -174,7 +174,7 @@ Some examples of how much the playbook changes the session:
 
 As stages complete, findings are written to a `.kt/` directory at the repo root:
 
-```
+```text
 .kt/
 ├── 00-progress.md          ← what's explored, what's next, open unknowns
 ├── 01-overview.md          ← purpose, stack, repo map
@@ -288,7 +288,7 @@ The skill is plain Markdown. Fork it and make it yours:
 
 ## Files
 
-```
+```text
 codebase-kt/
 ├── SKILL.md                      ← the skill itself
 ├── README.md                     ← this file

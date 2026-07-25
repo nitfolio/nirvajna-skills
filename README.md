@@ -2,21 +2,21 @@
 
 A collection of [Claude Code](https://docs.claude.com/en/docs/claude-code) skills.
 
-Each skill is a self-contained folder with a `SKILL.md` (and optional `references/`,
-`scripts/`, or `assets/`). Drop a skill into your Claude Code skills directory and it
-becomes available in your sessions.
+Each skill is a self-contained folder with a `SKILL.md` (and optional `references/`, `scripts/`, or
+`assets/`). Drop a skill into your Claude Code skills directory and it becomes available in your
+sessions.
 
 ## Skills
 
 | Skill | What it does |
 | --- | --- |
-| [`codebase-kt`](./codebase-kt) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Turns the repo into the teacher: Claude explores, explains, tracks what's known vs. unknown, and proposes the next step — so a new engineer only has to say "start KT" and "continue". Leaves a permanent `.kt/` onboarding trail. |
+| [`codebase-kt`](codebase-kt) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores the repo one stage per turn, tags every claim with its evidence, keeps an honest map of what's still unknown, and proposes the next step — you steer with one-word replies. Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding document. |
 
 ## Installing a skill
 
 Copy the skill's folder into one of these locations:
 
-```
+```bash
 # Personal — available in all your projects
 ~/.claude/skills/<skill-name>/
 
@@ -30,15 +30,46 @@ For example, for `codebase-kt`:
 cp -r codebase-kt ~/.claude/skills/
 ```
 
-Then start Claude Code and the skill triggers on its own when relevant, or you can invoke
-it explicitly. See each skill's own `README.md` for usage details.
+Copy the whole folder, not just `SKILL.md` — skills that use `references/` load those files at
+runtime and will be missing capability without them.
+
+Then start Claude Code. Skills trigger on their own when relevant, or you can invoke them
+explicitly. See each skill's own `README.md` for usage details.
+
+### Using these on claude.ai or Cowork
+
+Zip the skill folder (or package it as a `.skill` file) and upload it under
+Settings → Capabilities → Skills.
+
+## Repository layout
+
+```
+claude-skills-repo/
+├── README.md
+├── LICENSE
+└── codebase-kt/
+    ├── SKILL.md            ← the skill: name, description, and instructions
+    ├── README.md           ← human-facing usage docs
+    └── references/         ← loaded on demand, only when a run needs them
+        ├── repo-playbooks.md
+        └── synthesis.md
+```
+
+`SKILL.md` frontmatter carries the `name` and `description`. The description is what makes the skill
+trigger, so it's written as a list of the situations that should reach for it — keep it specific
+when you edit one.
 
 ## Contributing
 
-Issues and pull requests are welcome. If you add a skill, keep it self-contained in its own
-folder with a clear `SKILL.md` description (that description is what makes the skill trigger),
-and add a row to the table above.
+Issues and pull requests are welcome. If you add a skill:
+
+- Keep it self-contained in its own folder.
+- Write the `SKILL.md` description as trigger conditions, not a summary of features.
+- Push reference material that only some runs need into `references/`, so `SKILL.md` stays lean.
+- Give any multi-stage process a checkable "done when" condition per stage — vague criteria are the
+  most common reason a skill stops early.
+- Add a `README.md` for humans, and a row to the table above.
 
 ## License
 
-[MIT](./LICENSE) — free to use, modify, and share.
+[MIT](LICENSE) — free to use, modify, and share.

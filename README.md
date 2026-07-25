@@ -10,7 +10,7 @@ sessions.
 
 | Skill | What it does |
 | --- | --- |
-| [`codebase-kt`](codebase-kt) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores the repo one stage per turn, tags every claim with its evidence, keeps an honest map of what's still unknown, and proposes the next step — you steer with one-word replies. Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding document. |
+| [`codebase-onboarding`](codebase-onboarding) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores the repo one stage per turn, tags every claim with its evidence, keeps an honest map of what's still unknown, and proposes the next step — you steer with one-word replies. Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding document. |
 
 ## Installing a skill
 
@@ -24,10 +24,10 @@ Copy the skill's folder into one of these locations:
 <your-repo>/.claude/skills/<skill-name>/
 ```
 
-For example, for `codebase-kt`:
+For example, for `codebase-onboarding`:
 
 ```bash
-cp -r codebase-kt ~/.claude/skills/
+cp -r codebase-onboarding ~/.claude/skills/
 ```
 
 Copy the whole folder, not just `SKILL.md` — skills that use `references/` load those files at
@@ -47,7 +47,7 @@ Settings → Capabilities → Skills.
 claude-skills-repo/
 ├── README.md
 ├── LICENSE
-└── codebase-kt/
+└── codebase-onboarding/
     ├── SKILL.md            ← the skill: name, description, and instructions
     ├── README.md           ← human-facing usage docs
     └── references/         ← loaded on demand, only when a run needs them

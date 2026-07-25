@@ -1,4 +1,4 @@
-# codebase-kt
+# codebase-onboarding
 
 Guided, evidence-based **knowledge transfer** for a codebase you don't know yet.
 
@@ -12,10 +12,10 @@ Dropping an engineer into an unfamiliar repo fails in a predictable way: they do
 to ask good questions, so they either read files at random or ask an AI to "explain this codebase"
 and get a fluent, confident summary that is partly wrong — with no way to tell which parts.
 
-`codebase-kt` fixes both halves. Claude drives the session like a patient staff engineer running an
-onboarding: it explores the repo, teaches one layer at a time, marks every claim with where the
-evidence came from, keeps an honest map of what's still unknown, and proposes the next thing worth
-learning. You steer with one-word replies.
+`codebase-onboarding` fixes both halves. Claude drives the session like a patient staff engineer
+running a knowledge transfer: it explores the repo, teaches one layer at a time, marks every claim
+with where the evidence came from, keeps an honest map of what's still unknown, and proposes the
+next thing worth learning. You steer with one-word replies.
 
 It also leaves a trail. Findings are written to a `.kt/` directory as the session goes, so the work
 survives the chat and the next person — or the next session — inherits it.
@@ -30,10 +30,10 @@ Copy the folder into a skills directory:
 
 ```bash
 # Personal — available in every project
-cp -r codebase-kt ~/.claude/skills/
+cp -r codebase-onboarding ~/.claude/skills/
 
 # Or project-level — checked in, shared with everyone who clones the repo
-cp -r codebase-kt <your-repo>/.claude/skills/
+cp -r codebase-onboarding <your-repo>/.claude/skills/
 ```
 
 Restart Claude Code. The skill triggers on its own when you ask something that fits, or you can name
@@ -41,12 +41,12 @@ it directly.
 
 ### Claude.ai / Cowork
 
-Zip this folder (or package it as a `.skill` file) and upload it in Settings → Capabilities → Skills.
-Then upload the repo you want to explore as a zip in the conversation.
+Upload `codebase-onboarding.skill` (or zip the folder) in Settings → Capabilities → Skills. Then upload the
+repo you want to explore as a zip in the conversation.
 
 ### Verify it's installed
 
-Ask: *"what skills do you have available?"* — `codebase-kt` should be listed.
+Ask: *"what skills do you have available?"* — `codebase-onboarding` should be listed.
 
 ---
 
@@ -54,7 +54,7 @@ Ask: *"what skills do you have available?"* — `codebase-kt` should be listed.
 
 Open a session in the repo you want to learn, and say any of:
 
-```text
+```
 help me understand this repo
 where do I start with this codebase
 walk me through this project
@@ -80,7 +80,7 @@ Claude skips the question and starts.
 
 Every turn has the same shape, and covers **exactly one stage**:
 
-```text
+```
 DISCOVER  → gather real evidence from the repo
 EXPLAIN   → teach what it found, with file:line citations
 ASSESS    → redraw the map: what's lit now, what's still dark
@@ -172,9 +172,11 @@ Some examples of how much the playbook changes the session:
 
 ## The `.kt/` trail
 
-As stages complete, findings are written to a `.kt/` directory at the repo root:
+As stages complete, findings are written to a `.kt/` directory at the repo root. The name is short
+for knowledge transfer, which is what a session actually is, and it stays short so it sits quietly in
+your repo root:
 
-```text
+```
 .kt/
 ├── 00-progress.md          ← what's explored, what's next, open unknowns
 ├── 01-overview.md          ← purpose, stack, repo map
@@ -288,8 +290,8 @@ The skill is plain Markdown. Fork it and make it yours:
 
 ## Files
 
-```text
-codebase-kt/
+```
+codebase-onboarding/
 ├── SKILL.md                      ← the skill itself
 ├── README.md                     ← this file
 └── references/

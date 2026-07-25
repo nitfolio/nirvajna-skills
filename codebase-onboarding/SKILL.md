@@ -1,5 +1,5 @@
 ---
-name: codebase-kt
+name: codebase-onboarding
 description: >-
   Guided, evidence-based knowledge transfer (KT) for an unfamiliar codebase — one
   stage per turn, grounded in what the repo actually shows. Use when someone is

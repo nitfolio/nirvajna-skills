@@ -46,7 +46,8 @@ block on it.
 
 ## The core loop
 
-Every turn follows the same shape. Do exactly one stage per turn, then stop and wait.
+Every turn follows the same shape. Do exactly one stage per turn, then stop and wait. (The one
+exception is a `speedrun`, below, where the human pre-authorizes running every stage back-to-back.)
 
 ```
 DISCOVER  → gather real evidence from the repo
@@ -202,7 +203,8 @@ after a stage is actually done and evidence-backed.
 ├── 05-dependencies.md    ← dependency notes + blast-radius warnings
 ├── 06-operations.md      ← build/deploy/config, known fragile spots
 ├── 07-safe-contribution.md ← good first areas + how to run and verify a change
-└── 08-onboarding.md      ← the clean, curated deliverable (produced on `stop` — see below)
+├── 08-onboarding.md      ← the clean, curated deliverable (produced on `stop` — see below)
+└── onboarding.html       ← self-contained study page bundling 00–08 (produced together with 08)
 ```
 
 Files `00`–`07` are the **working trail**: evidence-tagged, honest, full of `[unknown]`s — a record of
@@ -249,20 +251,55 @@ session with single words:
 
 - **start** — begin (or resume from `00-progress.md`)
 - **continue** / **yes** — do the proposed next step
+- **speedrun** — run every remaining stage back-to-back without stopping for input, then produce the
+  final deliverable (see "Autonomous run" below)
 - **deeper** — go further on the current topic instead of moving on
 - **skip** — the proposal isn't interesting; propose a different next step
 - **jump to <topic>** — go to a specific area (e.g. "jump to auth", "jump to the payment flow")
 - **why** — explain the reasoning/evidence behind the last claim in more detail
 - **summarize** — give the current state of understanding and remaining unknowns
 - **pause** — suspend cleanly and leave a bookmark; resume later with `start`
-- **stop** — finish the session and synthesize the curated onboarding deliverable
+- **stop** — finish the session and synthesize the curated onboarding deliverable (plus the study page)
 
-After that first turn, don't repeat all nine. End each turn with the fog-of-war assessment, one clear
+After that first turn, don't repeat all ten. End each turn with the fog-of-war assessment, one clear
 proposal, and the two or three controls that fit the moment (the proposed default first) plus a nod
 that the rest still work — the full menu every turn buries the proposal.
 
 An experienced engineer can ignore all of this and just ask their own questions — the skill should
 follow their lead when they do.
+
+## Autonomous run: `speedrun`
+
+`speedrun` is a standing `continue` — the human grants it once and you run the entire ladder end to
+end without pausing between stages, finishing by producing `08-onboarding.md`. It is the same session
+at the same rigor; the only thing removed is the per-turn gate. Nothing in the method relaxes: still
+DISCOVER → EXPLAIN → ASSESS for every stage, still an evidence tag on every non-obvious claim, still
+honest `[unknown]`s, still the `.kt/` files written incrementally as each stage completes, still each
+completion criterion checked before a stage is called done. A speedrun that quietly lowers the bar to
+go faster has missed the point — the human traded their turn-by-turn confirmation for speed, not for a
+shallower map.
+
+How it runs:
+
+- **Confirm the goal first, then don't stop.** If the goal is already known, restate it in one line
+  and begin. If it isn't, ask the single goal question once — that one question is not a `continue`
+  gate — then run to the end with no further prompts.
+- **Keep a running trace; don't go dark.** Emit a compact block per stage as you go (stage name, its
+  key `[fact]`/`[inference]`/`[unknown]` lines, the `.kt/` file just written) so the human watches the
+  map fill in. You're skipping their confirmation, not hiding the work.
+- **Stay read-only — more strictly, not less.** Autonomy removes the human who would have approved
+  running a build, test, or script, so in a speedrun you never run them. Note them as things to run
+  (Stage 7 describes rather than performs anyway), and keep every other boundary intact.
+- **Pause the run for genuine forks; don't guess.** If you hit something that truly needs a decision —
+  a large monorepo that needs scoping, a destructive action you'd otherwise propose, evidence that
+  contradicts the stated goal — stop the run, say why, and ask. Answering resumes the speedrun.
+- **Finish with the real `stop` procedure.** When the ladder is done, do exactly what `stop` does:
+  read `references/synthesis.md`, run its coverage check and confidence filter, and write
+  `08-onboarding.md` and `onboarding.html`. The coverage check still bites — if the repo fought back
+  and coverage is thin, say so in the deliverable instead of polishing over it.
+
+Resumability is unchanged: `00-progress.md` is updated as you go, so a speedrun that gets interrupted
+resumes with `start` (or another `speedrun`) from wherever it stopped.
 
 ## Finishing: pause vs. stop
 
@@ -273,10 +310,12 @@ is a clean exit and bookmark, not a save operation: restate in one or two lines 
 what's next, confirm `00-progress.md` is current, and remind them they can resume anytime with `start`.
 Do **not** generate the onboarding deliverable on pause.
 
-**stop** — Finish and produce `08-onboarding.md`, the clean reader-facing document. Before writing a
+**stop** — Finish and produce `08-onboarding.md`, the clean reader-facing document, **and**
+`onboarding.html`, a self-contained study page bundling all of `00`–`08`. Before writing a
 word of it, **read `references/synthesis.md`** and follow it: it covers the coverage check that guards
 against polishing a barely-explored repo, the confidence filter that decides which claims are allowed
-to become settled statements, and the shape of the finished document.
+to become settled statements, the shape of the finished document, and how to build the study page from
+the template.
 
 ## Interaction style
 

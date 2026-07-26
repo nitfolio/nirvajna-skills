@@ -10,7 +10,7 @@ sessions.
 
 | Skill | What it does |
 | --- | --- |
-| [`codebase-onboarding`](codebase-onboarding) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores the repo one stage per turn, tags every claim with its evidence, keeps an honest map of what's still unknown, and proposes the next step — you steer with one-word replies. Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding document. |
+| [`codebase-onboarding`](codebase-onboarding) | Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores the repo one stage per turn, tags every claim with its evidence, keeps an honest map of what's still unknown, and proposes the next step — you steer with one-word replies. Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding document plus a self-contained study page. Say `speedrun` to run the whole ladder without stopping. |
 
 ## Installing a skill
 
@@ -52,7 +52,8 @@ claude-skills-repo/
     ├── README.md           ← human-facing usage docs
     └── references/         ← loaded on demand, only when a run needs them
         ├── repo-playbooks.md
-        └── synthesis.md
+        ├── synthesis.md
+        └── study-page-template.html
 ```
 
 `SKILL.md` frontmatter carries the `name` and `description`. The description is what makes the skill

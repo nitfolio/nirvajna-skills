@@ -98,6 +98,7 @@ solution.
 | --- | --- |
 | `start` | Begin, or resume from an existing `.kt/` |
 | `continue` / `yes` | Do the proposed next step |
+| `speedrun` | Run every remaining stage back-to-back, no stops, then produce the final document |
 | `deeper` | Stay on this topic and go further |
 | `skip` | Not interesting — propose something else |
 | `jump to <topic>` | Go straight to an area ("jump to auth", "jump to the payment flow") |
@@ -186,7 +187,8 @@ your repo root:
 ├── 05-dependencies.md      ← dependency notes + blast-radius warnings
 ├── 06-operations.md        ← build/deploy/config, fragile spots
 ├── 07-safe-contribution.md ← good first areas + how to verify a change
-└── 08-onboarding.md        ← the curated deliverable (only on `stop`)
+├── 08-onboarding.md        ← the curated deliverable (only on `stop`)
+└── onboarding.html         ← self-contained study page bundling 00–08 (built with 08)
 ```
 
 Files `00`–`07` are the **working trail**: raw, evidence-tagged, full of open questions. They're a
@@ -194,6 +196,11 @@ record of the learning, not a polished artifact.
 
 `08-onboarding.md` is different — it's the clean document a newcomer actually reads, and it's only
 produced when you say `stop`.
+
+Alongside it, `stop` also builds `onboarding.html` — a single, self-contained study page that bundles
+all of `00`–`08` into one view with sidebar navigation and a one-click copy button on every file. It
+inlines everything (no server, no internet), so you can just double-click it open, and it mirrors the
+already-redacted `.kt/` files, so it carries no secrets the trail didn't.
 
 **Should you commit `.kt/`?** Either works. Gitignore it if you treat it as scratch. Commit it if you
 want the next hire to inherit the map — a curated trail makes genuinely good onboarding docs, which
@@ -219,7 +226,7 @@ one.
 
 **`pause`** — Bookmark and exit. No deliverable is generated.
 
-**`stop`** — Produces `08-onboarding.md`, following
+**`stop`** — Produces `08-onboarding.md` (and the `onboarding.html` study page), following
 [`references/synthesis.md`](references/synthesis.md). Two guards apply:
 
 1. **Coverage check.** If exploration was thin, Claude won't quietly generate a polished document
@@ -231,6 +238,15 @@ one.
    confident prose.
 
 The result is meant to be readable start to finish by someone who never ran the skill.
+
+**`speedrun`** — A standing `continue`. Grant it once and the skill runs the whole ladder end to end
+without stopping between stages, then finishes with the same `stop` procedure and produces
+`08-onboarding.md`. Same method, same rigor, same evidence tags and honest unknowns — the only thing
+removed is the per-turn confirmation. It stays strictly read-only (it won't run builds, tests, or
+scripts, since you're not there to approve them), keeps a running trace so you can watch the map fill
+in, and pauses to ask only if it hits a real fork — a monorepo that needs scoping, or evidence that
+contradicts your goal. Because `00-progress.md` is still written as it goes, an interrupted speedrun
+resumes with `start`.
 
 ---
 
@@ -296,7 +312,8 @@ codebase-onboarding/
 ├── README.md                     ← this file
 └── references/
     ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
-    └── synthesis.md              ← how the final onboarding doc gets built
+    ├── synthesis.md              ← how the final onboarding doc gets built
+    └── study-page-template.html  ← the shell for the `onboarding.html` study page
 ```
 
 `SKILL.md` stays lean and always loaded; the references are pulled in only when the run actually

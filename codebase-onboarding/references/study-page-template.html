@@ -1,0 +1,368 @@
+<!doctype html>
+<!--
+  ============================================================================
+  KT STUDY PAGE TEMPLATE  —  do not ship this comment block.
+  ============================================================================
+  This is a self-contained, offline, single-file study page for a `.kt/`
+  onboarding trail. To produce `.kt/onboarding.html`, copy this file and
+  replace the CONTENT SLOTS below.
+
+  HOW TO FILL IT IN
+  -----------------
+  Near the bottom you will find one <script type="text/markdown"> block per
+  KT file. For each file that actually exists in `.kt/`:
+
+    - paste the file's RAW markdown VERBATIM between the script tags
+      (script[type=text/markdown] is inert — no JS escaping needed);
+    - if the markdown literally contains the text  </script>  write it as
+      <\/script> so it doesn't close the block early (rare);
+    - keep the data-id / data-label / data-group attributes.
+
+  Rules:
+    - DELETE the block for any KT file that was never created. The page adapts
+      to whatever blocks remain; empty sections must not appear.
+    - Do NOT add secret values. These blocks mirror the already-redacted `.kt/`
+      files — copy them as-is. If a redaction note is present, keep it.
+    - Also set the <title> and the .kt-repo-name span to the repo's name.
+    - Change nothing else. The CSS + renderer below are complete; the page
+      renders every block, builds the nav, and wires per-file / per-code-block
+      copy buttons on load.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding — REPO_NAME</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161922; --panel-2:#1c2029; --line:#2a2f3a;
+    --ink:#e7e9ee; --ink-dim:#a4acbd; --ink-faint:#6b7385;
+    --accent:#7aa2ff; --accent-soft:#243049; --good:#5ecb8f;
+    --code-bg:#12151c; --tag-fact:#5ecb8f; --tag-inf:#e3b341; --tag-unk:#ff8a8a; --tag-hum:#7aa2ff;
+    --radius:10px; --maxw:820px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f7f9; --panel:#ffffff; --panel-2:#f0f2f5; --line:#e2e5ea;
+      --ink:#1c2029; --ink-dim:#4a5262; --ink-faint:#858d9d;
+      --accent:#2b5cff; --accent-soft:#e6ecff; --good:#1f9d57;
+      --code-bg:#f2f4f8; --tag-fact:#1f9d57; --tag-inf:#a9791f; --tag-unk:#c0392b; --tag-hum:#2b5cff;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .layout{display:grid; grid-template-columns:280px 1fr; min-height:100vh}
+
+  /* Sidebar */
+  .side{
+    position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+    background:var(--panel); border-right:1px solid var(--line); padding:22px 16px;
+  }
+  .side h1{font-size:15px; margin:0 0 2px; letter-spacing:.2px}
+  .side .sub{color:var(--ink-faint); font-size:12px; margin-bottom:16px}
+  .search{width:100%; padding:9px 11px; margin-bottom:16px; border:1px solid var(--line);
+    background:var(--panel-2); color:var(--ink); border-radius:8px; font-size:13px; outline:none}
+  .search:focus{border-color:var(--accent)}
+  .nav-group-label{font-size:11px; text-transform:uppercase; letter-spacing:.7px;
+    color:var(--ink-faint); margin:16px 6px 6px}
+  .nav a{display:block; padding:7px 10px; border-radius:8px; color:var(--ink-dim);
+    font-size:13.5px; margin-bottom:1px}
+  .nav a:hover{background:var(--panel-2); color:var(--ink); text-decoration:none}
+  .nav a.active{background:var(--accent-soft); color:var(--ink)}
+  .nav a.feature{color:var(--ink); font-weight:600}
+
+  /* Main */
+  .main{padding:40px 40px 120px}
+  .wrap{max-width:var(--maxw); margin:0 auto}
+  .doc-head{margin-bottom:30px}
+  .doc-head h1{font-size:26px; margin:0 0 6px}
+  .doc-head p{color:var(--ink-dim); margin:0}
+
+  section.file{margin:0 0 14px; border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--panel); overflow:hidden}
+  section.file.feature{border-color:var(--accent-soft)}
+  .file-bar{display:flex; align-items:center; gap:10px; padding:12px 16px;
+    background:var(--panel-2); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:2}
+  .file-bar .name{font-weight:600; font-size:14px; flex:1}
+  .file-bar .badge{font-size:10.5px; text-transform:uppercase; letter-spacing:.6px;
+    color:var(--ink-faint); border:1px solid var(--line); padding:2px 7px; border-radius:20px}
+  .file-body{padding:6px 22px 20px}
+
+  .copy-btn{font:inherit; font-size:12px; cursor:pointer; color:var(--ink-dim);
+    background:transparent; border:1px solid var(--line); padding:4px 10px; border-radius:7px}
+  .copy-btn:hover{color:var(--ink); border-color:var(--accent)}
+  .copy-btn.done{color:var(--good); border-color:var(--good)}
+
+  /* Rendered markdown */
+  .md h1,.md h2,.md h3,.md h4{line-height:1.3; margin:1.4em 0 .5em}
+  .md h1{font-size:22px} .md h2{font-size:19px; padding-bottom:.25em; border-bottom:1px solid var(--line)}
+  .md h3{font-size:16px} .md h4{font-size:14px; color:var(--ink-dim)}
+  .md p{margin:.7em 0}
+  .md ul,.md ol{margin:.6em 0; padding-left:1.4em}
+  .md li{margin:.2em 0}
+  .md blockquote{margin:.8em 0; padding:.2em 14px; border-left:3px solid var(--accent-soft);
+    color:var(--ink-dim)}
+  .md hr{border:0; border-top:1px solid var(--line); margin:1.4em 0}
+  .md a{word-break:break-word}
+  .md code{background:var(--code-bg); padding:.12em .4em; border-radius:5px; font-size:.88em;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .md table{border-collapse:collapse; width:100%; margin:.9em 0; font-size:14px; display:block; overflow-x:auto}
+  .md th,.md td{border:1px solid var(--line); padding:7px 11px; text-align:left; vertical-align:top}
+  .md th{background:var(--panel-2)}
+
+  .codeblock{position:relative; margin:1em 0}
+  .codeblock pre{background:var(--code-bg); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; overflow-x:auto; margin:0}
+  .codeblock pre code{background:none; padding:0; font-size:13px; line-height:1.55}
+  .codeblock .lang{position:absolute; top:8px; right:64px; font-size:11px; color:var(--ink-faint);
+    text-transform:uppercase; letter-spacing:.5px}
+  .codeblock .copy-btn{position:absolute; top:6px; right:8px; padding:3px 9px; background:var(--panel)}
+
+  /* Evidence tags: [fact] [inference] [unknown] [human] */
+  .tag{font-weight:600}
+  .tag-fact{color:var(--tag-fact)} .tag-inference{color:var(--tag-inf)}
+  .tag-unknown{color:var(--tag-unk)} .tag-human{color:var(--tag-hum)}
+
+  .empty{color:var(--ink-faint); padding:60px 0; text-align:center}
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr}
+    .side{position:static; height:auto; border-right:0; border-bottom:1px solid var(--line)}
+    .main{padding:24px 18px 100px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="side">
+    <h1><span class="kt-repo-name">REPO_NAME</span></h1>
+    <div class="sub">Onboarding &middot; KT study page</div>
+    <input class="search" id="search" type="search" placeholder="Filter files & headings…" autocomplete="off">
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main">
+    <div class="wrap">
+      <div class="doc-head">
+        <h1>Codebase onboarding</h1>
+        <p>The curated guide is up top. Below it is the working trail — the evidence behind every claim.
+           Use the copy button on any card to grab its original markdown.</p>
+      </div>
+      <div id="content"></div>
+      <div class="empty" id="empty" style="display:none">No files matched your filter.</div>
+    </div>
+  </main>
+</div>
+
+<!-- ========================================================================
+     CONTENT SLOTS — paste each KT file's RAW markdown between the tags.
+     data-group is "guide" for 08 (featured) or "trail" for 00–07.
+     Delete any block whose file was not created.
+     ===================================================================== -->
+
+<script type="text/markdown" data-id="08-onboarding" data-label="08 · Onboarding guide" data-group="guide">
+<!-- PASTE 08-onboarding.md HERE (verbatim). This is the featured deliverable. -->
+</script>
+
+<script type="text/markdown" data-id="00-progress" data-label="00 · Progress" data-group="trail">
+<!-- PASTE 00-progress.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="01-overview" data-label="01 · Overview" data-group="trail">
+<!-- PASTE 01-overview.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="02-architecture" data-label="02 · Architecture" data-group="trail">
+<!-- PASTE 02-architecture.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="03-domain-glossary" data-label="03 · Domain glossary" data-group="trail">
+<!-- PASTE 03-domain-glossary.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="04-key-flows" data-label="04 · Key flows" data-group="trail">
+<!-- PASTE 04-key-flows.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="05-dependencies" data-label="05 · Dependencies" data-group="trail">
+<!-- PASTE 05-dependencies.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="06-operations" data-label="06 · Operations" data-group="trail">
+<!-- PASTE 06-operations.md HERE (verbatim). -->
+</script>
+
+<script type="text/markdown" data-id="07-safe-contribution" data-label="07 · Safe contribution" data-group="trail">
+<!-- PASTE 07-safe-contribution.md HERE (verbatim). -->
+</script>
+
+<script>
+/* ---- tiny, dependency-free markdown renderer (block + inline) ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function inline(s){
+  s = esc(s);
+  // code spans first, protected from other rules
+  const spans=[]; s=s.replace(/`([^`]+)`/g,(m,c)=>{spans.push("<code>"+c+"</code>");return "\u0000"+(spans.length-1)+"\u0000";});
+  s=s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  s=s.replace(/(^|[^*])\*([^*]+)\*/g,"$1<em>$2</em>");
+  s=s.replace(/\[(fact|inference|unknown|human)\]/g,'<span class="tag tag-$1">[$1]</span>');
+  s=s.replace(/\u0000(\d+)\u0000/g,(m,i)=>spans[i]);
+  return s;
+}
+
+function renderMarkdown(src){
+  // normalise, pull out fenced code blocks
+  const lines = src.replace(/\r\n?/g,"\n").split("\n");
+  let html="", i=0;
+  const flushList=(buf,ordered)=>{
+    if(!buf.length) return "";
+    const tag=ordered?"ol":"ul";
+    return "<"+tag+">"+buf.map(x=>"<li>"+inline(x)+"</li>").join("")+"</"+tag+">";
+  };
+  let listBuf=[], listOrdered=false;
+  const closeList=()=>{ if(listBuf.length){ html+=flushList(listBuf,listOrdered); listBuf=[]; } };
+
+  while(i<lines.length){
+    let ln=lines[i];
+
+    // fenced code
+    const fence=ln.match(/^```(.*)$/);
+    if(fence){
+      closeList();
+      const lang=fence[1].trim(); const code=[]; i++;
+      while(i<lines.length && !/^```/.test(lines[i])){ code.push(lines[i]); i++; }
+      i++; // skip closing fence
+      const raw=code.join("\n");
+      const langLabel = lang ? '<span class="lang">'+esc(lang)+'</span>' : '';
+      html+='<div class="codeblock">'+langLabel+
+            '<button class="copy-btn" data-copy-code>Copy</button>'+
+            '<pre><code>'+esc(raw)+'</code></pre>'+
+            '<textarea hidden>'+esc(raw)+'</textarea></div>';
+      continue;
+    }
+
+    // blank
+    if(/^\s*$/.test(ln)){ closeList(); i++; continue; }
+
+    // heading
+    const h=ln.match(/^(#{1,6})\s+(.*)$/);
+    if(h){ closeList(); const lvl=h[1].length; html+="<h"+lvl+">"+inline(h[2])+"</h"+lvl+">"; i++; continue; }
+
+    // hr
+    if(/^\s*([-*_])\1\1+\s*$/.test(ln)){ closeList(); html+="<hr>"; i++; continue; }
+
+    // blockquote (collapse consecutive)
+    if(/^\s*>\s?/.test(ln)){
+      closeList(); const q=[];
+      while(i<lines.length && /^\s*>\s?/.test(lines[i])){ q.push(lines[i].replace(/^\s*>\s?/,"")); i++; }
+      html+="<blockquote>"+renderMarkdown(q.join("\n"))+"</blockquote>"; continue;
+    }
+
+    // table (GFM): header row + separator row of ---|---
+    if(/\|/.test(ln) && i+1<lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i+1]) && /\|/.test(lines[i+1])){
+      closeList();
+      const cells=r=>r.replace(/^\s*\|?|\|?\s*$/g,"").split("|").map(c=>c.trim());
+      const head=cells(ln); i+=2; const rows=[];
+      while(i<lines.length && /\|/.test(lines[i]) && !/^\s*$/.test(lines[i])){ rows.push(cells(lines[i])); i++; }
+      html+='<table><thead><tr>'+head.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"+
+            rows.map(r=>"<tr>"+r.map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>").join("")+"</tbody></table>";
+      continue;
+    }
+
+    // lists
+    const ul=ln.match(/^\s*[-*+]\s+(.*)$/);
+    const ol=ln.match(/^\s*\d+[.)]\s+(.*)$/);
+    if(ul||ol){
+      const ordered=!!ol;
+      if(listBuf.length && ordered!==listOrdered) closeList();
+      listOrdered=ordered; listBuf.push((ul?ul[1]:ol[1])); i++; continue;
+    }
+
+    // paragraph (gather until blank / block starter)
+    closeList();
+    const para=[ln]; i++;
+    while(i<lines.length && !/^\s*$/.test(lines[i]) && !/^(#{1,6}\s|```|\s*>|\s*[-*+]\s|\s*\d+[.)]\s)/.test(lines[i])
+          && !/^\s*([-*_])\1\1+\s*$/.test(lines[i])){ para.push(lines[i]); i++; }
+    html+="<p>"+inline(para.join(" "))+"</p>";
+  }
+  closeList();
+  return html;
+}
+
+/* ---- build the page ---- */
+(function(){
+  const blocks=[...document.querySelectorAll('script[type="text/markdown"]')]
+    .map(s=>({id:s.dataset.id,label:s.dataset.label,group:s.dataset.group,
+              md:s.textContent.replace(/^\n/,"").replace(/\s+$/,"")}))
+    .filter(b=>b.md && !/^<!--[\s\S]*-->$/.test(b.md.trim()));
+
+  const nav=document.getElementById("nav");
+  const content=document.getElementById("content");
+  const groups=[["guide","Curated guide"],["trail","Working trail"]];
+  const sections=[];
+
+  groups.forEach(([g,glabel])=>{
+    const gb=blocks.filter(b=>b.group===g);
+    if(!gb.length) return;
+    const gl=document.createElement("div"); gl.className="nav-group-label"; gl.textContent=glabel; nav.appendChild(gl);
+    gb.forEach(b=>{
+      const a=document.createElement("a"); a.href="#"+b.id; a.textContent=b.label;
+      a.dataset.target=b.id; if(g==="guide") a.className="feature"; nav.appendChild(a);
+
+      const sec=document.createElement("section");
+      sec.className="file"+(g==="guide"?" feature":""); sec.id=b.id;
+      sec.innerHTML=
+        '<div class="file-bar"><span class="name">'+b.label+'</span>'+
+        (g==="guide"?'<span class="badge">deliverable</span>':'<span class="badge">evidence</span>')+
+        '<button class="copy-btn" data-copy-file>Copy markdown</button></div>'+
+        '<div class="file-body md">'+renderMarkdown(b.md)+'</div>';
+      sec.querySelector("[data-copy-file]").addEventListener("click",e=>copy(e.target,b.md));
+      content.appendChild(sec); sections.push({id:b.id,label:b.label,el:sec,nav:a});
+    });
+  });
+
+  if(!sections.length){ document.getElementById("empty").style.display="block"; }
+
+  // per-code-block copy
+  content.querySelectorAll("[data-copy-code]").forEach(btn=>{
+    btn.addEventListener("click",()=>{ const ta=btn.parentElement.querySelector("textarea"); copy(btn,ta.value); });
+  });
+
+  function copy(btn,text){
+    const done=()=>{ const t=btn.textContent; btn.textContent="Copied"; btn.classList.add("done");
+      setTimeout(()=>{btn.textContent=t; btn.classList.remove("done");},1200); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(fallback); }
+    else fallback();
+    function fallback(){ const t=document.createElement("textarea"); t.value=text; document.body.appendChild(t);
+      t.select(); try{document.execCommand("copy");}catch(e){} t.remove(); done(); }
+  }
+
+  // scroll-spy
+  const spy=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      sections.forEach(s=>s.nav.classList.toggle("active",s.id===e.target.id)); } });
+  },{rootMargin:"-45% 0px -50% 0px"});
+  sections.forEach(s=>spy.observe(s.el));
+
+  // filter
+  document.getElementById("search").addEventListener("input",e=>{
+    const q=e.target.value.trim().toLowerCase(); let any=false;
+    sections.forEach(s=>{
+      const hit=!q || s.label.toLowerCase().includes(q) || s.el.textContent.toLowerCase().includes(q);
+      s.el.style.display=hit?"":"none"; s.nav.style.display=hit?"":"none"; if(hit) any=true;
+    });
+    document.getElementById("empty").style.display=any?"none":"block";
+  });
+})();
+</script>
+</body>
+</html>

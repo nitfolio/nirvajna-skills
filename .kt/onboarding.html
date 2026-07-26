@@ -178,7 +178,7 @@ which Claude Code loads into its context when a user's situation matches the ski
 There is no build, no runtime, no dependencies: the markdown *is* the product, and the "deploy" is
 `cp -r` into a skills directory.
 
-The repo ships exactly one skill today, `codebase-onboarding` — a guided, evidence-based knowledge
+The repo ships exactly one skill today, `onboard-me` — a guided, evidence-based knowledge
 transfer procedure for unfamiliar codebases. It explores a repo one stage at a time, tags every
 claim with the evidence behind it, keeps an honest map of what it still doesn't know, and leaves a
 resumable `.kt/` trail plus a curated onboarding document behind. Twelve tracked files, 1,683 lines
@@ -251,14 +251,14 @@ The template is the repo's only executable code: a hand-rolled markdown renderer
 
 ## Your first change
 
-**Start here (zero behavioural risk):** `codebase-onboarding/README.md:62` still tells users to
-upload `codebase-onboarding.skill`. That file was deleted in commit `9a77940`, and commit `ce43ad1`
+**Start here (zero behavioural risk):** `onboard-me/README.md:62` still tells users to
+upload `onboard-me.skill`. That file was deleted in commit `9a77940`, and commit `ce43ad1`
 fixed the *root* README's wording but missed this one. Mirror the correct phrasing from
 `README.md:81-83`. Human-facing docs only — the agent never reads this file.
 
 **Next tier (additive):** add a 15th repo-type playbook. Copy an existing one, keep the five-part
 shape, then update the Contents list at `repo-playbooks.md:13-31` **and** the two hardcoded "13
-repo-type playbooks" strings (`README.md:100`, `codebase-onboarding/README.md:344`).
+repo-type playbooks" strings (`README.md:100`, `onboard-me/README.md:344`).
 
 **Treat `SKILL.md` as the high-risk file.** Every line is loaded for every run, and the frontmatter
 `description` is the single highest-blast-radius string in the repo — weaken it and the skill stops
@@ -267,19 +267,19 @@ triggering with no error anywhere.
 Verify like this — there is no test suite:
 
 ```bash
-cp -r codebase-onboarding ~/.claude/skills/
-diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding   # must print nothing
+cp -r onboard-me ~/.claude/skills/
+diff -r onboard-me ~/.claude/skills/onboard-me   # must print nothing
 # restart Claude Code, then:
-#   "what skills do you have available?"   → codebase-onboarding listed
+#   "what skills do you have available?"   → onboard-me listed
 #   "walk me through this repo"            → triggers WITHOUT being named  ← the check that matters
-#   /codebase-onboarding                   → one stage, then it STOPS and waits
-#   /codebase-onboarding speedrun          → full ladder + 08-onboarding.md + onboarding.html
+#   /onboard-me                            → one stage, then it STOPS and waits
+#   /onboard-me speedrun                   → full ladder + 08-onboarding.md + onboarding.html
 # NOTE: .kt/ is TRACKED in this repo (a worked example), so restore rather than delete:
 git restore .kt
 ```
 
 The unnamed-trigger check is the important one. A change tested only via the explicit
-`/codebase-onboarding` invocation will never catch a broken `description`.
+`/onboard-me` invocation will never catch a broken `description`.
 
 ## Assumptions & things to verify
 
@@ -298,7 +298,7 @@ The unnamed-trigger check is the important one. A change tested only via the exp
 - **[unknown] Is the missing mermaid ladder a dropped edit?** HEAD (`6e83541`) is a `wip:` commit
   titled "brand hero, badges, mermaid ladder", but `README.md` contains no mermaid block.
 - **[unknown] Is a `.skill` bundle published outside the repo** (e.g. as a release asset)? If so,
-  `codebase-onboarding/README.md:62` is correct and the finding above is wrong.
+  `onboard-me/README.md:62` is correct and the finding above is wrong.
 - **[unknown] Are more skills planned?** The repo name is plural and the README's table and
   contribution rules are built for many, but it ships one.
 - **Cross-file contracts are unenforced.** The `.kt/` filenames appear in `SKILL.md:194-205`,
@@ -337,7 +337,7 @@ repo is 1,683 lines of text, so coverage here is genuinely complete rather than 
   exercised. → Find out by uploading the zipped folder plus a zipped repo and running a session.
 - [unknown] Is the missing mermaid ladder in `README.md` intentional-in-progress or a dropped edit?
   HEAD `6e83541` is a `wip:` commit that names it. → Ask the author.
-- [unknown] Is `codebase-onboarding/README.md:62` ("Upload `codebase-onboarding.skill`") stale, or
+- [unknown] Is `onboard-me/README.md:62` ("Upload `onboard-me.skill`") stale, or
   is a `.skill` bundle published somewhere outside the repo (a release asset)? → Check GitHub
   releases / ask the author.
 - [unknown] Whether more skills are planned. The repo is named `nirvajna-skills` (plural) and the
@@ -366,7 +366,7 @@ collection of prompt-engineering artifacts, not a program. `README.md:11` states
 markdown, one HTML template, four PNGs, a LICENSE, and a `.gitignore`. Total 1,683 lines of text
 across the 5 content files.
 
-**[fact]** There is exactly **one skill** in the repo today: `codebase-onboarding/`. The README
+**[fact]** There is exactly **one skill** in the repo today: `onboard-me/`. The README
 badge at `README.md:14` hardcodes `Skills-1`.
 
 ## Stack
@@ -375,19 +375,19 @@ badge at `README.md:14` hardcodes `Skills-1`.
 `go.mod`, …), no build step, no dependency lockfile, no tests, no CI (`.github/` does not exist),
 no Dockerfile. `README.md:29` says this explicitly: "No plugin, no config, no runtime."
 
-**[fact]** The only code in the repo is inside `codebase-onboarding/references/study-page-template.html`
+**[fact]** The only code in the repo is inside `onboard-me/references/study-page-template.html`
 — vanilla browser JavaScript, no external libraries (`study-page-template.html:206-352`).
 
 ## Entry points
 
 Because the "runtime" is Claude Code itself, entry points are load points, not `main()`s:
 
-- **[fact]** `codebase-onboarding/SKILL.md:1-11` — YAML frontmatter (`name`, `description`). This is
+- **[fact]** `onboard-me/SKILL.md:1-11` — YAML frontmatter (`name`, `description`). This is
   the true entry point: Claude Code reads the `description` to decide whether to load the skill.
-- **[fact]** `codebase-onboarding/SKILL.md:12+` — the skill body, loaded into context on trigger.
-- **[fact]** `codebase-onboarding/references/*` — loaded lazily, only when the skill body says to
+- **[fact]** `onboard-me/SKILL.md:12+` — the skill body, loaded into context on trigger.
+- **[fact]** `onboard-me/references/*` — loaded lazily, only when the skill body says to
   read them.
-- **[fact]** `README.md:60-66` — the human entry point: `cp -r codebase-onboarding ~/.claude/skills/`.
+- **[fact]** `README.md:60-66` — the human entry point: `cp -r onboard-me ~/.claude/skills/`.
 
 ## Repo type
 
@@ -397,7 +397,7 @@ ladder was adapted, with "state" read as *the artifacts a run writes* and "bound
 host agent runtime*.
 
 **[fact]** This is a **self-referential KT**: the skill being explored is the same skill running the
-exploration. The installed copy at `~/.claude/skills/codebase-onboarding` is **byte-identical** to
+exploration. The installed copy at `~/.claude/skills/onboard-me` is **byte-identical** to
 the repo copy (verified with `diff -r`, no differences).
 
 ## History & ownership
@@ -428,7 +428,7 @@ nirvajna-skills/
 ├── LICENSE            ← MIT
 ├── .gitignore         ← comment only; .kt/ is intentionally tracked here
 ├── assets/            ← 4 PNGs: light/dark logo + wordmark, used only by README.md
-└── codebase-onboarding/          ← the one skill (a self-contained unit)
+└── onboard-me/        ← the one skill (a self-contained unit)
     ├── SKILL.md       (347 L)    ← ALWAYS loaded: frontmatter + method
     ├── README.md      (396 L)    ← human docs; never loaded by the agent
     └── references/               ← loaded on demand, one read away
@@ -455,7 +455,7 @@ graph TD
     SYN -->|writes at the end| KT8[".kt/08-onboarding.md"]
     TPL -->|filled with 00-08 verbatim| HTML[".kt/onboarding.html"]
     RM["README.md (repo)"] -.->|humans only, never loaded| BODY
-    SRM["codebase-onboarding/README.md"] -.->|humans only| BODY
+    SRM["onboard-me/README.md"] -.->|humans only| BODY
 ```
 
 **[fact]** The two read-triggers are explicit in the text:
@@ -610,11 +610,11 @@ The real dependencies are runtime and social, not packaged:
 | Dependency | Nature | Failure behaviour |
 |---|---|---|
 | **Claude Code (or Claude.ai / Cowork)** | The host that loads and executes `SKILL.md`. The only "runtime". | **[fact]** If frontmatter parsing or skill discovery changes upstream, the skill silently never triggers — no error surfaces. `README.md:110-112` |
-| **Skill-discovery convention** (`~/.claude/skills/<name>/`) | Install contract, `README.md:60-66` | **[inference]** Wrong path = skill absent with no diagnostic. The README's remedy is the manual check at `codebase-onboarding/README.md:65-67`: ask *"what skills do you have available?"* |
+| **Skill-discovery convention** (`~/.claude/skills/<name>/`) | Install contract, `README.md:60-66` | **[inference]** Wrong path = skill absent with no diagnostic. The README's remedy is the manual check at `onboard-me/README.md:65-67`: ask *"what skills do you have available?"* |
 | **The agent's own tools** (`ls`, `git`, grep, file read) | Every DISCOVER step assumes them, `SKILL.md:92-112` | **[fact]** `SKILL.md:113-128` covers degraded cases explicitly: no git history, read-only/uploaded repo, huge monorepo, vendored dirs. |
 | **The human's replies** | The controls, `SKILL.md:247-265` | **[fact]** `speedrun` removes this dependency for the duration of a run — hence the *stricter* read-only rule at `SKILL.md:~292`. |
-| **`assets/*.png` via raw.githubusercontent.com** | `codebase-onboarding/README.md` bottom uses absolute raw URLs | **[inference]** Deliberate — that README renders correctly when the folder is copied out of the repo. The root `README.md:139-141` uses relative paths instead. |
-| **[reference]** `mattpocock/skills` | Cited influence, `codebase-onboarding/README.md:376-379` | Credit only; nothing is imported. |
+| **`assets/*.png` via raw.githubusercontent.com** | `onboard-me/README.md` bottom uses absolute raw URLs | **[inference]** Deliberate — that README renders correctly when the folder is copied out of the repo. The root `README.md:139-141` uses relative paths instead. |
+| **[reference]** `mattpocock/skills` | Cited influence, `onboard-me/README.md:376-379` | Credit only; nothing is imported. |
 
 ## Blast radius — "if I change X, what breaks?"
 
@@ -625,12 +625,12 @@ The real dependencies are runtime and social, not packaged:
   **[inference]** Growth here is the main pressure the `references/` split exists to relieve
   (`README.md:114-116`); moving material *out* is safe, adding material *in* is the expensive
   direction.
-- **A "Done when" criterion** — **[fact]** `codebase-onboarding/README.md:330-331`: "If you add
+- **A "Done when" criterion** — **[fact]** `onboard-me/README.md:330-331`: "If you add
   [a stage], give it a completion criterion — a stage without one gets declared done early."
   Deleting one silently shortens every future run.
 - **`references/repo-playbooks.md`** — lowest blast radius. Playbooks are independent; adding #15
   affects only repos of that type. **[fact]** The one coupling is the Contents list at
-  `repo-playbooks.md:13-31`, which must be updated alongside (`codebase-onboarding/README.md:326-328`).
+  `repo-playbooks.md:13-31`, which must be updated alongside (`onboard-me/README.md:326-328`).
 - **`references/synthesis.md`** — affects only the final turn, but that's the turn that produces the
   artifact that outlives the session. A weakened coverage check (`synthesis.md:6-14`) reintroduces
   precisely the failure the whole skill exists to prevent.
@@ -644,15 +644,15 @@ The real dependencies are runtime and social, not packaged:
 
 ## Known drift (this repo, today)
 
-- **[fact]** `codebase-onboarding/README.md:62` still instructs users to "Upload
-  `codebase-onboarding.skill`". No such file exists — the packaged bundle was deleted in `9a77940`,
+- **[fact]** `onboard-me/README.md:62` still instructs users to "Upload
+  `onboard-me.skill`". No such file exists — the packaged bundle was deleted in `9a77940`,
   and commit `ce43ad1` fixed the *root* README's wording but not this one. Stale instruction.
 - **[fact]** HEAD (`6e83541`) is titled "wip: readme preview — brand hero, badges, **mermaid
   ladder**", but `README.md` contains no mermaid block (`grep -n mermaid README.md` → no match).
   **[inference]** The ladder diagram was dropped or not yet added; the commit is marked `wip:`, so
   this is likely in-flight rather than a bug.
 - **[fact]** Counts are duplicated in three places and currently agree: `README.md:14` badge
-  (`Skills-1`), `README.md:100` and `codebase-onboarding/README.md:344` ("13 repo-type playbooks +
+  (`Skills-1`), `README.md:100` and `onboard-me/README.md:344` ("13 repo-type playbooks +
   generic fallback"), matching the 14 `##` headings in `repo-playbooks.md`. **[inference]** Nothing
   enforces this; adding a playbook or a skill means hand-editing every copy.
 </script>
@@ -667,14 +667,14 @@ files *are* the artifact. `README.md:29`: "No plugin, no config, no runtime."
 
 ## Deploy
 
-**[fact]** "Deploy" = copy a folder (`README.md:58-66`, `codebase-onboarding/README.md:45-58`):
+**[fact]** "Deploy" = copy a folder (`README.md:58-66`, `onboard-me/README.md:45-58`):
 
 ```bash
-cp -r codebase-onboarding ~/.claude/skills/          # personal, all projects
-cp -r codebase-onboarding <your-repo>/.claude/skills/ # project-level, checked in
+cp -r onboard-me ~/.claude/skills/          # personal, all projects
+cp -r onboard-me <your-repo>/.claude/skills/ # project-level, checked in
 ```
 
-Then restart Claude Code (`codebase-onboarding/README.md:56-57`).
+Then restart Claude Code (`onboard-me/README.md:56-57`).
 
 **[fact]** The whole folder must be copied, not just `SKILL.md` — `README.md:58` and `README.md:84-86`
 both warn that a skill missing `references/` "will be missing capability."
@@ -685,7 +685,7 @@ both warn that a skill missing `references/` "will be missing capability."
 ## Configuration
 
 **[fact]** No config files. The only tunable surface is the prose itself —
-`codebase-onboarding/README.md:324-335` lists the four supported customizations: add a playbook,
+`onboard-me/README.md:324-335` lists the four supported customizations: add a playbook,
 change the ladder, change the `.kt/` layout, tune the house style.
 
 **[fact]** `.gitignore` is the sole repo-level setting, and it is a comment only: `.kt/` is
@@ -698,8 +698,8 @@ change the ladder, change the `.kt/` layout, tune the house style.
 link-checker, no markdown validation. This is the repo's most notable operational gap.
 
 **[fact]** The only prescribed verification is manual and in-band
-(`codebase-onboarding/README.md:65-67`): ask *"what skills do you have available?"* and confirm
-`codebase-onboarding` is listed.
+(`onboard-me/README.md:65-67`): ask *"what skills do you have available?"* and confirm
+`onboard-me` is listed.
 
 **[inference]** The de facto test suite is *running the skill on a real repo and reading the
 output* — which is exactly what this session is. Nothing catches a broken cross-reference, a stale
@@ -740,8 +740,8 @@ line-number citation, or a drifted count until a run trips over it.
 
 **Tier 1 — no behavioural risk at all**
 
-- **Fix the stale install line.** `codebase-onboarding/README.md:62` tells users to upload
-  `codebase-onboarding.skill`, which no longer exists (deleted in `9a77940`). The root README's
+- **Fix the stale install line.** `onboard-me/README.md:62` tells users to upload
+  `onboard-me.skill`, which no longer exists (deleted in `9a77940`). The root README's
   correct wording is at `README.md:81-83` — mirror it. Human-docs only; the agent never reads this
   file.
 - **Resolve the `wip:` mermaid gap.** HEAD claims a "mermaid ladder" in the README that isn't there.
@@ -749,16 +749,16 @@ line-number citation, or a drifted count until a run trips over it.
 
 **Tier 2 — additive, isolated**
 
-- **Add a 15th repo-type playbook.** `codebase-onboarding/README.md:326-328` gives the recipe: copy
+- **Add a 15th repo-type playbook.** `onboard-me/README.md:326-328` gives the recipe: copy
   an existing playbook, keep the five-part shape (recognition signals · ladder emphasis · files to
   read first · must-answer questions · traps), then **add it to the Contents list at
   `repo-playbooks.md:13-31`** and update the two "13 repo-type playbooks" strings
-  (`README.md:100`, `codebase-onboarding/README.md:344`). Blast radius: repos of that type only.
+  (`README.md:100`, `onboard-me/README.md:344`). Blast radius: repos of that type only.
 
 **Tier 3 — touches always-loaded context; review carefully**
 
 - **Editing `SKILL.md`.** Every line is loaded for every run. If you add a ladder stage, you must
-  give it a completion criterion (`codebase-onboarding/README.md:330-331`), add its `.kt/` file to
+  give it a completion criterion (`onboard-me/README.md:330-331`), add its `.kt/` file to
   the layout at `SKILL.md:194-205`, add a slot to `study-page-template.html:170-204`, and mention it
   in `synthesis.md`. Four files.
 - **Editing the frontmatter `description`.** Highest blast radius in the repo — see
@@ -770,18 +770,18 @@ There is no test command to run. **[fact]** Verification is manual and behaviour
 
 ```bash
 # 1. Reinstall the edited folder
-cp -r codebase-onboarding ~/.claude/skills/
+cp -r onboard-me ~/.claude/skills/
 
 # 2. Confirm the copy actually landed (should print nothing)
-diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding
+diff -r onboard-me ~/.claude/skills/onboard-me
 
 # 3. Restart Claude Code, then ask:
-#      "what skills do you have available?"        → codebase-onboarding must be listed
+#      "what skills do you have available?"        → onboard-me must be listed
 #      "walk me through this repo"                 → must trigger WITHOUT being named
 #
 # 4. Exercise the path you changed:
-#      /codebase-onboarding            → one stage, then it must STOP and wait
-#      /codebase-onboarding speedrun   → full ladder, then 08-onboarding.md + onboarding.html
+#      /onboard-me            → one stage, then it must STOP and wait
+#      /onboard-me speedrun   → full ladder, then 08-onboarding.md + onboarding.html
 #
 # 5. Inspect the output, then reset:
 open .kt/onboarding.html   # (macOS) — start .kt\onboarding.html on Windows
@@ -792,7 +792,7 @@ rm -rf .kt                 # NOTE: .kt/ is TRACKED in this repo - use git restor
 repo and installed copies were byte-identical.
 
 **[inference]** The highest-value check is step 3's *unnamed* trigger. A change that only ever gets
-tested via `/codebase-onboarding` will never catch a broken `description`, which is the one failure
+tested via `/onboard-me` will never catch a broken `description`, which is the one failure
 mode that fails silently.
 
 ## What not to do

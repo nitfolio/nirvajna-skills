@@ -10,7 +10,7 @@ collection of prompt-engineering artifacts, not a program. `README.md:11` states
 markdown, one HTML template, four PNGs, a LICENSE, and a `.gitignore`. Total 1,683 lines of text
 across the 5 content files.
 
-**[fact]** There is exactly **one skill** in the repo today: `codebase-onboarding/`. The README
+**[fact]** There is exactly **one skill** in the repo today: `onboard-me/`. The README
 badge at `README.md:14` hardcodes `Skills-1`.
 
 ## Stack
@@ -19,19 +19,19 @@ badge at `README.md:14` hardcodes `Skills-1`.
 `go.mod`, …), no build step, no dependency lockfile, no tests, no CI (`.github/` does not exist),
 no Dockerfile. `README.md:29` says this explicitly: "No plugin, no config, no runtime."
 
-**[fact]** The only code in the repo is inside `codebase-onboarding/references/study-page-template.html`
+**[fact]** The only code in the repo is inside `onboard-me/references/study-page-template.html`
 — vanilla browser JavaScript, no external libraries (`study-page-template.html:206-352`).
 
 ## Entry points
 
 Because the "runtime" is Claude Code itself, entry points are load points, not `main()`s:
 
-- **[fact]** `codebase-onboarding/SKILL.md:1-11` — YAML frontmatter (`name`, `description`). This is
+- **[fact]** `onboard-me/SKILL.md:1-11` — YAML frontmatter (`name`, `description`). This is
   the true entry point: Claude Code reads the `description` to decide whether to load the skill.
-- **[fact]** `codebase-onboarding/SKILL.md:12+` — the skill body, loaded into context on trigger.
-- **[fact]** `codebase-onboarding/references/*` — loaded lazily, only when the skill body says to
+- **[fact]** `onboard-me/SKILL.md:12+` — the skill body, loaded into context on trigger.
+- **[fact]** `onboard-me/references/*` — loaded lazily, only when the skill body says to
   read them.
-- **[fact]** `README.md:60-66` — the human entry point: `cp -r codebase-onboarding ~/.claude/skills/`.
+- **[fact]** `README.md:60-66` — the human entry point: `cp -r onboard-me ~/.claude/skills/`.
 
 ## Repo type
 
@@ -41,7 +41,7 @@ ladder was adapted, with "state" read as *the artifacts a run writes* and "bound
 host agent runtime*.
 
 **[fact]** This is a **self-referential KT**: the skill being explored is the same skill running the
-exploration. The installed copy at `~/.claude/skills/codebase-onboarding` is **byte-identical** to
+exploration. The installed copy at `~/.claude/skills/onboard-me` is **byte-identical** to
 the repo copy (verified with `diff -r`, no differences).
 
 ## History & ownership

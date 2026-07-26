@@ -6,7 +6,7 @@
   <img src="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="565">
 </picture>
 
-# codebase-onboarding
+# onboard-me
 
 **Guided, evidence-based knowledge transfer for a codebase you don't know yet.**
 
@@ -30,7 +30,7 @@ Dropping an engineer into an unfamiliar repo fails in a predictable way: they do
 to ask good questions, so they either read files at random or ask an AI to "explain this codebase"
 and get a fluent, confident summary that is partly wrong — with no way to tell which parts.
 
-`codebase-onboarding` fixes both halves. Claude drives the session like a patient staff engineer
+`onboard-me` fixes both halves. Claude drives the session like a patient staff engineer
 running a knowledge transfer: it explores the repo, teaches one layer at a time, marks every claim
 with where the evidence came from, keeps an honest map of what's still unknown, and proposes the
 next thing worth learning. You steer with one-word replies.
@@ -48,10 +48,10 @@ Copy the folder into a skills directory:
 
 ```bash
 # Personal — available in every project
-cp -r codebase-onboarding ~/.claude/skills/
+cp -r onboard-me ~/.claude/skills/
 
 # Or project-level — checked in, shared with everyone who clones the repo
-cp -r codebase-onboarding <your-repo>/.claude/skills/
+cp -r onboard-me <your-repo>/.claude/skills/
 ```
 
 Restart Claude Code. The skill triggers on its own when you ask something that fits, or you can name
@@ -59,12 +59,12 @@ it directly.
 
 ### Claude.ai / Cowork
 
-Upload `codebase-onboarding.skill` (or zip the folder) in Settings → Capabilities → Skills. Then upload the
+Upload `onboard-me.skill` (or zip the folder) in Settings → Capabilities → Skills. Then upload the
 repo you want to explore as a zip in the conversation.
 
 ### Verify it's installed
 
-Ask: *"what skills do you have available?"* — `codebase-onboarding` should be listed.
+Ask: *"what skills do you have available?"* — `onboard-me` should be listed.
 
 ---
 
@@ -337,7 +337,7 @@ The skill is plain Markdown. Fork it and make it yours:
 ## Files
 
 ```
-codebase-onboarding/
+onboard-me/
 ├── SKILL.md                      ← the skill itself
 ├── README.md                     ← this file
 └── references/

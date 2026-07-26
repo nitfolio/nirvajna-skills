@@ -7,14 +7,14 @@ files *are* the artifact. `README.md:29`: "No plugin, no config, no runtime."
 
 ## Deploy
 
-**[fact]** "Deploy" = copy a folder (`README.md:58-66`, `codebase-onboarding/README.md:45-58`):
+**[fact]** "Deploy" = copy a folder (`README.md:58-66`, `onboard-me/README.md:45-58`):
 
 ```bash
-cp -r codebase-onboarding ~/.claude/skills/          # personal, all projects
-cp -r codebase-onboarding <your-repo>/.claude/skills/ # project-level, checked in
+cp -r onboard-me ~/.claude/skills/          # personal, all projects
+cp -r onboard-me <your-repo>/.claude/skills/ # project-level, checked in
 ```
 
-Then restart Claude Code (`codebase-onboarding/README.md:56-57`).
+Then restart Claude Code (`onboard-me/README.md:56-57`).
 
 **[fact]** The whole folder must be copied, not just `SKILL.md` — `README.md:58` and `README.md:84-86`
 both warn that a skill missing `references/` "will be missing capability."
@@ -25,7 +25,7 @@ both warn that a skill missing `references/` "will be missing capability."
 ## Configuration
 
 **[fact]** No config files. The only tunable surface is the prose itself —
-`codebase-onboarding/README.md:324-335` lists the four supported customizations: add a playbook,
+`onboard-me/README.md:324-335` lists the four supported customizations: add a playbook,
 change the ladder, change the `.kt/` layout, tune the house style.
 
 **[fact]** `.gitignore` is the sole repo-level setting, and it is a comment only: `.kt/` is
@@ -38,8 +38,8 @@ change the ladder, change the `.kt/` layout, tune the house style.
 link-checker, no markdown validation. This is the repo's most notable operational gap.
 
 **[fact]** The only prescribed verification is manual and in-band
-(`codebase-onboarding/README.md:65-67`): ask *"what skills do you have available?"* and confirm
-`codebase-onboarding` is listed.
+(`onboard-me/README.md:65-67`): ask *"what skills do you have available?"* and confirm
+`onboard-me` is listed.
 
 **[inference]** The de facto test suite is *running the skill on a real repo and reading the
 output* — which is exactly what this session is. Nothing catches a broken cross-reference, a stale

@@ -34,7 +34,7 @@ for it. No plugin, no config, no runtime.
 <tr>
 <td width="220" valign="top">
 
-### [`codebase-onboarding`](codebase-onboarding)
+### [`onboard-me`](onboard-me)
 
 `knowledge transfer`
 
@@ -75,10 +75,10 @@ The whole folder, not just `SKILL.md`:
 
 ```bash
 # Personal — available in all your projects
-cp -r codebase-onboarding ~/.claude/skills/
+cp -r onboard-me ~/.claude/skills/
 
 # Project-level — checked into a repo, shared with everyone who clones it
-cp -r codebase-onboarding <your-repo>/.claude/skills/
+cp -r onboard-me <your-repo>/.claude/skills/
 ```
 
 </details>
@@ -88,7 +88,7 @@ cp -r codebase-onboarding <your-repo>/.claude/skills/
 **3. Use it.** Skills trigger on their own when relevant, or invoke one explicitly:
 
 ```text
-/codebase-onboarding
+/onboard-me
 ```
 
 <details>
@@ -111,7 +111,7 @@ nirvajna-skills/
 ├── README.md
 ├── LICENSE
 ├── assets/                     ← brand marks used by this README
-└── codebase-onboarding/
+└── onboard-me/
     ├── SKILL.md                ← the skill: name, description, and instructions
     ├── README.md               ← human-facing usage docs
     └── references/             ← loaded on demand, only when a run needs them

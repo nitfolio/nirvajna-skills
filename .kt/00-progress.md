@@ -28,7 +28,7 @@ repo is 1,683 lines of text, so coverage here is genuinely complete rather than 
   exercised. → Find out by uploading the zipped folder plus a zipped repo and running a session.
 - [unknown] Is the missing mermaid ladder in `README.md` intentional-in-progress or a dropped edit?
   HEAD `6e83541` is a `wip:` commit that names it. → Ask the author.
-- [unknown] Is `codebase-onboarding/README.md:62` ("Upload `codebase-onboarding.skill`") stale, or
+- [unknown] Is `onboard-me/README.md:62` ("Upload `onboard-me.skill`") stale, or
   is a `.skill` bundle published somewhere outside the repo (a release asset)? → Check GitHub
   releases / ask the author.
 - [unknown] Whether more skills are planned. The repo is named `nirvajna-skills` (plural) and the

@@ -8,7 +8,7 @@ which Claude Code loads into its context when a user's situation matches the ski
 There is no build, no runtime, no dependencies: the markdown *is* the product, and the "deploy" is
 `cp -r` into a skills directory.
 
-The repo ships exactly one skill today, `codebase-onboarding` — a guided, evidence-based knowledge
+The repo ships exactly one skill today, `onboard-me` — a guided, evidence-based knowledge
 transfer procedure for unfamiliar codebases. It explores a repo one stage at a time, tags every
 claim with the evidence behind it, keeps an honest map of what it still doesn't know, and leaves a
 resumable `.kt/` trail plus a curated onboarding document behind. Twelve tracked files, 1,683 lines
@@ -81,14 +81,14 @@ The template is the repo's only executable code: a hand-rolled markdown renderer
 
 ## Your first change
 
-**Start here (zero behavioural risk):** `codebase-onboarding/README.md:62` still tells users to
-upload `codebase-onboarding.skill`. That file was deleted in commit `9a77940`, and commit `ce43ad1`
+**Start here (zero behavioural risk):** `onboard-me/README.md:62` still tells users to
+upload `onboard-me.skill`. That file was deleted in commit `9a77940`, and commit `ce43ad1`
 fixed the *root* README's wording but missed this one. Mirror the correct phrasing from
 `README.md:81-83`. Human-facing docs only — the agent never reads this file.
 
 **Next tier (additive):** add a 15th repo-type playbook. Copy an existing one, keep the five-part
 shape, then update the Contents list at `repo-playbooks.md:13-31` **and** the two hardcoded "13
-repo-type playbooks" strings (`README.md:100`, `codebase-onboarding/README.md:344`).
+repo-type playbooks" strings (`README.md:100`, `onboard-me/README.md:344`).
 
 **Treat `SKILL.md` as the high-risk file.** Every line is loaded for every run, and the frontmatter
 `description` is the single highest-blast-radius string in the repo — weaken it and the skill stops
@@ -97,19 +97,19 @@ triggering with no error anywhere.
 Verify like this — there is no test suite:
 
 ```bash
-cp -r codebase-onboarding ~/.claude/skills/
-diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding   # must print nothing
+cp -r onboard-me ~/.claude/skills/
+diff -r onboard-me ~/.claude/skills/onboard-me   # must print nothing
 # restart Claude Code, then:
-#   "what skills do you have available?"   → codebase-onboarding listed
+#   "what skills do you have available?"   → onboard-me listed
 #   "walk me through this repo"            → triggers WITHOUT being named  ← the check that matters
-#   /codebase-onboarding                   → one stage, then it STOPS and waits
-#   /codebase-onboarding speedrun          → full ladder + 08-onboarding.md + onboarding.html
+#   /onboard-me                            → one stage, then it STOPS and waits
+#   /onboard-me speedrun                   → full ladder + 08-onboarding.md + onboarding.html
 # NOTE: .kt/ is TRACKED in this repo (a worked example), so restore rather than delete:
 git restore .kt
 ```
 
 The unnamed-trigger check is the important one. A change tested only via the explicit
-`/codebase-onboarding` invocation will never catch a broken `description`.
+`/onboard-me` invocation will never catch a broken `description`.
 
 ## Assumptions & things to verify
 
@@ -128,7 +128,7 @@ The unnamed-trigger check is the important one. A change tested only via the exp
 - **[unknown] Is the missing mermaid ladder a dropped edit?** HEAD (`6e83541`) is a `wip:` commit
   titled "brand hero, badges, mermaid ladder", but `README.md` contains no mermaid block.
 - **[unknown] Is a `.skill` bundle published outside the repo** (e.g. as a release asset)? If so,
-  `codebase-onboarding/README.md:62` is correct and the finding above is wrong.
+  `onboard-me/README.md:62` is correct and the finding above is wrong.
 - **[unknown] Are more skills planned?** The repo name is plural and the README's table and
   contribution rules are built for many, but it ships one.
 - **Cross-file contracts are unenforced.** The `.kt/` filenames appear in `SKILL.md:194-205`,

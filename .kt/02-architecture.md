@@ -16,7 +16,7 @@ nirvajna-skills/
 ├── LICENSE            ← MIT
 ├── .gitignore         ← comment only; .kt/ is intentionally tracked here
 ├── assets/            ← 4 PNGs: light/dark logo + wordmark, used only by README.md
-└── codebase-onboarding/          ← the one skill (a self-contained unit)
+└── onboard-me/        ← the one skill (a self-contained unit)
     ├── SKILL.md       (347 L)    ← ALWAYS loaded: frontmatter + method
     ├── README.md      (396 L)    ← human docs; never loaded by the agent
     └── references/               ← loaded on demand, one read away
@@ -43,7 +43,7 @@ graph TD
     SYN -->|writes at the end| KT8[".kt/08-onboarding.md"]
     TPL -->|filled with 00-08 verbatim| HTML[".kt/onboarding.html"]
     RM["README.md (repo)"] -.->|humans only, never loaded| BODY
-    SRM["codebase-onboarding/README.md"] -.->|humans only| BODY
+    SRM["onboard-me/README.md"] -.->|humans only| BODY
 ```
 
 **[fact]** The two read-triggers are explicit in the text:

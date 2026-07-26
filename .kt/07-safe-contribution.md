@@ -14,8 +14,8 @@
 
 **Tier 1 — no behavioural risk at all**
 
-- **Fix the stale install line.** `codebase-onboarding/README.md:62` tells users to upload
-  `codebase-onboarding.skill`, which no longer exists (deleted in `9a77940`). The root README's
+- **Fix the stale install line.** `onboard-me/README.md:62` tells users to upload
+  `onboard-me.skill`, which no longer exists (deleted in `9a77940`). The root README's
   correct wording is at `README.md:81-83` — mirror it. Human-docs only; the agent never reads this
   file.
 - **Resolve the `wip:` mermaid gap.** HEAD claims a "mermaid ladder" in the README that isn't there.
@@ -23,16 +23,16 @@
 
 **Tier 2 — additive, isolated**
 
-- **Add a 15th repo-type playbook.** `codebase-onboarding/README.md:326-328` gives the recipe: copy
+- **Add a 15th repo-type playbook.** `onboard-me/README.md:326-328` gives the recipe: copy
   an existing playbook, keep the five-part shape (recognition signals · ladder emphasis · files to
   read first · must-answer questions · traps), then **add it to the Contents list at
   `repo-playbooks.md:13-31`** and update the two "13 repo-type playbooks" strings
-  (`README.md:100`, `codebase-onboarding/README.md:344`). Blast radius: repos of that type only.
+  (`README.md:100`, `onboard-me/README.md:344`). Blast radius: repos of that type only.
 
 **Tier 3 — touches always-loaded context; review carefully**
 
 - **Editing `SKILL.md`.** Every line is loaded for every run. If you add a ladder stage, you must
-  give it a completion criterion (`codebase-onboarding/README.md:330-331`), add its `.kt/` file to
+  give it a completion criterion (`onboard-me/README.md:330-331`), add its `.kt/` file to
   the layout at `SKILL.md:194-205`, add a slot to `study-page-template.html:170-204`, and mention it
   in `synthesis.md`. Four files.
 - **Editing the frontmatter `description`.** Highest blast radius in the repo — see
@@ -44,18 +44,18 @@ There is no test command to run. **[fact]** Verification is manual and behaviour
 
 ```bash
 # 1. Reinstall the edited folder
-cp -r codebase-onboarding ~/.claude/skills/
+cp -r onboard-me ~/.claude/skills/
 
 # 2. Confirm the copy actually landed (should print nothing)
-diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding
+diff -r onboard-me ~/.claude/skills/onboard-me
 
 # 3. Restart Claude Code, then ask:
-#      "what skills do you have available?"        → codebase-onboarding must be listed
+#      "what skills do you have available?"        → onboard-me must be listed
 #      "walk me through this repo"                 → must trigger WITHOUT being named
 #
 # 4. Exercise the path you changed:
-#      /codebase-onboarding            → one stage, then it must STOP and wait
-#      /codebase-onboarding speedrun   → full ladder, then 08-onboarding.md + onboarding.html
+#      /onboard-me            → one stage, then it must STOP and wait
+#      /onboard-me speedrun   → full ladder, then 08-onboarding.md + onboarding.html
 #
 # 5. Inspect the output, then reset:
 open .kt/onboarding.html   # (macOS) — start .kt\onboarding.html on Windows
@@ -66,7 +66,7 @@ rm -rf .kt                 # NOTE: .kt/ is TRACKED in this repo - use git restor
 repo and installed copies were byte-identical.
 
 **[inference]** The highest-value check is step 3's *unnamed* trigger. A change that only ever gets
-tested via `/codebase-onboarding` will never catch a broken `description`, which is the one failure
+tested via `/onboard-me` will never catch a broken `description`, which is the one failure
 mode that fails silently.
 
 ## What not to do

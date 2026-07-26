@@ -1,8 +1,26 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-light.png">
+  <img src="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="460">
+</picture>
+
 # codebase-onboarding
 
-Guided, evidence-based **knowledge transfer** for a codebase you don't know yet.
+**Guided, evidence-based knowledge transfer for a codebase you don't know yet.**
 
-Part of [nitfolio/claude-skills-repo](https://github.com/nitfolio/claude-skills-repo).
+[![Claude Code](https://img.shields.io/badge/Claude_Code-skill-4A86D8?style=flat-square&labelColor=141312)](https://docs.claude.com/en/docs/claude-code)
+[![Playbooks](https://img.shields.io/badge/Repo_playbooks-13-4A86D8?style=flat-square&labelColor=141312)](#repo-type-playbooks)
+[![Read only](https://img.shields.io/badge/Read--only-by_default-FF4A17?style=flat-square&labelColor=141312)](#what-the-skill-will-not-do)
+[![MIT](https://img.shields.io/badge/License-MIT-4A86D8?style=flat-square&labelColor=141312)](https://github.com/nitfolio/claude-skills-repo/blob/main/LICENSE)
+
+[Install](#install) · [Quick start](#quick-start) · [The ladder](#the-exploration-ladder) · [`.kt/` trail](#the-kt-trail) · [FAQ](#faq)
+
+Part of [nitfolio/claude-skills-repo](https://github.com/nitfolio/claude-skills-repo) ·
+[oopsaididitagain.com](https://oopsaididitagain.com/)
+
+</div>
 
 ---
 
@@ -145,6 +163,18 @@ it declaring "architecture complete" after glancing at a folder listing.
 | 5 | Dependencies & blast radius | "What breaks if I change this" is answerable for everything covered |
 | 6 | Operations | Build, deploy, and config paths described; fragile spots named |
 | 7 | Safe contribution | A specific low-risk starting area, with commands to run and verify |
+
+```mermaid
+flowchart LR
+    S1["1<br/>Orientation"] --> S2["2<br/>Architecture"] --> S3["3<br/>Domain"] --> S4["4<br/>Key flows"]
+    S4 --> S5["5<br/>Blast radius"] --> S6["6<br/>Operations"] --> S7["7<br/>Safe contribution"]
+    S7 --> OUT(["08-onboarding.md<br/>+ onboarding.html"])
+
+    classDef stage fill:#4A86D8,stroke:#141312,stroke-width:1px,color:#ffffff;
+    classDef out fill:#FF4A17,stroke:#141312,stroke-width:1px,color:#ffffff;
+    class S1,S2,S3,S4,S5,S6,S7 stage;
+    class OUT out;
+```
 
 Stages you don't need can be skipped, and you can jump around freely.
 
@@ -351,3 +381,16 @@ reference.
 ## License
 
 MIT — see [LICENSE](https://github.com/nitfolio/claude-skills-repo/blob/main/LICENSE).
+
+<div align="center">
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-light.png">
+  <img src="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-light.png" alt="" width="40">
+</picture>
+
+**[oopsaididitagain.com](https://oopsaididitagain.com/)**
+
+</div>

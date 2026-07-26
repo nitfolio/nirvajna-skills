@@ -33,7 +33,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Onboarding — claude-skills-repo</title>
+<title>Onboarding — nirvajna-skills</title>
 <style>
   :root{
     --bg:#0f1115; --panel:#161922; --panel-2:#1c2029; --line:#2a2f3a;
@@ -143,7 +143,7 @@
 <body>
 <div class="layout">
   <aside class="side">
-    <h1><span class="kt-repo-name">claude-skills-repo</span></h1>
+    <h1><span class="kt-repo-name">nirvajna-skills</span></h1>
     <div class="sub">Onboarding &middot; KT study page</div>
     <input class="search" id="search" type="search" placeholder="Filter files & headings…" autocomplete="off">
     <nav class="nav" id="nav"></nav>
@@ -168,11 +168,11 @@
      ===================================================================== -->
 
 <script type="text/markdown" data-id="08-onboarding" data-label="08 · Onboarding guide" data-group="guide">
-# Onboarding — `claude-skills-repo`
+# Onboarding — `nirvajna-skills`
 
 ## What this system is
 
-`claude-skills-repo` is a distribution repo for **Claude Code skills** — reusable prompt artifacts,
+`nirvajna-skills` is a distribution repo for **Claude Code skills** — reusable prompt artifacts,
 not software. A skill is a self-contained folder holding a `SKILL.md` plus optional `references/`,
 which Claude Code loads into its context when a user's situation matches the skill's description.
 There is no build, no runtime, no dependencies: the markdown *is* the product, and the "deploy" is
@@ -274,7 +274,8 @@ diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding   # must print 
 #   "walk me through this repo"            → triggers WITHOUT being named  ← the check that matters
 #   /codebase-onboarding                   → one stage, then it STOPS and waits
 #   /codebase-onboarding speedrun          → full ladder + 08-onboarding.md + onboarding.html
-rm -rf .kt   # gitignored (.gitignore:2); safe to delete and re-run
+# NOTE: .kt/ is TRACKED in this repo (a worked example), so restore rather than delete:
+git restore .kt
 ```
 
 The unnamed-trigger check is the important one. A change tested only via the explicit
@@ -339,7 +340,7 @@ repo is 1,683 lines of text, so coverage here is genuinely complete rather than 
 - [unknown] Is `codebase-onboarding/README.md:62` ("Upload `codebase-onboarding.skill`") stale, or
   is a `.skill` bundle published somewhere outside the repo (a release asset)? → Check GitHub
   releases / ask the author.
-- [unknown] Whether more skills are planned. The repo is named `claude-skills-repo` (plural) and the
+- [unknown] Whether more skills are planned. The repo is named `nirvajna-skills` (plural) and the
   README has a table and contribution rules built for many, but ships one. → Ask the author.
 - [inference, unverified] `study-page-template.html`'s renderer has never been run in this session —
   it was read, not executed. Its correctness on real trail markdown is inferred from the code, not
@@ -357,7 +358,7 @@ task, not a KT step.
 
 ## What this system is
 
-**[fact]** `claude-skills-repo` is a **distribution repo for Claude Code skills** — a curated
+**[fact]** `nirvajna-skills` is a **distribution repo for Claude Code skills** — a curated
 collection of prompt-engineering artifacts, not a program. `README.md:11` states the thesis:
 "Skills that make Claude Code do the tedious part properly."
 
@@ -422,10 +423,10 @@ That single constraint explains every file boundary in the repo.
 ## Module map
 
 ```
-claude-skills-repo/
+nirvajna-skills/
 ├── README.md          ← repo-level marketing + install + contribution rules (146 lines)
 ├── LICENSE            ← MIT
-├── .gitignore         ← 2 lines; ignores .kt/ (the skill's own output)
+├── .gitignore         ← comment only; .kt/ is intentionally tracked here
 ├── assets/            ← 4 PNGs: light/dark logo + wordmark, used only by README.md
 └── codebase-onboarding/          ← the one skill (a self-contained unit)
     ├── SKILL.md       (347 L)    ← ALWAYS loaded: frontmatter + method
@@ -637,8 +638,9 @@ The real dependencies are runtime and social, not packaged:
   (`data-id`/`data-label`/`data-group`, lines 170-204) are a contract with `synthesis.md:52-53` and
   with the `.kt/` filenames in `SKILL.md:194-205`. Renaming a `.kt/` file means editing **three**
   files, and nothing checks the invariant.
-- **`.gitignore:2` (`.kt/`)** — remove it and every future KT run starts committing its working trail
-  into the user's repo.
+- **`.gitignore`** — in most repos this should ignore `.kt/`, or every KT run starts committing its
+  working trail into the user's repo. **This** repo deliberately does the opposite and tracks `.kt/`
+  as a worked example.
 
 ## Known drift (this repo, today)
 
@@ -686,8 +688,9 @@ both warn that a skill missing `references/` "will be missing capability."
 `codebase-onboarding/README.md:324-335` lists the four supported customizations: add a playbook,
 change the ladder, change the `.kt/` layout, tune the house style.
 
-**[fact]** `.gitignore` (2 lines) is the sole repo-level setting; it ignores `.kt/`, the directory
-this skill writes into the *user's* repo.
+**[fact]** `.gitignore` is the sole repo-level setting, and it is a comment only: `.kt/` is
+**deliberately tracked** here as a worked example of the skill's output. In a normal consumer repo
+`.kt/` would be ignored instead.
 
 ## Verification / test story
 
@@ -782,7 +785,7 @@ diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding
 #
 # 5. Inspect the output, then reset:
 open .kt/onboarding.html   # (macOS) — start .kt\onboarding.html on Windows
-rm -rf .kt                 # .kt/ is gitignored (.gitignore:2); safe to delete and re-run
+rm -rf .kt                 # NOTE: .kt/ is TRACKED in this repo - use git restore, not rm
 ```
 
 **[fact]** Step 2's `diff -r` is a real check — it was run during this session and confirmed the

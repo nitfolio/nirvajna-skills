@@ -1,8 +1,8 @@
-# Onboarding — `claude-skills-repo`
+# Onboarding — `nirvajna-skills`
 
 ## What this system is
 
-`claude-skills-repo` is a distribution repo for **Claude Code skills** — reusable prompt artifacts,
+`nirvajna-skills` is a distribution repo for **Claude Code skills** — reusable prompt artifacts,
 not software. A skill is a self-contained folder holding a `SKILL.md` plus optional `references/`,
 which Claude Code loads into its context when a user's situation matches the skill's description.
 There is no build, no runtime, no dependencies: the markdown *is* the product, and the "deploy" is
@@ -104,7 +104,8 @@ diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding   # must print 
 #   "walk me through this repo"            → triggers WITHOUT being named  ← the check that matters
 #   /codebase-onboarding                   → one stage, then it STOPS and waits
 #   /codebase-onboarding speedrun          → full ladder + 08-onboarding.md + onboarding.html
-rm -rf .kt   # gitignored (.gitignore:2); safe to delete and re-run
+# NOTE: .kt/ is TRACKED in this repo (a worked example), so restore rather than delete:
+git restore .kt
 ```
 
 The unnamed-trigger check is the important one. A change tested only via the explicit

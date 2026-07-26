@@ -11,10 +11,10 @@ That single constraint explains every file boundary in the repo.
 ## Module map
 
 ```
-claude-skills-repo/
+nirvajna-skills/
 ├── README.md          ← repo-level marketing + install + contribution rules (146 lines)
 ├── LICENSE            ← MIT
-├── .gitignore         ← 2 lines; ignores .kt/ (the skill's own output)
+├── .gitignore         ← comment only; .kt/ is intentionally tracked here
 ├── assets/            ← 4 PNGs: light/dark logo + wordmark, used only by README.md
 └── codebase-onboarding/          ← the one skill (a self-contained unit)
     ├── SKILL.md       (347 L)    ← ALWAYS loaded: frontmatter + method

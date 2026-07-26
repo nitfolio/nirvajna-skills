@@ -6,7 +6,7 @@
   <img src="assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="520">
 </picture>
 
-# claude-skills-repo
+# nirvajna-skills
 
 **Skills that make [Claude Code](https://docs.claude.com/en/docs/claude-code) do the tedious part properly.**
 
@@ -89,7 +89,7 @@ missing capability without them.
 ## ✦ Repository layout
 
 ```text
-claude-skills-repo/
+nirvajna-skills/
 ├── README.md
 ├── LICENSE
 ├── assets/                     ← brand marks used by this README

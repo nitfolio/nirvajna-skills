@@ -2,7 +2,7 @@
 
 ## What this system is
 
-**[fact]** `claude-skills-repo` is a **distribution repo for Claude Code skills** — a curated
+**[fact]** `nirvajna-skills` is a **distribution repo for Claude Code skills** — a curated
 collection of prompt-engineering artifacts, not a program. `README.md:11` states the thesis:
 "Skills that make Claude Code do the tedious part properly."
 

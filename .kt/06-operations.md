@@ -28,8 +28,9 @@ both warn that a skill missing `references/` "will be missing capability."
 `codebase-onboarding/README.md:324-335` lists the four supported customizations: add a playbook,
 change the ladder, change the `.kt/` layout, tune the house style.
 
-**[fact]** `.gitignore` (2 lines) is the sole repo-level setting; it ignores `.kt/`, the directory
-this skill writes into the *user's* repo.
+**[fact]** `.gitignore` is the sole repo-level setting, and it is a comment only: `.kt/` is
+**deliberately tracked** here as a worked example of the skill's output. In a normal consumer repo
+`.kt/` would be ignored instead.
 
 ## Verification / test story
 

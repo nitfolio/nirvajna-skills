@@ -59,7 +59,7 @@ diff -r codebase-onboarding ~/.claude/skills/codebase-onboarding
 #
 # 5. Inspect the output, then reset:
 open .kt/onboarding.html   # (macOS) — start .kt\onboarding.html on Windows
-rm -rf .kt                 # .kt/ is gitignored (.gitignore:2); safe to delete and re-run
+rm -rf .kt                 # NOTE: .kt/ is TRACKED in this repo - use git restore, not rm
 ```
 
 **[fact]** Step 2's `diff -r` is a real check — it was run during this session and confirmed the

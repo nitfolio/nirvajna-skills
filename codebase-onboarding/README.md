@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-light.png">
-  <img src="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="460">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png">
+  <img src="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="460">
 </picture>
 
 # codebase-onboarding
@@ -13,11 +13,11 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-skill-4A86D8?style=flat-square&labelColor=141312)](https://docs.claude.com/en/docs/claude-code)
 [![Playbooks](https://img.shields.io/badge/Repo_playbooks-13-4A86D8?style=flat-square&labelColor=141312)](#repo-type-playbooks)
 [![Read only](https://img.shields.io/badge/Read--only-by_default-FF4A17?style=flat-square&labelColor=141312)](#what-the-skill-will-not-do)
-[![MIT](https://img.shields.io/badge/License-MIT-4A86D8?style=flat-square&labelColor=141312)](https://github.com/nitfolio/claude-skills-repo/blob/main/LICENSE)
+[![MIT](https://img.shields.io/badge/License-MIT-4A86D8?style=flat-square&labelColor=141312)](https://github.com/nitfolio/nirvajna-skills/blob/main/LICENSE)
 
 [Install](#install) · [Quick start](#quick-start) · [The ladder](#the-exploration-ladder) · [`.kt/` trail](#the-kt-trail) · [FAQ](#faq)
 
-Part of [nitfolio/claude-skills-repo](https://github.com/nitfolio/claude-skills-repo) ·
+Part of [nitfolio/nirvajna-skills](https://github.com/nitfolio/nirvajna-skills) ·
 [oopsaididitagain.com](https://oopsaididitagain.com/)
 
 </div>
@@ -380,15 +380,15 @@ reference.
 
 ## License
 
-MIT — see [LICENSE](https://github.com/nitfolio/claude-skills-repo/blob/main/LICENSE).
+MIT — see [LICENSE](https://github.com/nitfolio/nirvajna-skills/blob/main/LICENSE).
 
 <div align="center">
 <br>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-light.png">
-  <img src="https://raw.githubusercontent.com/nitfolio/claude-skills-repo/main/assets/logo-light.png" alt="" width="40">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/logo-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/logo-light.png">
+  <img src="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/logo-light.png" alt="" width="40">
 </picture>
 
 **[oopsaididitagain.com](https://oopsaididitagain.com/)**

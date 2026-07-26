@@ -31,7 +31,7 @@ repo is 1,683 lines of text, so coverage here is genuinely complete rather than 
 - [unknown] Is `codebase-onboarding/README.md:62` ("Upload `codebase-onboarding.skill`") stale, or
   is a `.skill` bundle published somewhere outside the repo (a release asset)? → Check GitHub
   releases / ask the author.
-- [unknown] Whether more skills are planned. The repo is named `claude-skills-repo` (plural) and the
+- [unknown] Whether more skills are planned. The repo is named `nirvajna-skills` (plural) and the
   README has a table and contribution rules built for many, but ships one. → Ask the author.
 - [inference, unverified] `study-page-template.html`'s renderer has never been run in this session —
   it was read, not executed. Its correctness on real trail markdown is inferred from the code, not

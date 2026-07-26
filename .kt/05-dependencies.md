@@ -38,8 +38,9 @@ The real dependencies are runtime and social, not packaged:
   (`data-id`/`data-label`/`data-group`, lines 170-204) are a contract with `synthesis.md:52-53` and
   with the `.kt/` filenames in `SKILL.md:194-205`. Renaming a `.kt/` file means editing **three**
   files, and nothing checks the invariant.
-- **`.gitignore:2` (`.kt/`)** — remove it and every future KT run starts committing its working trail
-  into the user's repo.
+- **`.gitignore`** — in most repos this should ignore `.kt/`, or every KT run starts committing its
+  working trail into the user's repo. **This** repo deliberately does the opposite and tracks `.kt/`
+  as a worked example.
 
 ## Known drift (this repo, today)
 

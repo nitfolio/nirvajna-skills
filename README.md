@@ -55,7 +55,23 @@ stopping.
 
 ## ✦ Install
 
-**1. Copy the folder** into your skills directory — the whole folder, not just `SKILL.md`.
+**1. Add the skill.** The one-liner, from inside the project you want it in:
+
+```bash
+npx skills@latest add nitfolio/nirvajna-skills
+```
+
+That uses the [`skills` CLI](https://github.com/vercel-labs/skills). It keeps one canonical copy in
+`.agents/skills/` and symlinks it into `.claude/skills/` — plus every other agent directory it finds,
+so Codex, Cursor, Gemini CLI and the rest pick it up from the same source. Add `-g` to install for
+your user instead of the project, or `--copy` if you'd rather have real files than symlinks.
+
+<details>
+<summary><b>Or copy the folder by hand</b></summary>
+
+<br>
+
+The whole folder, not just `SKILL.md`:
 
 ```bash
 # Personal — available in all your projects
@@ -64,6 +80,8 @@ cp -r codebase-onboarding ~/.claude/skills/
 # Project-level — checked into a repo, shared with everyone who clones it
 cp -r codebase-onboarding <your-repo>/.claude/skills/
 ```
+
+</details>
 
 **2. Start Claude Code.** That's the whole install.
 

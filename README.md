@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/wordmark-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="assets/wordmark-light.png">
-  <img src="assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="520">
+  <img src="assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="640">
 </picture>
 
 # nirvajna-skills

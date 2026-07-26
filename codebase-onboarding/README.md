@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png">
-  <img src="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="460">
+  <img src="https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/wordmark-light.png" alt="Oops!... AI Did It Again" width="565">
 </picture>
 
 # codebase-onboarding

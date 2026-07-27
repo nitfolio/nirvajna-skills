@@ -4,7 +4,7 @@ Nothing executes, so a "flow" here is a path through *documents* — but it is a
 with waypoints, and the same discipline applies: every waypoint carries a `file:line`.
 
 Two flows matter. Flow A is what a user does. Flow B is what the skill does at the end, and it is
-where the only real machinery lives.
+where the only real machinery lives. Flow B gained a publishing step on 2026-07-27.
 
 ---
 
@@ -20,36 +20,37 @@ npx skills@latest add nitfolio/nirvajna-skills
 into `.claude/skills/` and every other agent directory found, so Codex/Cursor/Gemini CLI read the
 same source. `-g` installs for the user, `--copy` writes real files instead of symlinks.
 
-[fact] Manual alternative at `README.md:78-81`: `cp -r onboard-me ~/.claude/skills/` (personal) or
+[fact] Manual alternative at `README.md:78-81`: `cp -r your-skill-name ~/.claude/skills/` (personal) or
 into `<your-repo>/.claude/skills/` (project-level). The instruction stresses **the whole folder, not
 just `SKILL.md`** (`README.md:74`) — `references/` must travel with it.
 
 **Waypoint 2. Trigger.** [fact] `SKILL.md:3-10`. The `description` is matched against what the user
-says. It is written as situations, not features — "where do I start", "walk me through this repo",
-due diligence, reverse-engineering a legacy system, resuming an in-progress KT. [fact] Explicit
-override at the end: "Prefer this over ad-hoc 'explain this code' whenever the goal is understanding
+says, written as situations rather than features — "where do I start", "walk me through this repo",
+due diligence, reverse-engineering a legacy system, resuming an in-progress KT. [fact] It closes with
+an explicit override: "Prefer this over ad-hoc 'explain this code' whenever the goal is understanding
 a whole system rather than one snippet."
 
-[fact] An explicit invocation (`/onboard-me`, `README.md:91`) bypasses matching entirely.
+[fact] An explicit invocation — `/onboard-me` — bypasses matching entirely. `README.md:88-92`
+documents the pattern generically, showing `/your-skill-name` rather than this skill's own name.
 
-**Waypoint 3. The goal question.** [fact] `SKILL.md:30-45`. Exactly one question, asked before any
-exploration, with four options that reweight the whole ladder. [fact] `:42-45` gives two escape
-hatches: if the opening message already states the goal, don't spend a turn asking; if the human
-doesn't answer, assume "just understand it" and continue — never block.
+**Waypoint 3. The goal question.** [fact] `SKILL.md:30-45`. Exactly one question, before any
+exploration, with four options that reweight the ladder. [fact] `:42-45` gives two escape hatches: if
+the opening message already states the goal, don't spend a turn asking; if the human doesn't answer,
+assume "just understand it" and continue — never block.
 
-**Waypoint 4. Classify, then load the playbook.** [fact] `SKILL.md:182-188` — classify the repo
-during Orientation, then read `references/repo-playbooks.md` and follow **one** playbook.
+**Waypoint 4. Classify, then load the playbook.** [fact] `SKILL.md:182-188` — classify during
+Orientation, then read `references/repo-playbooks.md` and follow **one** playbook.
 [fact] `repo-playbooks.md:3-6` reinforces it: follow the dominant type, don't read all of them; if
 the repo is a mix, name the pieces and make the rest `jump to` targets.
 
 **Waypoint 5. Announce the trail, then write it.** [fact] `SKILL.md:250-251` — tell the human `.kt/`
 is being created *before* creating it, and mention they may want to gitignore it.
 
-**Waypoint 6. Loop.** [fact] `SKILL.md:52-58` — DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM,
-one stage per turn, then stop and wait. [fact] The stage may only be called done when its completion
+**Waypoint 6. Loop.** [fact] `SKILL.md:52-58` — DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM, one
+stage per turn, then stop and wait. [fact] A stage may only be called done when its completion
 criterion (`SKILL.md:160-180`) is met.
 
-Exit: the human says `pause` (bookmark, no deliverable — `SKILL.md:314-317`) or `stop` (Flow B).
+Exit: `pause` (bookmark, no deliverable — `SKILL.md:314-317`) or `stop` (Flow B).
 
 ### The speedrun variant
 
@@ -58,12 +59,12 @@ load-bearing:
 
 - [fact] `:296-298` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
   have approved running a build, test, or script, so in a speedrun you never run them."
-- [fact] `:299-301` — genuine forks still stop the run (monorepo needing scoping, a destructive
+- [fact] `:299-301` — genuine forks still stop the run (a monorepo needing scoping, a destructive
   action, evidence contradicting the stated goal).
 
 ---
 
-## Flow B — `stop` → two artifacts → rendered page
+## Flow B — `stop` → two artifacts → rendered page → published site
 
 **Waypoint 1.** [fact] `SKILL.md:319-324` — before writing a word, read `references/synthesis.md`.
 
@@ -86,17 +87,19 @@ system is · architecture map · domain glossary · one or two key flows · your
 assumptions & things to verify. [fact] `:43-44` sets the acceptance test — readable start to finish
 by someone who never ran the skill and has no access to the chat.
 
+[fact] Part 2 now carries the diagram rule (`synthesis.md:36-37`): draw the architecture map in text
+by default, because the study page ships no mermaid renderer.
+
 **Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:52-59`, four steps:
 
 1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
 2. Paste each file's **raw markdown verbatim** into its slot — `08` fills the `guide` slot, `00`–`07`
    the `trail` slots. Blocks are inert so no escaping is needed, with one exception: a literal
-   `</script>` in the markdown must be written `<\/script>`.
+   closing script tag in the markdown must be escaped.
 3. Delete the slot for any `.kt/` file that doesn't exist.
 4. Set the `<title>` and the `.kt-repo-name` span to the repo name. **Change nothing else.**
 
-[fact] The slots are at `study-page-template.html:171-205` — nine of them, each a
-`<script type="text/markdown">` with `data-id`, `data-label`, and `data-group`.
+[fact] The slots are at `study-page-template.html:171-205` — nine of them, keyed by `data-id`.
 [fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:147` (sidebar span).
 
 **Waypoint 6. Render — in the browser, no server.** [fact] The page's own pipeline:
@@ -104,19 +107,25 @@ by someone who never ran the skill and has no access to the chat.
 | Step | Where |
 | --- | --- |
 | Collect every markdown slot, strip leading newline | `:311-314` |
-| Drop slots still holding their `<!-- PASTE -->` comment | `:314` |
+| Drop slots still holding their placeholder comment | `:314` |
 | Group into "Curated guide" (08) and "Working trail" (00–07) | `:321-324` |
 | Build a nav link + a `<section>` card per file | `:325-338` |
-| Render markdown with the inline regex parser | `:208-307` |
+| Render markdown with the inline regex parser | `:223-307` |
 | Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:218` |
+| Label a mermaid fence as diagram source, linking mermaid.live | `:250-252`, styled at `:129` |
 | Per-file "Copy markdown" button | `:334` |
 | Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:255-257`, `:344-345` |
 | Clipboard write, with a `<textarea>` + `execCommand` fallback | `:348-355` |
 | Scroll-spy highlighting the active nav item | `:358` |
 | Live filter over files and headings | `:365` |
 
-**Waypoint 7.** [fact] `synthesis.md:64-65` — announce both outputs by name and mention the HTML
-opens straight in a browser, no server needed.
+**Waypoint 7. Publish (new, 2026-07-27).** [fact] Not part of the skill — a property of this repo.
+Pushing to `main` triggers a GitHub Pages build, which serves the trail at
+`https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`. [fact] The `onboard-me/README.md`
+PS links that URL, so the deliverable is reachable by anyone, not just whoever ran the session.
+
+[fact] `synthesis.md:64-65` — announce both outputs by name and mention the HTML opens straight in a
+browser, no server needed.
 
 ---
 
@@ -124,8 +133,8 @@ opens straight in a browser, no server needed.
 
 [fact] `SKILL.md:87-90`. When the human corrects a claim, three things happen in the **same turn**:
 retag it as `[human]`, fix the affected `.kt/` file, and ask whether the correction invalidates
-anything else already said. [fact] The rationale is given: "A mental model built on a stale
-assumption gets more wrong the longer it stands."
+anything else already said. [fact] The stated rationale: "A mental model built on a stale assumption
+gets more wrong the longer it stands."
 
 [inference] This is the only inbound edge into the trail from outside the repo, which is why
 `[human]` outranks `[fact]` in the filter at `synthesis.md:20`. Based on the tag definitions at
@@ -133,5 +142,5 @@ assumption gets more wrong the longer it stands."
 
 ## Open unknowns
 
-- [unknown] Whether the `npx skills@latest add` path has been run against this repo successfully —
-  the command is documented, but nothing in the repo records a verified install.
+- [unknown] Whether the `npx skills@latest add` path has ever been run successfully against this
+  repo — the command is documented and the package is real, but nothing records a verified install.

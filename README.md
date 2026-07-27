@@ -75,10 +75,10 @@ The whole folder, not just `SKILL.md`:
 
 ```bash
 # Personal — available in all your projects
-cp -r onboard-me ~/.claude/skills/
+cp -r your-skill-name ~/.claude/skills/
 
 # Project-level — checked into a repo, shared with everyone who clones it
-cp -r onboard-me <your-repo>/.claude/skills/
+cp -r your-skill-name <your-repo>/.claude/skills/
 ```
 
 </details>
@@ -88,7 +88,7 @@ cp -r onboard-me <your-repo>/.claude/skills/
 **3. Use it.** Skills trigger on their own when relevant, or invoke one explicitly:
 
 ```text
-/onboard-me
+/your-skill-name
 ```
 
 <details>
@@ -118,6 +118,10 @@ nirvajna-skills/
         ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
         ├── synthesis.md              ← how the final onboarding doc gets built
         └── study-page-template.html  ← the shell for the `onboarding.html` study page
+└── your-skill-2/
+└── your-skill-3/
+...
+└── your-skill-n/
 ```
 
 <details>

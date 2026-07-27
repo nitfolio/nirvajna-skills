@@ -92,6 +92,8 @@ help me understand this repo
 where do I start with this codebase
 walk me through this project
 run a KT on this repo
+OR
+invoke directly by /onboard-me
 ```
 
 Claude asks one question — **why** you're here — then begins. That answer shapes everything after,

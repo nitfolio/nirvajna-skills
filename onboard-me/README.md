@@ -407,7 +407,7 @@ trail the skill produced by running on *itself* — same ladder, same evidence t
 unknowns, nothing tidied up afterwards.
 
 The study page is exactly what `stop` produces: the curated
-[`08-onboarding.md` / `onboarding.html`](https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html)
+[`onboarding.html`](https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html)
 deliverable up top, and below it the whole working trail (`00`–`07`) holding the evidence behind
 every claim in it — including the assumptions the session refused to state as fact. It's the quickest
 way to see what a finished KT hands you before you run one yourself.

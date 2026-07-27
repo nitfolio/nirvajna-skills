@@ -1,5 +1,7 @@
 # 03 · Domain glossary
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 Two vocabularies overlap here. **Platform terms** come from Claude Code and constrain what the repo
 may look like. **Method terms** are invented by this skill and constrain what a KT session does.
 Confusing the two is the main way a newcomer misreads the repo.
@@ -40,19 +42,19 @@ Confusing the two is the main way a newcomer misreads the repo.
 | **Repo-type playbook** | A per-repo-kind adaptation of the ladder: recognition signals, ladder emphasis, files to read first, must-answer questions, traps. 13 types + a generic fallback. | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop`-time guard against polishing a barely-explored repo into a confident document. | `references/synthesis.md:6-14` |
 | **Confidence filter** | The `stop`-time sort: promote `[fact]`/`[human]`, drop guesses, carry surviving `[unknown]`/`[inference]` into an explicit "Assumptions & things to verify" section. | `references/synthesis.md:16-26` |
-| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:46-65` |
-| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:277-308` |
+| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:57-76` |
+| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:286-317` |
 
 ## The controls
 
-[fact] Ten single words drive a session, listed once at `SKILL.md:258-268` and mirrored for humans at
+[fact] Ten single words drive a session, listed once at `SKILL.md:267-277` and mirrored for humans at
 `onboard-me/README.md:132-143`:
 
 `start` · `continue`/`yes` · `speedrun` · `deeper` · `skip` · `jump to <topic>` · `why` ·
 `summarize` · `pause` · `stop`
 
 [fact] `pause` and `stop` are deliberately different promises — `pause` bookmarks and generates
-nothing; `stop` produces the deliverable (`SKILL.md:310-324`).
+nothing; `stop` produces the deliverable (`SKILL.md:319-333`).
 
 ## How the terms relate
 

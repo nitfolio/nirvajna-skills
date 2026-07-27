@@ -1,5 +1,7 @@
 # 04 · Key flows
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 Nothing executes, so a "flow" here is a path through *documents* — but it is a real, traceable path
 with waypoints, and the same discipline applies: every waypoint carries a `file:line`.
 
@@ -50,23 +52,23 @@ is being created *before* creating it, and mention they may want to gitignore it
 stage per turn, then stop and wait. [fact] A stage may only be called done when its completion
 criterion (`SKILL.md:160-180`) is met.
 
-Exit: `pause` (bookmark, no deliverable — `SKILL.md:314-317`) or `stop` (Flow B).
+Exit: `pause` (bookmark, no deliverable — `SKILL.md:323-326`) or `stop` (Flow B).
 
 ### The speedrun variant
 
-[fact] `SKILL.md:277-308`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
+[fact] `SKILL.md:286-317`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
 load-bearing:
 
-- [fact] `:296-298` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
+- [fact] `:305-307` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
   have approved running a build, test, or script, so in a speedrun you never run them."
-- [fact] `:299-301` — genuine forks still stop the run (a monorepo needing scoping, a destructive
+- [fact] `:308-310` — genuine forks still stop the run (a monorepo needing scoping, a destructive
   action, evidence contradicting the stated goal).
 
 ---
 
 ## Flow B — `stop` → two artifacts → rendered page → published site
 
-**Waypoint 1.** [fact] `SKILL.md:319-324` — before writing a word, read `references/synthesis.md`.
+**Waypoint 1.** [fact] `SKILL.md:328-333` — before writing a word, read `references/synthesis.md`.
 
 **Waypoint 2. Coverage check.** [fact] `synthesis.md:6-14`. If only a couple of stages met their
 criteria, do **not** silently generate a polished document — it "manufactures exactly the artifact
@@ -90,7 +92,7 @@ by someone who never ran the skill and has no access to the chat.
 [fact] Part 2 now carries the diagram rule (`synthesis.md:36-37`): draw the architecture map in text
 by default, because the study page ships no mermaid renderer.
 
-**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:52-59`, four steps:
+**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:63-70`, four steps:
 
 1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
 2. Paste each file's **raw markdown verbatim** into its slot — `08` fills the `guide` slot, `00`–`07`
@@ -124,7 +126,7 @@ Pushing to `main` triggers a GitHub Pages build, which serves the trail at
 `https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`. [fact] The `onboard-me/README.md`
 PS links that URL, so the deliverable is reachable by anyone, not just whoever ran the session.
 
-[fact] `synthesis.md:64-65` — announce both outputs by name and mention the HTML opens straight in a
+[fact] `synthesis.md:75-76` — announce both outputs by name and mention the HTML opens straight in a
 browser, no server needed.
 
 ---

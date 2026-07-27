@@ -43,7 +43,18 @@ handbook; the working trail (`00`–`07`) is already there for anyone who wants 
 It should be readable start to finish by someone who never ran the skill and has no access to the
 chat that produced it.
 
-## 4. Build the offline study page (`onboarding.html`)
+## 4. Stamp the commit
+
+Head the deliverable with the commit it was written against and the date — `git rev-parse --short HEAD`.
+Every `file:line` in the document is a line number at that commit, so say so. A reader can then check
+out that commit and verify any claim, and knows to regenerate rather than trust it once the repo has
+moved on. Without the stamp, a citation that has drifted looks identical to one that is simply wrong.
+
+If a human edited cited files during the session, spot-check the affected citations before promoting
+them — a citation can still resolve to a real line while pointing at the wrong thing, and that failure
+is invisible without reading the target.
+
+## 5. Build the offline study page (`onboarding.html`)
 
 Once `08-onboarding.md` is written, always also produce `.kt/onboarding.html` — a single, self-contained
 page that bundles the whole trail (`00`–`08`) into one place a newcomer can study, with a one-click copy

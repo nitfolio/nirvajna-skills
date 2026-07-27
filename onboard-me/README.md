@@ -364,7 +364,18 @@ onboard-me/
 ```
 
 `SKILL.md` stays lean and always loaded; the references are pulled in only when the run actually
-needs them.
+needs them. No scripts, no dependencies — the whole skill is plain text.
+
+### Citations and the commit stamp
+
+Every `[fact]` is anchored to a `file:line`. A line number is a position, not a label: edit a cited
+file and everything below it slides, so the citation keeps resolving to a real line that now says
+something different. Nothing errors, and the claim still looks cited.
+
+Within a single session this cannot happen — the skill is read-only, so nothing moves while it works.
+It matters across time, which is why **every `.kt/` file records the commit it was written against**.
+That turns a drifted citation from a wrong claim into a checkable one: check out that commit to verify
+it, or just re-run the skill to regenerate the trail against current source.
 
 ---
 

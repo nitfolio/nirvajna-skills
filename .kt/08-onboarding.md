@@ -1,6 +1,7 @@
 # Onboarding — `nirvajna-skills`
 
-*Produced by a full-ladder KT session on 2026-07-27, against commit `2e94f1b`. All seven stages met
+*Produced by a full-ladder KT session on 2026-07-27, against commit `2e94f1b` —
+every `file:line` here is a line number at that commit. All seven stages met
 their completion criteria; the working trail with the underlying evidence is in `.kt/00-progress.md`
 through `07-safe-contribution.md`.*
 
@@ -34,7 +35,7 @@ tags, or releases.
 
 ## 2. Architecture map
 
-The organising principle is **progressive disclosure**: 353 lines always loaded, 801 lines loaded
+The organising principle is **progressive disclosure**: 362 lines always loaded, 812 lines loaded
 only when a run reaches the stage that needs them.
 
 ```
@@ -46,11 +47,11 @@ nirvajna-skills/
 ├── assets/                    4 PNGs, wordmark + logo, light/dark       (no runtime role)
 ├── .kt/                       this trail — committed, and published
 └── onboard-me/                THE PRODUCT
-    ├── SKILL.md       353 L   ── ALWAYS LOADED. The method.
-    ├── README.md      428 L   ── humans only; nothing loads it at runtime
+    ├── SKILL.md       362 L   ── ALWAYS LOADED. The method.
+    ├── README.md      439 L   ── humans only; nothing loads it at runtime
     └── references/            ── ON DEMAND
         ├── repo-playbooks.md         360 L
-        ├── synthesis.md               65 L
+        ├── synthesis.md               76 L
         └── study-page-template.html  376 L
 ```
 
@@ -64,12 +65,12 @@ pointing back:
                           |
         +-----------------+------------------+
         |                                    |
-   :185 | at Orientation                :303 | at `stop`
-        |                               :321 |
+   :185 | at Orientation                :312 | at `stop`
+        |                               :330 |
         v                                    v
  repo-playbooks.md                     synthesis.md
  (13 types + fallback)                       |
-                                        :52  | "copy the template"
+                                        :63  | "copy the template"
                                              v
                                    study-page-template.html
                                              |
@@ -132,9 +133,9 @@ Two vocabularies overlap. Confusing them is the main way a newcomer misreads the
 | **Repo-type playbook** | Per-repo-kind adaptation of the ladder; 13 types + generic fallback | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop` guard against polishing a barely-explored repo | `synthesis.md:6-14` |
 | **Confidence filter** | Promote `[fact]`/`[human]`, drop guesses, carry the rest into an explicit section | `synthesis.md:16-26` |
-| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:277-308` |
+| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:286-317` |
 
-Ten single words drive a session (`SKILL.md:258-268`): `start` · `continue` · `speedrun` · `deeper` ·
+Ten single words drive a session (`SKILL.md:267-277`): `start` · `continue` · `speedrun` · `deeper` ·
 `skip` · `jump to <topic>` · `why` · `summarize` · `pause` · `stop`. `pause` and `stop` are different
 promises — `pause` bookmarks and generates nothing; `stop` produces the deliverable.
 
@@ -166,11 +167,11 @@ Manual install alternative: `cp -r your-skill-name ~/.claude/skills/` — **the 
 
 | # | Waypoint | Where |
 | --- | --- | --- |
-| 1 | Read `synthesis.md` before writing a word | `SKILL.md:319-324` |
+| 1 | Read `synthesis.md` before writing a word | `SKILL.md:328-333` |
 | 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
 | 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
 | 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-41` |
-| 5 | Fill the template: raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:52-59`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
+| 5 | Fill the template: raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:63-70`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
 | 6 | Browser render: collect slots `:311-314` → group and build cards `:321-338` → markdown parser `:223-307` → colour tags `:218` → mermaid fence note `:250-252` → copy buttons `:334`, `:344-345` → scroll-spy `:358` → live filter `:365` | `study-page-template.html` |
 | 7 | **Publish** — a push to `main` rebuilds GitHub Pages, serving the trail publicly | repo behaviour, not the skill |
 
@@ -288,10 +289,12 @@ Everything above is drawn from `[fact]` claims with citations. These are not.
 - **Prose edits to `SKILL.md` fail soft** — the file is interpreted by a model, not parsed, so
   wording changes shift behaviour by degrees. The dangerous edits are structural. Based on there
   being no parser, schema, or test anywhere.
-- **A citation-checking script is the repo's highest-value addition.** Based on four observed drift
-  events in a single day, ~15 further citations found wrong by one audit, and no tooling to catch
-  any of it. Note that checking a line *exists* is not enough — all 97 citations were in range while
-  ~15 pointed at the wrong content.
+- **The commit stamp, not tooling, is the answer to citation drift.** `[human]` — the author's call,
+  and it holds up: a citation is a line number at a known snapshot, so drift becomes a versioning
+  question rather than a wrong claim. A checker script was written and removed the same day; it only
+  caught citations pointing past end-of-file, and none of the ~15 real errors did. Checking that a
+  line *exists* is not enough — all 97 were in range while ~15 pointed at the wrong content. Reading
+  the targets is the check that works.
 - **Bus factor 1** — 30 commits, one author, no CI, no reviewers.
 - **`[human]` outranks `[fact]`** in the confidence filter. Implied by the tag definitions and the
   promotion rule; never stated explicitly.

@@ -1,5 +1,7 @@
 # 07 · Safe contribution
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## The house rules
 
 [fact] `README.md:144-151` states them for anyone adding a skill:
@@ -62,7 +64,7 @@ is the "nothing fits" case.
 ## How to verify it
 
 There is no test command. [fact] Nothing in the repo builds, tests, or lints — so verification is a
-consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:296-298`: a speedrun
+consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:305-307`: a speedrun
 never executes commands); they are for you.
 
 ### 1. Structural checks (seconds, from the repo root)
@@ -91,12 +93,14 @@ list and the regex naming the same four tags, 9 slots, and `.nojekyll` present.
 
 ### 2. Check the trail's citations still resolve
 
-[fact] This is the repo's most active failure mode — four drift events on 2026-07-27, plus ~15
-citations found wrong that predated them — and it has no tooling. Any edit to `SKILL.md`,
-`synthesis.md`, `study-page-template.html`, or either README shifts lines that `.kt/` cites.
+[fact] Every `.kt/` file is stamped with the commit it was written against, so a citation is a line
+number at a known snapshot. **If you edit a cited file, the trail is now describing an older commit —
+either re-verify the affected citations or regenerate the trail.** Do not leave it half-updated: a
+stamp that no longer matches the content is worse than no stamp.
 
-[fact] **An existence check is not enough.** All 97 citations resolved *in range* while ~15 pointed
-at the wrong content. You have to read the target line, not just confirm it exists:
+[fact] **An existence check is not enough.** In the 2026-07-27 audit all 97 citations resolved *in
+range* while ~15 pointed at the wrong content. You have to read the target line, not just confirm it
+exists:
 
 ```bash
 # every distinct citation against one file
@@ -107,9 +111,10 @@ sed -n '207p' onboard-me/README.md      # expect: Covered: backend service/API �
 sed -n '218p' onboard-me/references/study-page-template.html   # expect: the tag regex
 ```
 
-[inference] A script that walks every `file:line` in `.kt/`, resolves it, and prints the target for
-review would close this loop permanently, and is probably the single highest-value addition to the
-repo. Based on four observed drifts, ~15 latent errors found in one audit, and no checking tool.
+[fact] A checker script for this was written and then deliberately removed on 2026-07-27: it only
+caught citations pointing past the end of a file, which none of the real errors did, and it cost a
+Python dependency plus an execution exception in a skill that advertises "no plugin, no config, no
+runtime". Two lines of `grep` and `sed` do the part that actually worked.
 
 ### 3. The real end-to-end verification — run the skill
 
@@ -132,7 +137,7 @@ repo to match what you added, or the change goes untested.
 
 ### 4. Check the study page renders
 
-[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:64-65`):
+[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:75-76`):
 
 ```bash
 start .kt/onboarding.html      # Windows;  macOS: open,  Linux: xdg-open

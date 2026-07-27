@@ -1,5 +1,7 @@
 # 05 · Dependencies & blast radius
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## External dependencies
 
 There is no dependency manifest, so these were found by reading, not by resolving a lockfile.
@@ -99,9 +101,15 @@ a `<summary>` tag instead of the description rule (correct: `132-134`);
 [fact] Every one of these is *in range* — the cited line exists. Only reading the target reveals the
 error, which is why an existence check is not enough.
 
-[inference] This is the only failure mode here with a cheap mechanical fix: a script that walks every
-`file:line` in `.kt/`, resolves it, and prints the target for review. Based on four observed drift
-events, ~15 latent errors found by one audit, and the absence of any checking tool in the repo.
+[human] Resolved by the author: **stamp each `.kt/` file with the commit it was written against.**
+A citation is then a line number at a known snapshot — a reader checks out that commit to verify, or
+regenerates the trail. Drift stops being wrongness and becomes a versioning question.
+
+[fact] A `scripts/check-citations.py` was written, tested, and then removed on 2026-07-27. It only
+hard-failed citations pointing *past the end* of a file; all ~15 real errors were in range and passed
+it silently. What caught them was reading the target lines, which `grep` and `sed` do without adding
+a Python dependency, executable code, or an exception to the read-only boundary — all of which cut
+against the skill's "no plugin, no config, no runtime" claim (`README.md:27-29`).
 
 ### 7. Adding or removing a repo-type playbook — **5 stale counters**
 

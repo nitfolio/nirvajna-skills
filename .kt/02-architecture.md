@@ -1,5 +1,7 @@
 # 02 · Architecture
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## The shape
 
 There is no runtime, so "architecture" here means **what gets loaded into an agent's context, and
@@ -32,19 +34,19 @@ purpose.
 
 ```
 onboard-me/
-├── SKILL.md          353 L  ── ALWAYS LOADED. The method.
-├── README.md         428 L  ── humans only; no runtime edge points at it
+├── SKILL.md          362 L  ── ALWAYS LOADED. The method.
+├── README.md         439 L  ── humans only; no runtime edge points at it
 └── references/              ── ON DEMAND
     ├── repo-playbooks.md         360 L
-    ├── synthesis.md               65 L
+    ├── synthesis.md               76 L
     └── study-page-template.html  376 L
 ```
 
-[fact] 353 lines always loaded vs 801 lines on demand — the heavy 69% of the skill stays out of
+[fact] 362 lines always loaded vs 812 lines on demand — the heavy 69% of the skill stays out of
 context until a run reaches the stage that needs it.
 
 [fact] `SKILL.md` has 17 top-level sections, from "What this skill is for" (`:15`) to "Example of one
-good turn" (`:332`).
+good turn" (`:341`).
 
 ## How the pieces talk
 
@@ -57,12 +59,12 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
                           |
         +-----------------+------------------+
         |                                    |
-   :185 | at Orientation                :303 | at `stop`
-        |                               :321 |
+   :185 | at Orientation                :312 | at `stop`
+        |                               :330 |
         v                                    v
  repo-playbooks.md                     synthesis.md
  (13 types + fallback)                       |
-                                        :52  | "copy the template"
+                                        :63  | "copy the template"
                                              v
                                    study-page-template.html
                                              |
@@ -74,8 +76,8 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
 ```
 
 - [fact] `SKILL.md:185` → `references/repo-playbooks.md`, during Stage 1 Orientation.
-- [fact] `SKILL.md:303` and `SKILL.md:321` → `references/synthesis.md`, at `stop` / end of speedrun.
-- [fact] `synthesis.md:52` → `references/study-page-template.html`, the only second-hop edge.
+- [fact] `SKILL.md:312` and `SKILL.md:330` → `references/synthesis.md`, at `stop` / end of speedrun.
+- [fact] `synthesis.md:63` → `references/study-page-template.html`, the only second-hop edge.
 - [fact] All edges are one-way and originate in `SKILL.md`. No reference file points back.
 - [fact] `onboard-me/README.md` is referenced by nothing at runtime — documentation *about* the
   skill, never loaded *by* it.
@@ -89,7 +91,7 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
 ```
 
 [fact] This is a **hyperlink, not a fetch** — the page still requests nothing over the network, so
-the self-contained/offline guarantee (`SKILL.md:207`, `:320`, `synthesis.md:48`, `:64-65`) is intact.
+the self-contained/offline guarantee (`SKILL.md:207`, `:329`, `synthesis.md:59`, `:64-65`) is intact.
 
 [fact] `SKILL.md`, `repo-playbooks.md`, and `synthesis.md` contain **zero** URLs (grep count 0 for
 each). Everything the agent loads is fully self-contained.
@@ -118,7 +120,7 @@ silently stops highlighting it — no error, just unstyled text.
 ```
 
 Any slot still holding its `<!-- PASTE … -->` placeholder is dropped at render time, so
-`synthesis.md:57-58`'s "delete the slot" instruction is belt-and-braces rather than load-bearing.
+`synthesis.md:68-69`'s "delete the slot" instruction is belt-and-braces rather than load-bearing.
 
 [fact] There are 9 slots, at `study-page-template.html:171-205`, keyed by `data-id` — `08-onboarding`
 in the `guide` group and `00`–`07` in the `trail` group.

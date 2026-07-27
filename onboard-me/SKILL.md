@@ -250,6 +250,15 @@ fresh session resuming from `00-progress.md` is sharper than a foggy one.
 Before creating `.kt/`, tell the human it's happening and mention they may want to gitignore it (or
 keep it — a curated `.kt/` can become real onboarding docs).
 
+**Stamp every `.kt/` file with the commit it was written against** — short hash and date, one line
+under the heading, saying its `file:line` citations are line numbers at that commit. Citations rot as
+the repo moves; the stamp turns a drifted claim into a checkable one and tells the next reader whether
+to verify against that commit or regenerate.
+
+**Resuming an existing `.kt/`?** Compare its stamp against `git rev-parse --short HEAD`. If they
+differ, say so in your first turn and re-verify the citations you build on — one can resolve to a real
+line and still point at the wrong thing.
+
 ## The human's controls
 
 State the full menu once, when the session starts. The human should be able to run the whole

@@ -1,5 +1,7 @@
 # KT progress
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 Goal: regenerate the trail from scratch against the repo as it stands after the 2026-07-27 changes
 (GitHub Pages, `.nojekyll`, the diagram rule) · Repo type: **Library / SDK** (playbook 5), soft match
 Mode: `speedrun` (full ladder, no per-turn gate) · Session date: 2026-07-27 · Repo at `2e94f1b`
@@ -62,5 +64,7 @@ The repo moved underneath the first run, which is why this one exists:
 ## Next step
 
 None — the ladder is finished. A future session can `start` to extend any stage, or
-`jump to <topic>`. The highest-value follow-up the trail identified is a citation-checking script
-(see `07-safe-contribution.md`, verification step 2).
+`jump to <topic>`. The citation-drift question the trail raised was resolved during the session:
+every `.kt/` file now carries the commit it was written against, so a drifted citation is checkable
+rather than wrong. A checker script was built, evaluated, and deliberately discarded — see
+`05-dependencies.md`.

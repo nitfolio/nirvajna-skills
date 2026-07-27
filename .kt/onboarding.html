@@ -141,7 +141,8 @@
 <script type="text/markdown" data-id="08-onboarding" data-label="08 · Onboarding guide" data-group="guide">
 # Onboarding — `nirvajna-skills`
 
-*Produced by a full-ladder KT session on 2026-07-27, against commit `2e94f1b`. All seven stages met
+*Produced by a full-ladder KT session on 2026-07-27, against commit `2e94f1b` —
+every `file:line` here is a line number at that commit. All seven stages met
 their completion criteria; the working trail with the underlying evidence is in `.kt/00-progress.md`
 through `07-safe-contribution.md`.*
 
@@ -175,7 +176,7 @@ tags, or releases.
 
 ## 2. Architecture map
 
-The organising principle is **progressive disclosure**: 353 lines always loaded, 801 lines loaded
+The organising principle is **progressive disclosure**: 362 lines always loaded, 812 lines loaded
 only when a run reaches the stage that needs them.
 
 ```
@@ -187,11 +188,11 @@ nirvajna-skills/
 ├── assets/                    4 PNGs, wordmark + logo, light/dark       (no runtime role)
 ├── .kt/                       this trail — committed, and published
 └── onboard-me/                THE PRODUCT
-    ├── SKILL.md       353 L   ── ALWAYS LOADED. The method.
-    ├── README.md      428 L   ── humans only; nothing loads it at runtime
+    ├── SKILL.md       362 L   ── ALWAYS LOADED. The method.
+    ├── README.md      439 L   ── humans only; nothing loads it at runtime
     └── references/            ── ON DEMAND
         ├── repo-playbooks.md         360 L
-        ├── synthesis.md               65 L
+        ├── synthesis.md               76 L
         └── study-page-template.html  376 L
 ```
 
@@ -205,12 +206,12 @@ pointing back:
                           |
         +-----------------+------------------+
         |                                    |
-   :185 | at Orientation                :303 | at `stop`
-        |                               :321 |
+   :185 | at Orientation                :312 | at `stop`
+        |                               :330 |
         v                                    v
  repo-playbooks.md                     synthesis.md
  (13 types + fallback)                       |
-                                        :52  | "copy the template"
+                                        :63  | "copy the template"
                                              v
                                    study-page-template.html
                                              |
@@ -273,9 +274,9 @@ Two vocabularies overlap. Confusing them is the main way a newcomer misreads the
 | **Repo-type playbook** | Per-repo-kind adaptation of the ladder; 13 types + generic fallback | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop` guard against polishing a barely-explored repo | `synthesis.md:6-14` |
 | **Confidence filter** | Promote `[fact]`/`[human]`, drop guesses, carry the rest into an explicit section | `synthesis.md:16-26` |
-| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:277-308` |
+| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:286-317` |
 
-Ten single words drive a session (`SKILL.md:258-268`): `start` · `continue` · `speedrun` · `deeper` ·
+Ten single words drive a session (`SKILL.md:267-277`): `start` · `continue` · `speedrun` · `deeper` ·
 `skip` · `jump to <topic>` · `why` · `summarize` · `pause` · `stop`. `pause` and `stop` are different
 promises — `pause` bookmarks and generates nothing; `stop` produces the deliverable.
 
@@ -307,11 +308,11 @@ Manual install alternative: `cp -r your-skill-name ~/.claude/skills/` — **the 
 
 | # | Waypoint | Where |
 | --- | --- | --- |
-| 1 | Read `synthesis.md` before writing a word | `SKILL.md:319-324` |
+| 1 | Read `synthesis.md` before writing a word | `SKILL.md:328-333` |
 | 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
 | 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
 | 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-41` |
-| 5 | Fill the template: raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:52-59`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
+| 5 | Fill the template: raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:63-70`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
 | 6 | Browser render: collect slots `:311-314` → group and build cards `:321-338` → markdown parser `:223-307` → colour tags `:218` → mermaid fence note `:250-252` → copy buttons `:334`, `:344-345` → scroll-spy `:358` → live filter `:365` | `study-page-template.html` |
 | 7 | **Publish** — a push to `main` rebuilds GitHub Pages, serving the trail publicly | repo behaviour, not the skill |
 
@@ -429,10 +430,12 @@ Everything above is drawn from `[fact]` claims with citations. These are not.
 - **Prose edits to `SKILL.md` fail soft** — the file is interpreted by a model, not parsed, so
   wording changes shift behaviour by degrees. The dangerous edits are structural. Based on there
   being no parser, schema, or test anywhere.
-- **A citation-checking script is the repo's highest-value addition.** Based on four observed drift
-  events in a single day, ~15 further citations found wrong by one audit, and no tooling to catch
-  any of it. Note that checking a line *exists* is not enough — all 97 citations were in range while
-  ~15 pointed at the wrong content.
+- **The commit stamp, not tooling, is the answer to citation drift.** `[human]` — the author's call,
+  and it holds up: a citation is a line number at a known snapshot, so drift becomes a versioning
+  question rather than a wrong claim. A checker script was written and removed the same day; it only
+  caught citations pointing past end-of-file, and none of the ~15 real errors did. Checking that a
+  line *exists* is not enough — all 97 were in range while ~15 pointed at the wrong content. Reading
+  the targets is the check that works.
 - **Bus factor 1** — 30 commits, one author, no CI, no reviewers.
 - **`[human]` outranks `[fact]`** in the confidence filter. Implied by the tag definitions and the
   promotion rule; never stated explicitly.
@@ -464,6 +467,8 @@ running it.
 
 <script type="text/markdown" data-id="00-progress" data-label="00 · Progress" data-group="trail">
 # KT progress
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 Goal: regenerate the trail from scratch against the repo as it stands after the 2026-07-27 changes
 (GitHub Pages, `.nojekyll`, the diagram rule) · Repo type: **Library / SDK** (playbook 5), soft match
@@ -527,12 +532,16 @@ The repo moved underneath the first run, which is why this one exists:
 ## Next step
 
 None — the ladder is finished. A future session can `start` to extend any stage, or
-`jump to <topic>`. The highest-value follow-up the trail identified is a citation-checking script
-(see `07-safe-contribution.md`, verification step 2).
+`jump to <topic>`. The citation-drift question the trail raised was resolved during the session:
+every `.kt/` file now carries the commit it was written against, so a drifted citation is checkable
+rather than wrong. A checker script was built, evaluated, and deliberately discarded — see
+`05-dependencies.md`.
 </script>
 
 <script type="text/markdown" data-id="01-overview" data-label="01 · Overview" data-group="trail">
 # 01 · Overview
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 ## What this system is
 
@@ -569,8 +578,14 @@ being executable. No file states it outright.
   description is the only thing that makes a skill trigger", which is why it is written as a list of
   situations rather than a feature summary.
 
-[fact] Secondary, human-facing: `README.md` (repo front door) and `onboard-me/README.md` (skill usage
-docs). Neither is loaded by the agent at runtime.
+[human] Secondary, human-facing, and deliberately split by scope: `README.md` is the **front door for
+a collection** — it describes how skills work here and is written generically (`your-skill-name`)
+because more skills are planned. Per-skill documentation lives in that skill's own README. Neither is
+loaded by the agent at runtime.
+
+[inference] The single-skill framing in this trail is therefore time-limited. A later session will
+find several skills and should classify the repo accordingly. Based on the author's stated plan; the
+repo currently contains one skill.
 
 [fact] A third, new entry point exists for readers rather than agents: the published study page at
 `https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`, linked from the PS at the end of
@@ -587,20 +602,25 @@ nirvajna-skills/
 ├── assets/                           4 PNGs: wordmark + logo, each light/dark
 ├── .kt/                             this trail — committed on purpose, and published
 └── onboard-me/                       the one skill
-    ├── SKILL.md              353 L   always loaded — the method
-    ├── README.md             428 L   human docs — not loaded by the agent
+    ├── SKILL.md              362 L   always loaded — the method
+    ├── README.md             439 L   human docs — not loaded by the agent
     └── references/                   loaded on demand only
         ├── repo-playbooks.md        360 L
         ├── study-page-template.html 376 L
-        └── synthesis.md              65 L
+        └── synthesis.md              76 L
 ```
 
 [fact] Line counts measured with `wc -l` on 2026-07-27 at commit `2e94f1b`. Always-loaded weight is
-353 lines; on-demand weight is 801 lines — a ~1:2.3 split. This is the progressive-disclosure design
+362 lines; on-demand weight is 812 lines — a ~1:2.2 split. This is the progressive-disclosure design
 described at `README.md:136-138`.
 
-[fact] `.gitignore` contains no ignore patterns at all — both lines are comments explaining that
-`.kt/` is committed on purpose as a worked example of the skill's output.
+[human] `.kt/` is committed here as a **showcase, not a recommendation**. The author keeps it in the
+repo so anyone evaluating the skill can see the exact shape of its output before installing it. The
+skill's own guidance is neutral — commit it or gitignore it, either works. Don't read this repo's
+choice as the default.
+
+[fact] `.gitignore` reflects that: no ignore patterns at all, both lines comments explaining that
+`.kt/` is kept on purpose.
 
 [fact] `.nojekyll` is empty (0 lines). Its existence is the whole content: it tells GitHub Pages to
 skip Jekyll, which otherwise refuses to publish any path beginning with a dot — including `.kt/`.
@@ -636,6 +656,8 @@ this one was regenerated.
 <script type="text/markdown" data-id="02-architecture" data-label="02 · Architecture" data-group="trail">
 # 02 · Architecture
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## The shape
 
 There is no runtime, so "architecture" here means **what gets loaded into an agent's context, and
@@ -668,19 +690,19 @@ purpose.
 
 ```
 onboard-me/
-├── SKILL.md          353 L  ── ALWAYS LOADED. The method.
-├── README.md         428 L  ── humans only; no runtime edge points at it
+├── SKILL.md          362 L  ── ALWAYS LOADED. The method.
+├── README.md         439 L  ── humans only; no runtime edge points at it
 └── references/              ── ON DEMAND
     ├── repo-playbooks.md         360 L
-    ├── synthesis.md               65 L
+    ├── synthesis.md               76 L
     └── study-page-template.html  376 L
 ```
 
-[fact] 353 lines always loaded vs 801 lines on demand — the heavy 69% of the skill stays out of
+[fact] 362 lines always loaded vs 812 lines on demand — the heavy 69% of the skill stays out of
 context until a run reaches the stage that needs it.
 
 [fact] `SKILL.md` has 17 top-level sections, from "What this skill is for" (`:15`) to "Example of one
-good turn" (`:332`).
+good turn" (`:341`).
 
 ## How the pieces talk
 
@@ -693,12 +715,12 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
                           |
         +-----------------+------------------+
         |                                    |
-   :185 | at Orientation                :303 | at `stop`
-        |                               :321 |
+   :185 | at Orientation                :312 | at `stop`
+        |                               :330 |
         v                                    v
  repo-playbooks.md                     synthesis.md
  (13 types + fallback)                       |
-                                        :52  | "copy the template"
+                                        :63  | "copy the template"
                                              v
                                    study-page-template.html
                                              |
@@ -710,8 +732,8 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
 ```
 
 - [fact] `SKILL.md:185` → `references/repo-playbooks.md`, during Stage 1 Orientation.
-- [fact] `SKILL.md:303` and `SKILL.md:321` → `references/synthesis.md`, at `stop` / end of speedrun.
-- [fact] `synthesis.md:52` → `references/study-page-template.html`, the only second-hop edge.
+- [fact] `SKILL.md:312` and `SKILL.md:330` → `references/synthesis.md`, at `stop` / end of speedrun.
+- [fact] `synthesis.md:63` → `references/study-page-template.html`, the only second-hop edge.
 - [fact] All edges are one-way and originate in `SKILL.md`. No reference file points back.
 - [fact] `onboard-me/README.md` is referenced by nothing at runtime — documentation *about* the
   skill, never loaded *by* it.
@@ -725,7 +747,7 @@ config, no registry — an instruction like "read `references/repo-playbooks.md`
 ```
 
 [fact] This is a **hyperlink, not a fetch** — the page still requests nothing over the network, so
-the self-contained/offline guarantee (`SKILL.md:207`, `:320`, `synthesis.md:48`, `:64-65`) is intact.
+the self-contained/offline guarantee (`SKILL.md:207`, `:329`, `synthesis.md:59`, `:64-65`) is intact.
 
 [fact] `SKILL.md`, `repo-playbooks.md`, and `synthesis.md` contain **zero** URLs (grep count 0 for
 each). Everything the agent loads is fully self-contained.
@@ -754,7 +776,7 @@ silently stops highlighting it — no error, just unstyled text.
 ```
 
 Any slot still holding its `<!-- PASTE … -->` placeholder is dropped at render time, so
-`synthesis.md:57-58`'s "delete the slot" instruction is belt-and-braces rather than load-bearing.
+`synthesis.md:68-69`'s "delete the slot" instruction is belt-and-braces rather than load-bearing.
 
 [fact] There are 9 slots, at `study-page-template.html:171-205`, keyed by `data-id` — `08-onboarding`
 in the `guide` group and `00`–`07` in the `trail` group.
@@ -789,6 +811,8 @@ install instructions; no comment explains it.
 
 <script type="text/markdown" data-id="03-domain-glossary" data-label="03 · Domain glossary" data-group="trail">
 # 03 · Domain glossary
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 Two vocabularies overlap here. **Platform terms** come from Claude Code and constrain what the repo
 may look like. **Method terms** are invented by this skill and constrain what a KT session does.
@@ -830,19 +854,19 @@ Confusing the two is the main way a newcomer misreads the repo.
 | **Repo-type playbook** | A per-repo-kind adaptation of the ladder: recognition signals, ladder emphasis, files to read first, must-answer questions, traps. 13 types + a generic fallback. | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop`-time guard against polishing a barely-explored repo into a confident document. | `references/synthesis.md:6-14` |
 | **Confidence filter** | The `stop`-time sort: promote `[fact]`/`[human]`, drop guesses, carry surviving `[unknown]`/`[inference]` into an explicit "Assumptions & things to verify" section. | `references/synthesis.md:16-26` |
-| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:46-65` |
-| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:277-308` |
+| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:57-76` |
+| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:286-317` |
 
 ## The controls
 
-[fact] Ten single words drive a session, listed once at `SKILL.md:258-268` and mirrored for humans at
+[fact] Ten single words drive a session, listed once at `SKILL.md:267-277` and mirrored for humans at
 `onboard-me/README.md:132-143`:
 
 `start` · `continue`/`yes` · `speedrun` · `deeper` · `skip` · `jump to <topic>` · `why` ·
 `summarize` · `pause` · `stop`
 
 [fact] `pause` and `stop` are deliberately different promises — `pause` bookmarks and generates
-nothing; `stop` produces the deliverable (`SKILL.md:310-324`).
+nothing; `stop` produces the deliverable (`SKILL.md:319-333`).
 
 ## How the terms relate
 
@@ -885,6 +909,8 @@ the site link `oopsaididitagain.com` (`README.md:16`).
 
 <script type="text/markdown" data-id="04-key-flows" data-label="04 · Key flows" data-group="trail">
 # 04 · Key flows
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 Nothing executes, so a "flow" here is a path through *documents* — but it is a real, traceable path
 with waypoints, and the same discipline applies: every waypoint carries a `file:line`.
@@ -936,23 +962,23 @@ is being created *before* creating it, and mention they may want to gitignore it
 stage per turn, then stop and wait. [fact] A stage may only be called done when its completion
 criterion (`SKILL.md:160-180`) is met.
 
-Exit: `pause` (bookmark, no deliverable — `SKILL.md:314-317`) or `stop` (Flow B).
+Exit: `pause` (bookmark, no deliverable — `SKILL.md:323-326`) or `stop` (Flow B).
 
 ### The speedrun variant
 
-[fact] `SKILL.md:277-308`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
+[fact] `SKILL.md:286-317`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
 load-bearing:
 
-- [fact] `:296-298` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
+- [fact] `:305-307` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
   have approved running a build, test, or script, so in a speedrun you never run them."
-- [fact] `:299-301` — genuine forks still stop the run (a monorepo needing scoping, a destructive
+- [fact] `:308-310` — genuine forks still stop the run (a monorepo needing scoping, a destructive
   action, evidence contradicting the stated goal).
 
 ---
 
 ## Flow B — `stop` → two artifacts → rendered page → published site
 
-**Waypoint 1.** [fact] `SKILL.md:319-324` — before writing a word, read `references/synthesis.md`.
+**Waypoint 1.** [fact] `SKILL.md:328-333` — before writing a word, read `references/synthesis.md`.
 
 **Waypoint 2. Coverage check.** [fact] `synthesis.md:6-14`. If only a couple of stages met their
 criteria, do **not** silently generate a polished document — it "manufactures exactly the artifact
@@ -976,7 +1002,7 @@ by someone who never ran the skill and has no access to the chat.
 [fact] Part 2 now carries the diagram rule (`synthesis.md:36-37`): draw the architecture map in text
 by default, because the study page ships no mermaid renderer.
 
-**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:52-59`, four steps:
+**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:63-70`, four steps:
 
 1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
 2. Paste each file's **raw markdown verbatim** into its slot — `08` fills the `guide` slot, `00`–`07`
@@ -1010,7 +1036,7 @@ Pushing to `main` triggers a GitHub Pages build, which serves the trail at
 `https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`. [fact] The `onboard-me/README.md`
 PS links that URL, so the deliverable is reachable by anyone, not just whoever ran the session.
 
-[fact] `synthesis.md:64-65` — announce both outputs by name and mention the HTML opens straight in a
+[fact] `synthesis.md:75-76` — announce both outputs by name and mention the HTML opens straight in a
 browser, no server needed.
 
 ---
@@ -1034,6 +1060,8 @@ gets more wrong the longer it stands."
 
 <script type="text/markdown" data-id="05-dependencies" data-label="05 · Dependencies" data-group="trail">
 # 05 · Dependencies & blast radius
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 ## External dependencies
 
@@ -1134,9 +1162,15 @@ a `<summary>` tag instead of the description rule (correct: `132-134`);
 [fact] Every one of these is *in range* — the cited line exists. Only reading the target reveals the
 error, which is why an existence check is not enough.
 
-[inference] This is the only failure mode here with a cheap mechanical fix: a script that walks every
-`file:line` in `.kt/`, resolves it, and prints the target for review. Based on four observed drift
-events, ~15 latent errors found by one audit, and the absence of any checking tool in the repo.
+[human] Resolved by the author: **stamp each `.kt/` file with the commit it was written against.**
+A citation is then a line number at a known snapshot — a reader checks out that commit to verify, or
+regenerates the trail. Drift stops being wrongness and becomes a versioning question.
+
+[fact] A `scripts/check-citations.py` was written, tested, and then removed on 2026-07-27. It only
+hard-failed citations pointing *past the end* of a file; all ~15 real errors were in range and passed
+it silently. What caught them was reading the target lines, which `grep` and `sed` do without adding
+a Python dependency, executable code, or an exception to the read-only boundary — all of which cut
+against the skill's "no plugin, no config, no runtime" claim (`README.md:27-29`).
 
 ### 7. Adding or removing a repo-type playbook — **5 stale counters**
 
@@ -1172,6 +1206,8 @@ Editing them cannot change how a KT session behaves.
 
 <script type="text/markdown" data-id="06-operations" data-label="06 · Operations" data-group="trail">
 # 06 · Operations
+
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
 
 ## Build
 
@@ -1299,6 +1335,8 @@ mermaid ladder".
 <script type="text/markdown" data-id="07-safe-contribution" data-label="07 · Safe contribution" data-group="trail">
 # 07 · Safe contribution
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## The house rules
 
 [fact] `README.md:144-151` states them for anyone adding a skill:
@@ -1361,7 +1399,7 @@ is the "nothing fits" case.
 ## How to verify it
 
 There is no test command. [fact] Nothing in the repo builds, tests, or lints — so verification is a
-consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:296-298`: a speedrun
+consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:305-307`: a speedrun
 never executes commands); they are for you.
 
 ### 1. Structural checks (seconds, from the repo root)
@@ -1390,12 +1428,14 @@ list and the regex naming the same four tags, 9 slots, and `.nojekyll` present.
 
 ### 2. Check the trail's citations still resolve
 
-[fact] This is the repo's most active failure mode — four drift events on 2026-07-27, plus ~15
-citations found wrong that predated them — and it has no tooling. Any edit to `SKILL.md`,
-`synthesis.md`, `study-page-template.html`, or either README shifts lines that `.kt/` cites.
+[fact] Every `.kt/` file is stamped with the commit it was written against, so a citation is a line
+number at a known snapshot. **If you edit a cited file, the trail is now describing an older commit —
+either re-verify the affected citations or regenerate the trail.** Do not leave it half-updated: a
+stamp that no longer matches the content is worse than no stamp.
 
-[fact] **An existence check is not enough.** All 97 citations resolved *in range* while ~15 pointed
-at the wrong content. You have to read the target line, not just confirm it exists:
+[fact] **An existence check is not enough.** In the 2026-07-27 audit all 97 citations resolved *in
+range* while ~15 pointed at the wrong content. You have to read the target line, not just confirm it
+exists:
 
 ```bash
 # every distinct citation against one file
@@ -1406,9 +1446,10 @@ sed -n '207p' onboard-me/README.md      # expect: Covered: backend service/API �
 sed -n '218p' onboard-me/references/study-page-template.html   # expect: the tag regex
 ```
 
-[inference] A script that walks every `file:line` in `.kt/`, resolves it, and prints the target for
-review would close this loop permanently, and is probably the single highest-value addition to the
-repo. Based on four observed drifts, ~15 latent errors found in one audit, and no checking tool.
+[fact] A checker script for this was written and then deliberately removed on 2026-07-27: it only
+caught citations pointing past the end of a file, which none of the real errors did, and it cost a
+Python dependency plus an execution exception in a skill that advertises "no plugin, no config, no
+runtime". Two lines of `grep` and `sed` do the part that actually worked.
 
 ### 3. The real end-to-end verification — run the skill
 
@@ -1431,7 +1472,7 @@ repo to match what you added, or the change goes untested.
 
 ### 4. Check the study page renders
 
-[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:64-65`):
+[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:75-76`):
 
 ```bash
 start .kt/onboarding.html      # Windows;  macOS: open,  Linux: xdg-open

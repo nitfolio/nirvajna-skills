@@ -1,5 +1,7 @@
 # 06 · Operations
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## Build
 
 [fact] **There is none.** No `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, or `Makefile`

@@ -1,5 +1,7 @@
 # 01 · Overview
 
+*Written against commit `2e94f1b` on 2026-07-27. Every `file:line` below is a line number **at that commit** — check that commit out to verify a claim, or re-run the skill to regenerate the trail against current source.*
+
 ## What this system is
 
 [fact] A public repository of **Claude Code skills**. `README.md:11`: "Skills that make Claude Code
@@ -35,8 +37,14 @@ being executable. No file states it outright.
   description is the only thing that makes a skill trigger", which is why it is written as a list of
   situations rather than a feature summary.
 
-[fact] Secondary, human-facing: `README.md` (repo front door) and `onboard-me/README.md` (skill usage
-docs). Neither is loaded by the agent at runtime.
+[human] Secondary, human-facing, and deliberately split by scope: `README.md` is the **front door for
+a collection** — it describes how skills work here and is written generically (`your-skill-name`)
+because more skills are planned. Per-skill documentation lives in that skill's own README. Neither is
+loaded by the agent at runtime.
+
+[inference] The single-skill framing in this trail is therefore time-limited. A later session will
+find several skills and should classify the repo accordingly. Based on the author's stated plan; the
+repo currently contains one skill.
 
 [fact] A third, new entry point exists for readers rather than agents: the published study page at
 `https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`, linked from the PS at the end of
@@ -53,20 +61,25 @@ nirvajna-skills/
 ├── assets/                           4 PNGs: wordmark + logo, each light/dark
 ├── .kt/                             this trail — committed on purpose, and published
 └── onboard-me/                       the one skill
-    ├── SKILL.md              353 L   always loaded — the method
-    ├── README.md             428 L   human docs — not loaded by the agent
+    ├── SKILL.md              362 L   always loaded — the method
+    ├── README.md             439 L   human docs — not loaded by the agent
     └── references/                   loaded on demand only
         ├── repo-playbooks.md        360 L
         ├── study-page-template.html 376 L
-        └── synthesis.md              65 L
+        └── synthesis.md              76 L
 ```
 
 [fact] Line counts measured with `wc -l` on 2026-07-27 at commit `2e94f1b`. Always-loaded weight is
-353 lines; on-demand weight is 801 lines — a ~1:2.3 split. This is the progressive-disclosure design
+362 lines; on-demand weight is 812 lines — a ~1:2.2 split. This is the progressive-disclosure design
 described at `README.md:136-138`.
 
-[fact] `.gitignore` contains no ignore patterns at all — both lines are comments explaining that
-`.kt/` is committed on purpose as a worked example of the skill's output.
+[human] `.kt/` is committed here as a **showcase, not a recommendation**. The author keeps it in the
+repo so anyone evaluating the skill can see the exact shape of its output before installing it. The
+skill's own guidance is neutral — commit it or gitignore it, either works. Don't read this repo's
+choice as the default.
+
+[fact] `.gitignore` reflects that: no ignore patterns at all, both lines comments explaining that
+`.kt/` is kept on purpose.
 
 [fact] `.nojekyll` is empty (0 lines). Its existence is the whole content: it tells GitHub Pages to
 skip Jekyll, which otherwise refuses to publish any path beginning with a dot — including `.kt/`.

@@ -111,16 +111,15 @@ nirvajna-skills/
 ├── README.md
 ├── LICENSE
 ├── assets/                     ← brand marks used by this README
-└── onboard-me/
-    ├── SKILL.md                ← the skill: name, description, and instructions
-    ├── README.md               ← human-facing usage docs
-    └── references/             ← loaded on demand, only when a run needs them
-        ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
-        ├── synthesis.md              ← how the final onboarding doc gets built
-        └── study-page-template.html  ← the shell for the `onboarding.html` study page
-└── your-skill-2/
-└── your-skill-3/
-...
+├── onboard-me/
+│   ├── SKILL.md                ← the skill: name, description, and instructions
+│   ├── README.md               ← human-facing usage docs
+│   └── references/             ← loaded on demand, only when a run needs them
+│       ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
+│       ├── synthesis.md              ← how the final onboarding doc gets built
+│       └── study-page-template.html  ← the shell for the `onboarding.html` study page
+├── your-skill-2/               ← each new skill is a sibling folder, same shape
+├── your-skill-3/
 └── your-skill-n/
 ```
 

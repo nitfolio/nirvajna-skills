@@ -12,8 +12,9 @@ calls for it. No plugin, no config, no runtime."
 
 ## Stack
 
-[fact] **There is no code.** 12 tracked source files: 6 Markdown/HTML documents, 4 PNGs, `LICENSE`,
-and `.gitignore`. (22 tracked in total once the `.kt/` trail this session produced was committed.)
+[fact] **There is no code.** 13 tracked source files: 6 Markdown/HTML documents, 4 PNGs, `LICENSE`,
+`.gitignore`, and an empty `.nojekyll` (the GitHub Pages marker — see `06-operations.md`).
+(23 tracked in total once the `.kt/` trail this session produced was committed.)
 
 [fact] Absent, each checked individually: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`,
 `Makefile`, `.github/workflows`, `.github/`. There is no build, no test suite, no CI, no lockfile,
@@ -42,18 +43,19 @@ nirvajna-skills/
 ├── README.md                 164 L   repo front door: pitch, skills table, install, layout
 ├── LICENSE                          MIT (README.md:13)
 ├── .gitignore                  2 L   two comment lines, ZERO patterns
+├── .nojekyll                   0 L   GitHub Pages marker — publishes .kt/
 ├── assets/                           4 PNGs: wordmark + logo, each light/dark
 └── onboard-me/                       the one skill
-    ├── SKILL.md              347 L   always loaded — the method
+    ├── SKILL.md              353 L   always loaded — the method
     ├── README.md             426 L   human docs — not loaded by the agent
     └── references/                   loaded on demand only
         ├── repo-playbooks.md        360 L
-        ├── study-page-template.html 368 L
-        └── synthesis.md              64 L
+        ├── study-page-template.html 376 L
+        └── synthesis.md              65 L
 ```
 
-[fact] Line counts measured with `wc -l` on 2026-07-27. Always-loaded weight is 347 lines; on-demand
-weight is 792 lines — a ~1:2.3 split. This is the progressive-disclosure design `README.md:132-134`
+[fact] Line counts measured with `wc -l` on 2026-07-27. Always-loaded weight is 353 lines; on-demand
+weight is 801 lines — a ~1:2.3 split. This is the progressive-disclosure design `README.md:132-134`
 describes.
 
 [fact] `.gitignore` contains no ignore patterns at all — both its lines are comments explaining that

@@ -33,25 +33,25 @@ Getting them confused is the main way a newcomer misreads the repo.
 | **Fog of war** | The metaphor for the map: what's lit vs what's still dark. Keeping it honest is "the skill's whole job". | `SKILL.md:25-28` |
 | **Zone of proximal development** | How the next step is chosen — just beyond current knowledge and reachable from it, not the most interesting thing found. | `SKILL.md:60-63` |
 | **The `.kt/` trail** | The directory of findings written as stages complete, so the work outlives the chat. | `SKILL.md:190-208` |
-| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record of the learning. | `SKILL.md:210-213` |
-| **Deliverable (`08-onboarding.md`)** | The clean reader-facing document, written only at `stop`. | `SKILL.md:212-213` |
-| **`00-progress.md`** | The resumability file — kept current every turn so a fresh session can pick up exactly where the last stopped. | `SKILL.md:220-237` |
+| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record of the learning. | `SKILL.md:216-219` |
+| **Deliverable (`08-onboarding.md`)** | The clean reader-facing document, written only at `stop`. | `SKILL.md:218-219` |
+| **`00-progress.md`** | The resumability file — kept current every turn so a fresh session can pick up exactly where the last stopped. | `SKILL.md:226-243` |
 | **Repo-type playbook** | A per-repo-kind adaptation of the ladder: recognition signals, ladder emphasis, files to read first, must-answer questions, traps. 13 types + a generic fallback. | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop`-time guard that refuses to polish a barely-explored repo into a confident document. | `references/synthesis.md:6-14` |
 | **Confidence filter** | The `stop`-time sort: promote `[fact]`/`[human]`, drop guesses, carry surviving `[unknown]`/`[inference]` into an explicit "Assumptions & things to verify" section. | `references/synthesis.md:16-26` |
-| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:45-64` |
-| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:271-302` |
+| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:46-65` |
+| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:277-308` |
 
 ## The controls
 
-[fact] Ten single words drive a session, listed once at `SKILL.md:252-262` and mirrored for humans at
+[fact] Ten single words drive a session, listed once at `SKILL.md:258-268` and mirrored for humans at
 `onboard-me/README.md:115-126`:
 
 `start` · `continue`/`yes` · `speedrun` · `deeper` · `skip` · `jump to <topic>` · `why` ·
 `summarize` · `pause` · `stop`
 
 [fact] `pause` and `stop` are deliberately different promises — `pause` bookmarks and generates
-nothing; `stop` produces the deliverable (`SKILL.md:304-318`).
+nothing; `stop` produces the deliverable (`SKILL.md:310-324`).
 
 ## How the terms relate
 

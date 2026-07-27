@@ -61,7 +61,7 @@ because it is the "nothing fits" case.
 ## How to verify it
 
 There is no test command. [fact] Nothing in the repo builds, tests, or lints — so verification is a
-consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:290-292`: a speedrun
+consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:296-298`: a speedrun
 never executes commands); they are for you.
 
 ### 1. Structural checks (seconds, from the repo root)
@@ -99,7 +99,7 @@ cp -r onboard-me <some-scratch-repo>/.claude/skills/
 
 Then confirm, in order: it asks the goal question once (`SKILL.md:30-45`), it classifies the repo and
 says which playbook it loaded (`SKILL.md:182-188`), it announces `.kt/` before creating it
-(`SKILL.md:244-245`), and — for a full check — `stop` produces both `08-onboarding.md` and
+(`SKILL.md:250-251`), and — for a full check — `stop` produces both `08-onboarding.md` and
 `onboarding.html`.
 
 [fact] A new playbook is only exercised if the scratch repo actually *is* that type. Pick the test
@@ -107,7 +107,7 @@ repo to match what you added, or the change goes untested.
 
 ### 3. Check the study page renders
 
-[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:63-64`) — open it
+[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:64-65`) — open it
 directly:
 
 ```bash

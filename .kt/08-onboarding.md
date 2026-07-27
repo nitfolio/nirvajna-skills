@@ -11,9 +11,10 @@ the working trail with the underlying evidence is in `.kt/00-progress.md` throug
 a guided knowledge-transfer skill that walks an engineer through an unfamiliar codebase one stage at
 a time, tagging every claim with its evidence.
 
-The thing to internalise before reading anything: **there is no code here.** Twelve tracked source
-files — six Markdown/HTML documents, four PNGs, `LICENSE`, and `.gitignore`. No build, no tests, no
-CI, no dependencies, no config. (The repo now also carries this KT trail in `.kt/`.)
+The thing to internalise before reading anything: **there is no code here.** Thirteen tracked source
+files — six Markdown/HTML documents, four PNGs, `LICENSE`, `.gitignore`, and an empty `.nojekyll`.
+No build, no tests, no CI, no dependencies, no config. (The repo now also carries this KT trail in
+`.kt/`, published as a static site via GitHub Pages.)
 A skill is "a self-contained folder — a `SKILL.md` plus optional `references/`, `scripts/`, or
 `assets/` — that Claude Code loads when the situation calls for it. No plugin, no config, no runtime"
 (`README.md:27-29`). The repo is inert text; behaviour exists only when an agent loads it.
@@ -29,7 +30,7 @@ tags, or releases.
 
 ## 2. Architecture map
 
-The organising principle is **progressive disclosure**: 347 lines always loaded, 792 lines loaded
+The organising principle is **progressive disclosure**: 353 lines always loaded, 801 lines loaded
 only when a run reaches the stage that needs them.
 
 ```
@@ -37,14 +38,15 @@ nirvajna-skills/
 ├── README.md          164 L   front door — pitch, install, layout      (no runtime role)
 ├── LICENSE                    MIT                                       (no runtime role)
 ├── .gitignore           2 L   two comments, ZERO patterns               (no runtime role)
+├── .nojekyll            0 L   GitHub Pages marker — publishes .kt/      (no runtime role)
 ├── assets/                    4 PNGs, wordmark + logo, light/dark       (no runtime role)
 └── onboard-me/                THE PRODUCT
-    ├── SKILL.md       347 L   ── ALWAYS LOADED. The method.
+    ├── SKILL.md       353 L   ── ALWAYS LOADED. The method.
     ├── README.md      426 L   ── humans only; nothing loads it at runtime
     └── references/            ── ON DEMAND
         ├── repo-playbooks.md         360 L
-        ├── synthesis.md               64 L
-        └── study-page-template.html  368 L
+        ├── synthesis.md               65 L
+        └── study-page-template.html  376 L
 ```
 
 Modules "talk" through **a prose sentence naming a file path** — that is the entire dispatch
@@ -111,14 +113,14 @@ Two vocabularies overlap. Confusing them is the main way a newcomer misreads the
 | **Evidence tags** | `[fact]` (cited) · `[inference]` (reasoned, unconfirmed) · `[unknown]` (couldn't determine) · `[human]` (the engineer said so — strongest) | `SKILL.md:74-82` |
 | **Fog of war** | The map of what's lit vs still dark; keeping it honest is "the skill's whole job" | `SKILL.md:25-28` |
 | **The `.kt/` trail** | Findings written as stages complete, so work outlives the chat | `SKILL.md:190-208` |
-| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record | `SKILL.md:210-213` |
-| **Deliverable (`08`)** | The clean reader-facing document, written only at `stop` | `SKILL.md:212-213` |
+| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record | `SKILL.md:216-219` |
+| **Deliverable (`08`)** | The clean reader-facing document, written only at `stop` | `SKILL.md:218-219` |
 | **Repo-type playbook** | Per-repo-kind adaptation of the ladder; 13 types + generic fallback | `references/repo-playbooks.md` |
 | **Coverage check** | The `stop` guard against polishing a barely-explored repo | `synthesis.md:6-14` |
 | **Confidence filter** | Promote `[fact]`/`[human]`, drop guesses, carry the rest into an explicit section | `synthesis.md:16-26` |
-| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:271-302` |
+| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:277-308` |
 
-Ten single words drive a session (`SKILL.md:252-262`): `start` · `continue` · `speedrun` · `deeper` ·
+Ten single words drive a session (`SKILL.md:258-268`): `start` · `continue` · `speedrun` · `deeper` ·
 `skip` · `jump to <topic>` · `why` · `summarize` · `pause` · `stop`. `pause` and `stop` are different
 promises — `pause` bookmarks and generates nothing; `stop` produces the deliverable.
 
@@ -138,7 +140,7 @@ mechanism.**
 | 2 | The `description` matches what the user says — or `/onboard-me` bypasses matching | `SKILL.md:3-10`; `README.md:91` |
 | 3 | **One** goal question, before any exploration; skipped if the opening message states the goal, never blocking if unanswered | `SKILL.md:30-45` |
 | 4 | Classify the repo, then read **one** playbook | `SKILL.md:182-188`; `repo-playbooks.md:3-6` |
-| 5 | Announce `.kt/` *before* creating it | `SKILL.md:244-245` |
+| 5 | Announce `.kt/` *before* creating it | `SKILL.md:250-251` |
 | 6 | Core loop, one stage per turn, gated on the stage's completion criterion | `SKILL.md:52-58`, `:160-180` |
 
 Exit: `pause` (bookmark, nothing generated) or `stop` (Flow B).
@@ -150,13 +152,13 @@ Manual install alternative: `cp -r onboard-me ~/.claude/skills/` — **the whole
 
 | # | Waypoint | Where |
 | --- | --- | --- |
-| 1 | Read `synthesis.md` before writing a word | `SKILL.md:313-318` |
+| 1 | Read `synthesis.md` before writing a word | `SKILL.md:319-324` |
 | 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
 | 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
-| 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-40` |
-| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
+| 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-41` |
+| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:52-59`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
 | 6 | Browser render: collect slots `:311-314` → group and build cards `:321-338` → markdown parser `:208-307` → colour tags `:218` → copy buttons `:334`, `:344-345` → scroll-spy `:358` → live filter `:365` | `study-page-template.html` |
-| 7 | Announce both outputs; the HTML opens straight in a browser | `synthesis.md:63-64` |
+| 7 | Announce both outputs; the HTML opens straight in a browser | `synthesis.md:64-65` |
 
 ### The correction flow — short, and the most important
 

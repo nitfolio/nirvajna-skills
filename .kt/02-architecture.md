@@ -20,6 +20,7 @@ Every top-level entry is accounted for — none left unexplored.
 | `assets/` | 4 PNGs (wordmark + logo, light/dark each) | None |
 | `LICENSE` | MIT | None |
 | `.gitignore` | Two comment lines, zero patterns | None |
+| `.nojekyll` | Empty GitHub Pages marker — without it Pages skips `.kt/` | None |
 
 [fact] `.gitignore` ignores nothing. Both lines are a comment explaining that `.kt/` is committed on
 purpose. Verified: the file is 2 lines and neither is a pattern.
@@ -28,15 +29,15 @@ purpose. Verified: the file is 2 lines and neither is a pattern.
 
 ```
 onboard-me/
-├── SKILL.md          347 L  ── ALWAYS LOADED. The method.
+├── SKILL.md          353 L  ── ALWAYS LOADED. The method.
 ├── README.md         426 L  ── humans only; no runtime edge points at it
 └── references/              ── ON DEMAND
     ├── repo-playbooks.md         360 L
-    ├── synthesis.md               64 L
-    └── study-page-template.html  368 L
+    ├── synthesis.md               65 L
+    └── study-page-template.html  376 L
 ```
 
-[fact] 347 lines always loaded vs 792 lines on demand — the heavy 70% of the skill stays out of
+[fact] 353 lines always loaded vs 801 lines on demand — the heavy 69% of the skill stays out of
 context until a run reaches the stage that needs it.
 
 ## How the pieces talk
@@ -66,8 +67,8 @@ Every edge, enumerated:
 ```
 
 - [fact] `SKILL.md:185` → `references/repo-playbooks.md`, during Stage 1 Orientation.
-- [fact] `SKILL.md:297` and `SKILL.md:315` → `references/synthesis.md`, at `stop`/end of speedrun.
-- [fact] `synthesis.md:51` → `references/study-page-template.html`, the only second-hop edge.
+- [fact] `SKILL.md:303` and `SKILL.md:321` → `references/synthesis.md`, at `stop`/end of speedrun.
+- [fact] `synthesis.md:52` → `references/study-page-template.html`, the only second-hop edge.
 - [fact] All edges are one-way and originate in `SKILL.md`. No reference file points back.
 
 ## Two couplings that are invisible from either side
@@ -95,7 +96,7 @@ that would catch it.
 ```
 
 Any slot still containing its `<!-- PASTE … -->` placeholder is dropped at render time. So
-`synthesis.md:56-57`'s instruction to delete slots for missing files is belt-and-braces, not
+`synthesis.md:57-58`'s instruction to delete slots for missing files is belt-and-braces, not
 load-bearing — a partial KT degrades gracefully either way.
 
 ## The asset path split

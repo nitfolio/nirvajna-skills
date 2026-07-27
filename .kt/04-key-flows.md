@@ -42,30 +42,30 @@ during Orientation, then read `references/repo-playbooks.md` and follow **one** 
 [fact] `repo-playbooks.md:3-6` reinforces it: follow the dominant type, don't read all of them; if
 the repo is a mix, name the pieces and make the rest `jump to` targets.
 
-**Waypoint 5. Announce the trail, then write it.** [fact] `SKILL.md:244-245` — tell the human `.kt/`
+**Waypoint 5. Announce the trail, then write it.** [fact] `SKILL.md:250-251` — tell the human `.kt/`
 is being created *before* creating it, and mention they may want to gitignore it.
 
 **Waypoint 6. Loop.** [fact] `SKILL.md:52-58` — DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM,
 one stage per turn, then stop and wait. [fact] The stage may only be called done when its completion
 criterion (`SKILL.md:160-180`) is met.
 
-Exit: the human says `pause` (bookmark, no deliverable — `SKILL.md:308-311`) or `stop` (Flow B).
+Exit: the human says `pause` (bookmark, no deliverable — `SKILL.md:314-317`) or `stop` (Flow B).
 
 ### The speedrun variant
 
-[fact] `SKILL.md:271-302`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
+[fact] `SKILL.md:277-308`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
 load-bearing:
 
-- [fact] `:290-292` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
+- [fact] `:296-298` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
   have approved running a build, test, or script, so in a speedrun you never run them."
-- [fact] `:293-295` — genuine forks still stop the run (monorepo needing scoping, a destructive
+- [fact] `:299-301` — genuine forks still stop the run (monorepo needing scoping, a destructive
   action, evidence contradicting the stated goal).
 
 ---
 
 ## Flow B — `stop` → two artifacts → rendered page
 
-**Waypoint 1.** [fact] `SKILL.md:313-318` — before writing a word, read `references/synthesis.md`.
+**Waypoint 1.** [fact] `SKILL.md:319-324` — before writing a word, read `references/synthesis.md`.
 
 **Waypoint 2. Coverage check.** [fact] `synthesis.md:6-14`. If only a couple of stages met their
 criteria, do **not** silently generate a polished document — it "manufactures exactly the artifact
@@ -81,12 +81,12 @@ here." Offer three options: synthesize anyway, keep exploring, or pause.
 
 [fact] `:25-26`: "Never launder an inference into confident prose by dropping its tag."
 
-**Waypoint 4. Write `08-onboarding.md`.** [fact] Six-part shape at `synthesis.md:33-40`: what this
+**Waypoint 4. Write `08-onboarding.md`.** [fact] Six-part shape at `synthesis.md:33-41`: what this
 system is · architecture map · domain glossary · one or two key flows · your first change ·
-assumptions & things to verify. [fact] `:42-43` sets the acceptance test — readable start to finish
+assumptions & things to verify. [fact] `:43-44` sets the acceptance test — readable start to finish
 by someone who never ran the skill and has no access to the chat.
 
-**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:51-58`, four steps:
+**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:52-59`, four steps:
 
 1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
 2. Paste each file's **raw markdown verbatim** into its slot — `08` fills the `guide` slot, `00`–`07`
@@ -115,7 +115,7 @@ by someone who never ran the skill and has no access to the chat.
 | Scroll-spy highlighting the active nav item | `:358` |
 | Live filter over files and headings | `:365` |
 
-**Waypoint 7.** [fact] `synthesis.md:63-64` — announce both outputs by name and mention the HTML
+**Waypoint 7.** [fact] `synthesis.md:64-65` — announce both outputs by name and mention the HTML
 opens straight in a browser, no server needed.
 
 ---

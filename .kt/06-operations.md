@@ -38,9 +38,27 @@ another push.
 [fact] The `.skill` bundle is *not* a build output of this repo — no such file is tracked, and
 `9a77940` deliberately removed the one that used to be. It is packaged ad hoc when someone needs it.
 
+## GitHub Pages
+
+[fact] The repo also publishes itself as a static site, enabled 2026-07-27 from `main` at the repo
+root: `https://nitfolio.github.io/nirvajna-skills/`. Its only purpose is to serve the study page at
+`https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html`, which `onboard-me/README.md` links
+from its PS.
+
+[fact] This requires the empty `.nojekyll` file at the repo root. Jekyll skips paths beginning with a
+dot, so without it `.kt/` would never be published. Verified: with `.nojekyll` present, Pages serves
+`.kt/onboarding.html` as `200 text/html` and `.kt/08-onboarding.md` as `200 text/markdown`.
+
+[fact] The site root returns **404** — there is no `index.html`. Only the deep link is advertised.
+
+[fact] Blast radius: deleting `.nojekyll` silently unpublishes `.kt/`, breaking the README link with
+no error anywhere. It is a one-line file with no obvious purpose, which makes it exactly the kind of
+thing a tidy-up deletes.
+
 ## Configuration
 
-[fact] **There is none.** No config file of any kind is tracked.
+[fact] Almost none. The only tracked config is the empty `.nojekyll` marker described above — no
+build config, no linter config, no CI config, no application config.
 
 [fact] `.claude/settings.local.json` exists on this machine but is untracked, has one top-level key
 (`permissions`), and is ignored by the *user's global* gitignore (`~/.config/git/ignore:1`) rather

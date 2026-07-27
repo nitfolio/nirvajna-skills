@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding — nirvajna-skills</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161922; --panel-2:#1c2029; --line:#2a2f3a;
+    --ink:#e7e9ee; --ink-dim:#a4acbd; --ink-faint:#6b7385;
+    --accent:#7aa2ff; --accent-soft:#243049; --good:#5ecb8f;
+    --code-bg:#12151c; --tag-fact:#5ecb8f; --tag-inf:#e3b341; --tag-unk:#ff8a8a; --tag-hum:#7aa2ff;
+    --radius:10px; --maxw:820px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f6f7f9; --panel:#ffffff; --panel-2:#f0f2f5; --line:#e2e5ea;
+      --ink:#1c2029; --ink-dim:#4a5262; --ink-faint:#858d9d;
+      --accent:#2b5cff; --accent-soft:#e6ecff; --good:#1f9d57;
+      --code-bg:#f2f4f8; --tag-fact:#1f9d57; --tag-inf:#a9791f; --tag-unk:#c0392b; --tag-hum:#2b5cff;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .layout{display:grid; grid-template-columns:280px 1fr; min-height:100vh}
+
+  /* Sidebar */
+  .side{
+    position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+    background:var(--panel); border-right:1px solid var(--line); padding:22px 16px;
+  }
+  .side h1{font-size:15px; margin:0 0 2px; letter-spacing:.2px}
+  .side .sub{color:var(--ink-faint); font-size:12px; margin-bottom:16px}
+  .search{width:100%; padding:9px 11px; margin-bottom:16px; border:1px solid var(--line);
+    background:var(--panel-2); color:var(--ink); border-radius:8px; font-size:13px; outline:none}
+  .search:focus{border-color:var(--accent)}
+  .nav-group-label{font-size:11px; text-transform:uppercase; letter-spacing:.7px;
+    color:var(--ink-faint); margin:16px 6px 6px}
+  .nav a{display:block; padding:7px 10px; border-radius:8px; color:var(--ink-dim);
+    font-size:13.5px; margin-bottom:1px}
+  .nav a:hover{background:var(--panel-2); color:var(--ink); text-decoration:none}
+  .nav a.active{background:var(--accent-soft); color:var(--ink)}
+  .nav a.feature{color:var(--ink); font-weight:600}
+
+  /* Main */
+  .main{padding:40px 40px 120px}
+  .wrap{max-width:var(--maxw); margin:0 auto}
+  .doc-head{margin-bottom:30px}
+  .doc-head h1{font-size:26px; margin:0 0 6px}
+  .doc-head p{color:var(--ink-dim); margin:0}
+
+  section.file{margin:0 0 14px; border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--panel); overflow:hidden}
+  section.file.feature{border-color:var(--accent-soft)}
+  .file-bar{display:flex; align-items:center; gap:10px; padding:12px 16px;
+    background:var(--panel-2); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:2}
+  .file-bar .name{font-weight:600; font-size:14px; flex:1}
+  .file-bar .badge{font-size:10.5px; text-transform:uppercase; letter-spacing:.6px;
+    color:var(--ink-faint); border:1px solid var(--line); padding:2px 7px; border-radius:20px}
+  .file-body{padding:6px 22px 20px}
+
+  .copy-btn{font:inherit; font-size:12px; cursor:pointer; color:var(--ink-dim);
+    background:transparent; border:1px solid var(--line); padding:4px 10px; border-radius:7px}
+  .copy-btn:hover{color:var(--ink); border-color:var(--accent)}
+  .copy-btn.done{color:var(--good); border-color:var(--good)}
+
+  /* Rendered markdown */
+  .md h1,.md h2,.md h3,.md h4{line-height:1.3; margin:1.4em 0 .5em}
+  .md h1{font-size:22px} .md h2{font-size:19px; padding-bottom:.25em; border-bottom:1px solid var(--line)}
+  .md h3{font-size:16px} .md h4{font-size:14px; color:var(--ink-dim)}
+  .md p{margin:.7em 0}
+  .md ul,.md ol{margin:.6em 0; padding-left:1.4em}
+  .md li{margin:.2em 0}
+  .md blockquote{margin:.8em 0; padding:.2em 14px; border-left:3px solid var(--accent-soft);
+    color:var(--ink-dim)}
+  .md hr{border:0; border-top:1px solid var(--line); margin:1.4em 0}
+  .md a{word-break:break-word}
+  .md code{background:var(--code-bg); padding:.12em .4em; border-radius:5px; font-size:.88em;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .md table{border-collapse:collapse; width:100%; margin:.9em 0; font-size:14px; display:block; overflow-x:auto}
+  .md th,.md td{border:1px solid var(--line); padding:7px 11px; text-align:left; vertical-align:top}
+  .md th{background:var(--panel-2)}
+
+  .codeblock{position:relative; margin:1em 0}
+  .codeblock pre{background:var(--code-bg); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; overflow-x:auto; margin:0}
+  .codeblock pre code{background:none; padding:0; font-size:13px; line-height:1.55}
+  .codeblock .lang{position:absolute; top:8px; right:64px; font-size:11px; color:var(--ink-faint);
+    text-transform:uppercase; letter-spacing:.5px}
+  .codeblock .copy-btn{position:absolute; top:6px; right:8px; padding:3px 9px; background:var(--panel)}
+
+  /* Evidence tags: [fact] [inference] [unknown] [human] */
+  .tag{font-weight:600}
+  .tag-fact{color:var(--tag-fact)} .tag-inference{color:var(--tag-inf)}
+  .tag-unknown{color:var(--tag-unk)} .tag-human{color:var(--tag-hum)}
+
+  .empty{color:var(--ink-faint); padding:60px 0; text-align:center}
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr}
+    .side{position:static; height:auto; border-right:0; border-bottom:1px solid var(--line)}
+    .main{padding:24px 18px 100px}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="side">
+    <h1><span class="kt-repo-name">nirvajna-skills</span></h1>
+    <div class="sub">Onboarding &middot; KT study page</div>
+    <input class="search" id="search" type="search" placeholder="Filter files & headings…" autocomplete="off">
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="main">
+    <div class="wrap">
+      <div class="doc-head">
+        <h1>Codebase onboarding</h1>
+        <p>The curated guide is up top. Below it is the working trail — the evidence behind every claim.
+           Use the copy button on any card to grab its original markdown.</p>
+      </div>
+      <div id="content"></div>
+      <div class="empty" id="empty" style="display:none">No files matched your filter.</div>
+    </div>
+  </main>
+</div>
+
+<!-- ========================================================================
+     CONTENT SLOTS — paste each KT file's RAW markdown between the tags.
+     data-group is "guide" for 08 (featured) or "trail" for 00–07.
+     Delete any block whose file was not created.
+     ===================================================================== -->
+
+<script type="text/markdown" data-id="08-onboarding" data-label="08 · Onboarding guide" data-group="guide">
+# Onboarding — `nirvajna-skills`
+
+*Produced by a full-ladder KT session on 2026-07-27. All seven stages met their completion criteria;
+the working trail with the underlying evidence is in `.kt/00-progress.md` through `07-safe-contribution.md`.*
+
+---
+
+## 1. What this system is
+
+`nirvajna-skills` is a public repository of **Claude Code skills**. It ships exactly one: `onboard-me`,
+a guided knowledge-transfer skill that walks an engineer through an unfamiliar codebase one stage at
+a time, tagging every claim with its evidence.
+
+The thing to internalise before reading anything: **there is no code here.** Twelve tracked files —
+six Markdown/HTML documents and four PNGs. No build, no tests, no CI, no dependencies, no config.
+A skill is "a self-contained folder — a `SKILL.md` plus optional `references/`, `scripts/`, or
+`assets/` — that Claude Code loads when the situation calls for it. No plugin, no config, no runtime"
+(`README.md:27-29`). The repo is inert text; behaviour exists only when an agent loads it.
+
+So the usual questions get unusual answers. *Architecture* means what gets loaded into context and
+when. *Key flows* are paths through documents. *Operations* means that build, CI, and config are all
+genuinely empty — and that `main` is production.
+
+Single author, 21 commits, 2026-07-08 to 2026-07-27, public on GitHub with no stars, forks, issues,
+tags, or releases.
+
+---
+
+## 2. Architecture map
+
+The organising principle is **progressive disclosure**: 347 lines always loaded, 792 lines loaded
+only when a run reaches the stage that needs them.
+
+```
+nirvajna-skills/
+├── README.md          164 L   front door — pitch, install, layout      (no runtime role)
+├── LICENSE                    MIT                                       (no runtime role)
+├── .gitignore           2 L   two comments, ZERO patterns               (no runtime role)
+├── assets/                    4 PNGs, wordmark + logo, light/dark       (no runtime role)
+└── onboard-me/                THE PRODUCT
+    ├── SKILL.md       347 L   ── ALWAYS LOADED. The method.
+    ├── README.md      411 L   ── humans only; nothing loads it at runtime
+    └── references/            ── ON DEMAND
+        ├── repo-playbooks.md         360 L
+        ├── synthesis.md               64 L
+        └── study-page-template.html  368 L
+```
+
+Modules "talk" through **a prose sentence naming a file path** — that is the entire dispatch
+mechanism. There is no import graph, no config, no registry. Four edges, all originating in
+`SKILL.md`, none pointing back:
+
+```
+                      SKILL.md
+                (frontmatter = trigger)
+                          |
+        +-----------------+------------------+
+        |                                    |
+   :185 | at Orientation                :297 | at `stop`
+        |                               :315 |
+        v                                    v
+ repo-playbooks.md                     synthesis.md
+ (13 types + fallback)                       |
+                                        :51  | "copy the template"
+                                             v
+                                   study-page-template.html
+                                             |
+                                             v
+                                     .kt/onboarding.html
+```
+
+**Two couplings nothing enforces** — these are the interesting part of this architecture:
+
+1. **The HTML template is hard-coded to the evidence vocabulary.**
+   `study-page-template.html:215` regex-matches `[fact|inference|unknown|human]` to colour the tags.
+   Those four words are defined at `SKILL.md:74-82`. Rename one and the study page silently stops
+   highlighting it — no error, and no build step that would catch it.
+2. **Unfilled slots hide themselves.** `study-page-template.html:305` drops any slot still containing
+   its `<!-- PASTE … -->` comment, so a partial KT degrades gracefully.
+
+One deliberate asymmetry: the root README references `assets/` by relative path, the skill README by
+absolute `raw.githubusercontent.com` URL — because the `onboard-me/` folder is designed to be copied
+*out* of the repo, where a relative path would resolve to nothing.
+
+---
+
+## 3. Domain glossary
+
+Two vocabularies overlap. Confusing them is the main way a newcomer misreads the repo.
+
+**Platform terms — Claude Code defines these, and they constrain what the repo may look like:**
+
+| Term | Meaning | Home |
+| --- | --- | --- |
+| **Skill** | Self-contained folder Claude Code loads on demand | `README.md:27-29` |
+| **`SKILL.md`** | The one required file; loaded whole when the skill triggers | `onboard-me/SKILL.md` |
+| **`name`** | Skill identifier — must equal the containing directory name | `SKILL.md:2` |
+| **`description` / trigger surface** | The *only* thing deciding whether a skill activates | `SKILL.md:3-10`, rule at `README.md:128-130` |
+| **`references/`** | Files loaded lazily, only when a stage needs them | `onboard-me/references/` |
+| **Progressive disclosure** | Keep `SKILL.md` lean; push heavy material into `references/` | `README.md:132-134` |
+
+**Method terms — this skill invents these, and they constrain what a session does:**
+
+| Term | Meaning | Home |
+| --- | --- | --- |
+| **KT** | Knowledge transfer: "I know nothing" → "I can safely make a change" | `SKILL.md:22-23` |
+| **The core loop** | DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM, once per turn | `SKILL.md:52-58` |
+| **The ladder** | Seven stages, Orientation through Safe contribution | `SKILL.md:160-180` |
+| **Completion criterion** | The checkable condition a stage must meet before being called done | `SKILL.md:155-158` |
+| **Evidence tags** | `[fact]` (cited) · `[inference]` (reasoned, unconfirmed) · `[unknown]` (couldn't determine) · `[human]` (the engineer said so — strongest) | `SKILL.md:74-82` |
+| **Fog of war** | The map of what's lit vs still dark; keeping it honest is "the skill's whole job" | `SKILL.md:25-28` |
+| **The `.kt/` trail** | Findings written as stages complete, so work outlives the chat | `SKILL.md:190-208` |
+| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record | `SKILL.md:210-213` |
+| **Deliverable (`08`)** | The clean reader-facing document, written only at `stop` | `SKILL.md:212-213` |
+| **Repo-type playbook** | Per-repo-kind adaptation of the ladder; 13 types + generic fallback | `references/repo-playbooks.md` |
+| **Coverage check** | The `stop` guard against polishing a barely-explored repo | `synthesis.md:6-14` |
+| **Confidence filter** | Promote `[fact]`/`[human]`, drop guesses, carry the rest into an explicit section | `synthesis.md:16-26` |
+| **Speedrun** | Standing `continue`: whole ladder, no gate, *stricter* read-only | `SKILL.md:271-302` |
+
+Ten single words drive a session (`SKILL.md:252-262`): `start` · `continue` · `speedrun` · `deeper` ·
+`skip` · `jump to <topic>` · `why` · `summarize` · `pause` · `stop`. `pause` and `stop` are different
+promises — `pause` bookmarks and generates nothing; `stop` produces the deliverable.
+
+The dependency runs one way: tags feed the trail, the trail feeds the filter, the filter feeds the
+deliverable. Nothing downstream can promote a claim the tag didn't license. **That is the whole trust
+mechanism.**
+
+---
+
+## 4. Key flows
+
+### Flow A — install → trigger → first stage
+
+| # | Waypoint | Where |
+| --- | --- | --- |
+| 1 | `npx skills@latest add nitfolio/nirvajna-skills` — one canonical copy in `.agents/skills/`, symlinked into `.claude/skills/` and other agent dirs | `README.md:61`, `:64-67` |
+| 2 | The `description` matches what the user says — or `/onboard-me` bypasses matching | `SKILL.md:3-10`; `README.md:91` |
+| 3 | **One** goal question, before any exploration; skipped if the opening message states the goal, never blocking if unanswered | `SKILL.md:30-45` |
+| 4 | Classify the repo, then read **one** playbook | `SKILL.md:182-188`; `repo-playbooks.md:3-6` |
+| 5 | Announce `.kt/` *before* creating it | `SKILL.md:244-245` |
+| 6 | Core loop, one stage per turn, gated on the stage's completion criterion | `SKILL.md:52-58`, `:160-180` |
+
+Exit: `pause` (bookmark, nothing generated) or `stop` (Flow B).
+
+Manual install alternative: `cp -r onboard-me ~/.claude/skills/` — **the whole folder, not just
+`SKILL.md`** (`README.md:74-81`), because `references/` must travel with it.
+
+### Flow B — `stop` → two artifacts → rendered page
+
+| # | Waypoint | Where |
+| --- | --- | --- |
+| 1 | Read `synthesis.md` before writing a word | `SKILL.md:313-318` |
+| 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
+| 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
+| 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-40` |
+| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:170-204`, placeholders at `:36` and `:146` |
+| 6 | Browser render: collect slots `:303-305` → group and build cards `:311-330` → markdown parser `:206-298` → colour tags `:215` → copy buttons `:328`, `:336-337` → scroll-spy `:350` → live filter `:357` | `study-page-template.html` |
+| 7 | Announce both outputs; the HTML opens straight in a browser | `synthesis.md:63-64` |
+
+### The correction flow — short, and the most important
+
+When the human corrects a claim, three things happen in the *same* turn (`SKILL.md:87-90`): retag it
+as `[human]`, fix the affected `.kt/` file, and ask what else the correction invalidates. The stated
+reason: "A mental model built on a stale assumption gets more wrong the longer it stands."
+
+---
+
+## 5. Your first change
+
+**Add a repo-type playbook.** The repo asks for exactly this at `onboard-me/README.md:341-343`.
+
+It is the safest real change because a new playbook section is inert until the Orientation classifier
+selects it, and `SKILL.md:186-188` names the covered categories generically rather than by number —
+so adding one cannot break an existing run. It also touches neither of the two silent couplings.
+
+**Work in** `onboard-me/references/repo-playbooks.md`. Copy an existing playbook (e.g. `:130-152`)
+and keep all five parts: `Recognize it` · `Ladder emphasis` · `Read first` · `The KT must answer` ·
+`Traps`. Keep the generic fallback last — `:347` is numbered 14 because it is the "nothing fits" case.
+
+**Then update six hand-synced places**, because nothing keeps them in agreement:
+
+| File | Line |
+| --- | --- |
+| `onboard-me/references/repo-playbooks.md` | `13-28` (contents list) |
+| `README.md` | `48` |
+| `README.md` | `118` |
+| `onboard-me/README.md` | `14` (badge URL) |
+| `onboard-me/README.md` | `190-193` |
+| `onboard-me/README.md` | `359` |
+
+### How to verify
+
+There is no test command — nothing in this repo builds, tests, or lints. Verification is a
+consistency sweep plus one real run.
+
+```bash
+# 1 — structural checks, from the repo root
+head -3 onboard-me/SKILL.md                                    # expect: name: onboard-me
+grep -c '^## [0-9]' onboard-me/references/repo-playbooks.md    # expect: 14 (13 + fallback)
+grep -rn 'repo-type playbooks\|repo types\|Repo_playbooks-' --include=*.md .
+grep -c 'data-id=' onboard-me/references/study-page-template.html   # expect: 9
+
+# the silent coupling — these two lists must name the same four tags
+grep -n '^- \*\*\[' onboard-me/SKILL.md
+grep -n 'fact|inference|unknown|human' onboard-me/references/study-page-template.html
+```
+
+```bash
+# 2 — the real end-to-end test: run the skill
+cp -r onboard-me <some-scratch-repo>/.claude/skills/
+# then in Claude Code inside that repo:
+/onboard-me
+```
+
+Confirm in order: it asks the goal question once, names the playbook it loaded, announces `.kt/`
+before creating it, and on `stop` produces both `08-onboarding.md` and `onboarding.html`. A new
+playbook is only exercised if the scratch repo actually *is* that type — pick the test repo to match,
+or the change goes untested.
+
+```bash
+# 3 — check the study page renders (self-contained, no server)
+start .kt/onboarding.html      # macOS: open   ·   Linux: xdg-open
+```
+
+**Commit convention:** imperative, sentence-case subject, no prefix — "Add a Rust workspace playbook".
+Single branch `main`.
+
+### What to avoid on a first change
+
+- **Editing `SKILL.md:3-10`, the `description`.** Sole trigger surface; failure mode is a skill that
+  silently stops firing.
+- **Renaming anything.** Three things must move together — the directory, `SKILL.md:2`'s `name`, and
+  every installed copy. Installed junctions/symlinks break invisibly and are undocumented in the repo.
+- **Renaming a `.kt/` file or an evidence tag.** Both drift silently against the HTML template.
+
+### Know before you push
+
+**`main` is production and it deploys on push.** The install command carries no ref and every asset
+URL is pinned to `/main/`. With 0 tags and 0 releases there is nothing to roll back to, and no CI
+stands between a commit and every consumer.
+
+Other easy starting points: the wordmark width mismatch (`README.md:6` says `640`,
+`onboard-me/README.md:6` says `565`), prose in `references/`, or an entirely new skill folder
+(`README.md:140-147`).
+
+---
+
+## 6. Assumptions & things to verify with a human
+
+Everything above is drawn from `[fact]` claims with citations. These are not.
+
+### Inferences — reasoned, not confirmed
+
+- **The Library/SDK classification is soft.** It fits the shape (no server, explicit public surface,
+  installed into other projects) but none of the signals (no registry metadata, `examples/`,
+  CHANGELOG, or tests). The "library" is a prompt. Stages 4–6 leaned on the generic fallback's
+  anchors instead.
+- **The runtime is Claude Code itself.** Based on `README.md:27-29` plus nothing in the tree being
+  executable. No file states it outright.
+- **The relative-vs-absolute asset path split is deliberate**, because the skill folder is designed to
+  be copied out of the repo. No comment says so.
+- **Prose edits to `SKILL.md` fail soft** — the file is interpreted by a model, not parsed, so wording
+  changes shift behaviour by degrees. The dangerous edits are structural. Based on there being no
+  parser, schema, or test anywhere.
+- **Bus factor 1** — 21 commits, one author, no CI, no reviewers.
+- **`[human]` outranks `[fact]`** in the confidence filter. Implied by the tag definitions and the
+  promotion rule; never stated explicitly.
+
+### Unknowns — genuinely unresolved
+
+- **Does Claude Code *enforce* `name:` == directory name, or merely convention it?** A platform
+  behaviour; needs the Claude Code docs, not this repo.
+- **Has `npx skills@latest add nitfolio/nirvajna-skills` ever run successfully against this repo?**
+  The package is real (npm `skills` v1.5.20) and the command is well-formed, but nothing records a
+  verified install.
+- **What does "nirvajna" mean, and why was it chosen?** It appears only in the repo name and URLs —
+  never in a document body. Ask the author.
+- **Does branch protection or any GitHub-side setting exist?** Not visible from the repo.
+- **How does the author package a `.skill` bundle?** No script is tracked, and no release asset has
+  ever existed here.
+- **PRs or issues first?** `README.md:140` welcomes both; there is no `CONTRIBUTING.md`, no PR
+  template, and no PR history to infer a convention from.
+
+### One caveat about this document
+
+This KT ran as a `speedrun` — the full ladder with no per-turn human confirmation. Read-only was
+enforced *more* strictly as a result: **no build, test, or script was executed at any point**, so
+every command in section 5 is described rather than demonstrated. Nothing here has been checked by
+running it.
+</script>
+
+<script type="text/markdown" data-id="00-progress" data-label="00 · Progress" data-group="trail">
+# KT progress
+
+Goal: regenerate the `.kt/` trail from scratch as the worked example of this skill's own output ·
+Repo type: **Library / SDK** (playbook 5) — soft match, see note below
+Mode: `speedrun` (full ladder, no per-turn gate) · Session date: 2026-07-27
+Status: **complete** — all 7 stages met their completion criteria; `08` + study page produced.
+
+## Stages
+
+- [x] 1. Orientation — purpose, stack, entry points, repo type, all cited → `01-overview.md`
+- [x] 2. Architecture — all 5 top-level modules explained, all 4 load edges traced → `02-architecture.md`
+- [x] 3. Domain — every term has a meaning, a home file, and its relationships → `03-domain-glossary.md`
+- [x] 4. Key flows — 2 flows traced end to end with `file:line` waypoints → `04-key-flows.md`
+- [x] 5. Dependencies & blast radius — 6 externals + 7 ranked blast radii → `05-dependencies.md`
+- [x] 6. Operations — build/deploy/config described (all three are empty), 6 fragile spots named → `06-operations.md`
+- [x] 7. Safe contribution — one specific starting area + exact verify commands → `07-safe-contribution.md`
+
+Coverage: **7/7**. The coverage check at `references/synthesis.md:6-14` passes on merit, not by
+waiver.
+
+## Classification note
+
+The Library/SDK playbook fits the *shape* — no server, no long-running entry point, an explicit
+public surface, consumed by installing it into other projects. It does not fit the *signals*: no
+registry metadata, no `examples/`, no CHANGELOG, no tests. The "library" here is a prompt, not
+executable code. Treat the classification as **soft**; the generic fallback's four anchors
+(`references/repo-playbooks.md:353-356`) carried Stages 4–6 where there was no code path to trace.
+
+## What made this repo unusual
+
+Zero lines of executable code. "Architecture" meant *what loads into context and when*; "key flows"
+meant paths through documents; "operations" meant that build, CI, and config are all genuinely
+empty and `main` ships on push.
+
+## Resolved during the session
+
+- [resolved] External adoption — public repo, **0 stars, 0 forks, 0 open issues, 0 releases, 0 tags**
+  (GitHub API, 2026-07-27). The answer is "nobody yet", not "unmeasured".
+- [resolved] The `skills` CLI is real — npm `skills` **v1.5.20**, `github.com/vercel-labs/skills`.
+- [resolved] There is no `.skill` release asset and never has been in this repo (0 releases; `9a77940`
+  removed the committed bundle). Doc corrected in `047333c`.
+
+## Open questions
+
+- [unknown] Whether Claude Code *enforces* `name:` == directory name, or merely conventions it —
+  a platform behaviour, not answerable from this repo. Would need the Claude Code docs.
+- [unknown] Whether `npx skills@latest add nitfolio/nirvajna-skills` has ever run successfully
+  against this repo. Would need a scratch install.
+- [unknown] What "nirvajna" means or why it was chosen — appears only in the repo name and URLs,
+  never in a document body. Ask the author.
+- [unknown] Whether branch protection or other GitHub-side settings exist. Would need repo settings
+  access.
+- [unknown] How the author packages a `.skill` bundle when one is needed — no script is tracked.
+- [unknown] Whether the author prefers PRs or issues first. `README.md:140` welcomes both; there is no
+  `CONTRIBUTING.md`, no PR template, and no PR history to infer from.
+
+## Next step
+
+None — the ladder is finished. `08-onboarding.md` and `onboarding.html` are written. A future session
+can `start` to extend any stage, or `jump to <topic>` for a specific area.
+</script>
+
+<script type="text/markdown" data-id="01-overview" data-label="01 · Overview" data-group="trail">
+# 01 · Overview
+
+## What this system is
+
+[fact] A public repository of **Claude Code skills**. `README.md:11` states the pitch: "Skills that
+make Claude Code do the tedious part properly." It currently ships exactly one skill, `onboard-me`
+(badge at `README.md:14`, confirmed against `git ls-files`).
+
+[fact] `README.md:27-29` defines the unit of work: a skill is "a self-contained folder — a `SKILL.md`
+plus optional `references/`, `scripts/`, or `assets/` — that Claude Code loads when the situation
+calls for it. No plugin, no config, no runtime."
+
+## Stack
+
+[fact] **There is no code.** 12 tracked files: 6 Markdown/HTML documents and 4 PNGs.
+
+[fact] Absent, each checked individually: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`,
+`Makefile`, `.github/workflows`, `.github/`. There is no build, no test suite, no CI, no lockfile,
+and no dependency manifest of any kind.
+
+[inference] The "runtime" is Claude Code itself. The repo is inert text; behaviour only exists when
+an agent loads `SKILL.md` into its context. Based on `README.md:27-29` and the fact that nothing in
+the tree is executable.
+
+## Entry points
+
+[fact] `onboard-me/SKILL.md:1-11` — the YAML frontmatter, and the only true entry point:
+
+- `name: onboard-me` (`:2`) must match the containing directory name.
+- `description:` (`:3-10`) is the **trigger surface**. `README.md:128-130` is explicit: "The
+  description is the only thing that makes a skill trigger", which is why it is written as a list of
+  situations rather than a feature summary.
+
+[fact] Secondary, human-facing entry points: `README.md` (repo front door) and
+`onboard-me/README.md` (skill usage docs). Neither is loaded by the agent at runtime.
+
+## Repo map
+
+```
+nirvajna-skills/
+├── README.md                 164 L   repo front door: pitch, skills table, install, layout
+├── LICENSE                          MIT (README.md:13)
+├── .gitignore                  2 L   two comment lines, ZERO patterns
+├── assets/                           4 PNGs: wordmark + logo, each light/dark
+└── onboard-me/                       the one skill
+    ├── SKILL.md              347 L   always loaded — the method
+    ├── README.md             411 L   human docs — not loaded by the agent
+    └── references/                   loaded on demand only
+        ├── repo-playbooks.md        360 L
+        ├── study-page-template.html 368 L
+        └── synthesis.md              64 L
+```
+
+[fact] Line counts measured with `wc -l` on 2026-07-27. Always-loaded weight is 347 lines; on-demand
+weight is 792 lines — a ~1:2.3 split. This is the progressive-disclosure design `README.md:132-134`
+describes.
+
+[fact] `.gitignore` contains no ignore patterns at all — both its lines are comments explaining that
+`.kt/` is committed on purpose as a worked example of the skill's output.
+
+[fact] `.claude/settings.local.json` exists but is untracked, and it is ignored by the *user's global*
+gitignore (`~/.config/git/ignore:1`), not by this repo. Top-level key: `permissions`. Not part of the
+project.
+
+## History
+
+[fact] 21 commits, 2026-07-08 → 2026-07-27, one author (`nitfolio <ntv.nitin@gmail.com>`).
+Remote: `https://github.com/nitfolio/nirvajna-skills.git`. Single branch `main`.
+
+[fact] The history is dominated by two renames, which is worth knowing before reading old commits:
+
+- the skill: `codebase-kt` → `codebase-onboarding` (`d52f691`) → `onboard-me` (`00b7dd3`)
+- the repo: `claude-skills-repo` → `nirvajna-skills` (`c09418a`)
+
+[fact] `9a77940` "Remove codebase-kt.skill" and `ce43ad1` "Fix Claude.ai install instructions after
+removing codebase-kt.skill" — a packaged `.skill` bundle used to be committed and was deliberately
+removed.
+
+## Open unknowns
+
+- [unknown] Whether anyone outside the author uses this — no stars/forks/issues data gathered.
+</script>
+
+<script type="text/markdown" data-id="02-architecture" data-label="02 · Architecture" data-group="trail">
+# 02 · Architecture
+
+## The shape
+
+There is no runtime, so "architecture" here means **what gets loaded into an agent's context, and
+when**. Everything else is documentation for humans or brand assets.
+
+The organising principle is **progressive disclosure**: a lean always-loaded file plus heavier files
+pulled in only when a run actually needs them (`README.md:132-134`).
+
+## Top-level modules
+
+Every top-level entry is accounted for — none left unexplored.
+
+| Module | What it is | Runtime role |
+| --- | --- | --- |
+| `onboard-me/` | The one skill | **The entire product** |
+| `README.md` | Repo front door — pitch, skills table, install, layout | None |
+| `onboard-me/README.md` | Human usage docs for the skill | **None** — never loaded by the agent |
+| `assets/` | 4 PNGs (wordmark + logo, light/dark each) | None |
+| `LICENSE` | MIT | None |
+| `.gitignore` | Two comment lines, zero patterns | None |
+
+[fact] `.gitignore` ignores nothing. Both lines are a comment explaining that `.kt/` is committed on
+purpose. Verified: the file is 2 lines and neither is a pattern.
+
+## Inside the skill
+
+```
+onboard-me/
+├── SKILL.md          347 L  ── ALWAYS LOADED. The method.
+├── README.md         411 L  ── humans only; no runtime edge points at it
+└── references/              ── ON DEMAND
+    ├── repo-playbooks.md         360 L
+    ├── synthesis.md               64 L
+    └── study-page-template.html  368 L
+```
+
+[fact] 347 lines always loaded vs 792 lines on demand — the heavy 70% of the skill stays out of
+context until a run reaches the stage that needs it.
+
+## How the pieces talk
+
+The dispatch mechanism is **a prose sentence naming a file path**. There is no import graph, no
+config, no registry — an instruction like "read `references/repo-playbooks.md`" is the call.
+
+Every edge, enumerated:
+
+```
+                      SKILL.md
+                (frontmatter = trigger)
+                          |
+        +-----------------+------------------+
+        |                                    |
+   :185 | at Orientation                :297 | at `stop`
+        |                               :315 |
+        v                                    v
+ repo-playbooks.md                     synthesis.md
+ (13 types + fallback)                       |
+                                        :51  | "copy the template"
+                                             v
+                                   study-page-template.html
+                                             |
+                                             v
+                                     .kt/onboarding.html
+```
+
+- [fact] `SKILL.md:185` → `references/repo-playbooks.md`, during Stage 1 Orientation.
+- [fact] `SKILL.md:297` and `SKILL.md:315` → `references/synthesis.md`, at `stop`/end of speedrun.
+- [fact] `synthesis.md:51` → `references/study-page-template.html`, the only second-hop edge.
+- [fact] All edges are one-way and originate in `SKILL.md`. No reference file points back.
+
+## Two couplings that are invisible from either side
+
+These are the interesting bits of this architecture, because nothing enforces them.
+
+**1. The HTML template is hard-coded to `SKILL.md`'s evidence vocabulary.**
+
+[fact] `study-page-template.html:215`:
+
+```js
+s=s.replace(/\[(fact|inference|unknown|human)\]/g,'<span class="tag tag-$1">[$1]</span>');
+```
+
+Those four words are defined in `SKILL.md:74-82`. [fact] Rename or add a tag there and the study page
+silently stops highlighting it — no error, just unstyled text. There is no test and no build step
+that would catch it.
+
+**2. Unfilled slots hide themselves.**
+
+[fact] `study-page-template.html:305`:
+
+```js
+.filter(b=>b.md && !/^<!--[\s\S]*-->$/.test(b.md.trim()));
+```
+
+Any slot still containing its `<!-- PASTE … -->` placeholder is dropped at render time. So
+`synthesis.md:56-57`'s instruction to delete slots for missing files is belt-and-braces, not
+load-bearing — a partial KT degrades gracefully either way.
+
+## The asset path split
+
+[fact] The two READMEs reference the same PNGs differently:
+
+- `README.md:4-6`, `:157-159` — relative (`assets/wordmark-dark.png`)
+- `onboard-me/README.md:4-6`, `:404-406` — absolute (`https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/assets/…`)
+
+[inference] Deliberate, not drift. The `onboard-me/` folder is *designed to be copied out of the
+repo* (`README.md:78-81`), where a relative `../assets/` path would resolve to nothing. Based on the
+install instructions, not on a comment — no comment explains it.
+
+[fact] Cosmetic inconsistency, noted not fixed: the wordmark is `width="640"` in `README.md:6` but
+`width="565"` in `onboard-me/README.md:6`. Commit `da19904` ("Enlarge the README wordmark to 640px")
+only touched the root.
+
+## Open unknowns
+
+- [unknown] Nothing enforces the `name:`/directory-name match or the tag-vocabulary coupling. Whether
+  the author has a checking process outside the repo is not visible from here.
+</script>
+
+<script type="text/markdown" data-id="03-domain-glossary" data-label="03 · Domain glossary" data-group="trail">
+# 03 · Domain glossary
+
+Two vocabularies overlap here. **Platform terms** come from Claude Code and constrain what the repo
+may look like. **Method terms** are invented by this skill and constrain what a KT session does.
+Getting them confused is the main way a newcomer misreads the repo.
+
+## Platform terms (Claude Code defines these)
+
+| Term | One-line meaning | Lives in |
+| --- | --- | --- |
+| **Skill** | A self-contained folder Claude Code loads on demand — `SKILL.md` plus optional `references/`, `scripts/`, `assets/`. No plugin, no config, no runtime. | `README.md:27-29` |
+| **`SKILL.md`** | The one required file. Its body is the instructions; it is loaded in full whenever the skill triggers. | `onboard-me/SKILL.md` |
+| **Frontmatter** | The YAML block at the top of `SKILL.md`, carrying `name` and `description`. | `SKILL.md:1-11` |
+| **`name`** | The skill's identifier. Must equal the containing directory name. | `SKILL.md:2` |
+| **`description` / trigger surface** | The *only* thing that decides whether a skill activates — so it is written as a list of situations, not a feature summary. | `SKILL.md:3-10`; rule stated at `README.md:128-130` |
+| **`references/`** | Files loaded lazily, only when a run reaches the stage that needs them. | `onboard-me/references/` |
+| **Progressive disclosure** | The design rule: keep `SKILL.md` lean enough to stay in context all session, push heavy material into `references/`. | `README.md:132-134` |
+
+## Method terms (this skill defines these)
+
+| Term | One-line meaning | Lives in |
+| --- | --- | --- |
+| **KT** | Knowledge transfer — a guided session that moves someone from "I know nothing" to "I can safely make a change". | `SKILL.md:13`, `:22-23` |
+| **The core loop** | The fixed five-beat shape of every turn: DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM. | `SKILL.md:52-58` |
+| **The ladder** | The seven-stage default exploration order, from Orientation to Safe contribution. | `SKILL.md:160-180` |
+| **Stage** | One rung of the ladder. Exactly one is covered per turn (except in a speedrun). | `SKILL.md:49-50` |
+| **Completion criterion** | The checkable condition that must hold before a stage may be called done — the guard against declaring "Architecture complete" after a folder listing. | `SKILL.md:155-158` |
+| **Evidence tag** | The label on every non-obvious claim: `[fact]`, `[inference]`, `[unknown]`, `[human]`. | `SKILL.md:74-82` |
+| **`[fact]`** | Directly supported by something read, *with a citation*. No citation → not a fact. | `SKILL.md:74-75` |
+| **`[inference]`** | A reasonable deduction, not confirmed; must state what it rests on. | `SKILL.md:76-77` |
+| **`[unknown]`** | Couldn't determine it. Treated as valuable output, not failure. | `SKILL.md:78-79` |
+| **`[human]`** | The engineer said so — the strongest evidence in the room, treated as settled. | `SKILL.md:80-82` |
+| **Fog of war** | The metaphor for the map: what's lit vs what's still dark. Keeping it honest is "the skill's whole job". | `SKILL.md:25-28` |
+| **Zone of proximal development** | How the next step is chosen — just beyond current knowledge and reachable from it, not the most interesting thing found. | `SKILL.md:60-63` |
+| **The `.kt/` trail** | The directory of findings written as stages complete, so the work outlives the chat. | `SKILL.md:190-208` |
+| **Working trail (`00`–`07`)** | Raw, evidence-tagged, unpolished record of the learning. | `SKILL.md:210-213` |
+| **Deliverable (`08-onboarding.md`)** | The clean reader-facing document, written only at `stop`. | `SKILL.md:212-213` |
+| **`00-progress.md`** | The resumability file — kept current every turn so a fresh session can pick up exactly where the last stopped. | `SKILL.md:220-237` |
+| **Repo-type playbook** | A per-repo-kind adaptation of the ladder: recognition signals, ladder emphasis, files to read first, must-answer questions, traps. 13 types + a generic fallback. | `references/repo-playbooks.md` |
+| **Coverage check** | The `stop`-time guard that refuses to polish a barely-explored repo into a confident document. | `references/synthesis.md:6-14` |
+| **Confidence filter** | The `stop`-time sort: promote `[fact]`/`[human]`, drop guesses, carry surviving `[unknown]`/`[inference]` into an explicit "Assumptions & things to verify" section. | `references/synthesis.md:16-26` |
+| **Study page** | `onboarding.html` — one self-contained offline page bundling `00`–`08`, with per-file copy buttons. | `references/synthesis.md:45-64` |
+| **Speedrun** | A standing `continue`: the whole ladder end to end with no per-turn gate, same rigor, *stricter* read-only. | `SKILL.md:271-302` |
+
+## The controls
+
+[fact] Ten single words drive a session, listed once at `SKILL.md:252-262` and mirrored for humans at
+`onboard-me/README.md:115-126`:
+
+`start` · `continue`/`yes` · `speedrun` · `deeper` · `skip` · `jump to <topic>` · `why` ·
+`summarize` · `pause` · `stop`
+
+[fact] `pause` and `stop` are deliberately different promises — `pause` bookmarks and generates
+nothing; `stop` produces the deliverable (`SKILL.md:304-318`).
+
+## How the terms relate
+
+```
+Skill (platform)
+  └── SKILL.md ── description ──> triggers the session
+                    │
+                    └── the method:
+                          core loop  ──runs once per──>  stage
+                                                          │
+                                          stage ──gated by──> completion criterion
+                                          stage ──adapted by──> repo-type playbook
+                                          stage ──emits──>  evidence-tagged claims
+                                                                  │
+                                                      claims ──written to──> .kt/ working trail (00–07)
+                                                                                    │
+                                                        at `stop`: coverage check ──┤
+                                                                confidence filter ──┤
+                                                                                    v
+                                                              08-onboarding.md + onboarding.html
+```
+
+[fact] The dependency runs one way: tags feed the trail, the trail feeds the filter, the filter feeds
+the deliverable. Nothing downstream can promote a claim the tag didn't license — that is the whole
+trust mechanism.
+
+## Naming
+
+[fact] The repo is named `nirvajna-skills` (`c09418a` renamed it from `claude-skills-repo`). No file
+in the repo defines, explains, or otherwise uses the word "nirvajna" — a full-text search finds it
+only in the repo/remote name and URLs.
+
+[fact] The brand is "Oops!... AI Did It Again", carried by the wordmark alt text (`README.md:6`) and
+the site link `oopsaididitagain.com` (`README.md:16`).
+
+## Open unknowns
+
+- [unknown] What "nirvajna" means or why it was chosen — not answerable from the repo.
+</script>
+
+<script type="text/markdown" data-id="04-key-flows" data-label="04 · Key flows" data-group="trail">
+# 04 · Key flows
+
+Nothing executes, so a "flow" here is a path through *documents* — but it is a real, traceable path
+with waypoints, and the same discipline applies: every waypoint carries a `file:line`.
+
+Two flows matter. Flow A is what a user does. Flow B is what the skill does at the end, and it is
+where the only real machinery lives.
+
+---
+
+## Flow A — install → trigger → first stage
+
+**Waypoint 1. Install.** [fact] `README.md:61`:
+
+```bash
+npx skills@latest add nitfolio/nirvajna-skills
+```
+
+[fact] `README.md:64-67` describes the result: one canonical copy in `.agents/skills/`, symlinked
+into `.claude/skills/` and every other agent directory found, so Codex/Cursor/Gemini CLI read the
+same source. `-g` installs for the user, `--copy` writes real files instead of symlinks.
+
+[fact] Manual alternative at `README.md:78-81`: `cp -r onboard-me ~/.claude/skills/` (personal) or
+into `<your-repo>/.claude/skills/` (project-level). The instruction stresses **the whole folder, not
+just `SKILL.md`** (`README.md:74`) — `references/` must travel with it.
+
+**Waypoint 2. Trigger.** [fact] `SKILL.md:3-10`. The `description` is matched against what the user
+says. It is written as situations, not features — "where do I start", "walk me through this repo",
+due diligence, reverse-engineering a legacy system, resuming an in-progress KT. [fact] Explicit
+override at the end: "Prefer this over ad-hoc 'explain this code' whenever the goal is understanding
+a whole system rather than one snippet."
+
+[fact] An explicit invocation (`/onboard-me`, `README.md:91`) bypasses matching entirely.
+
+**Waypoint 3. The goal question.** [fact] `SKILL.md:30-45`. Exactly one question, asked before any
+exploration, with four options that reweight the whole ladder. [fact] `:42-45` gives two escape
+hatches: if the opening message already states the goal, don't spend a turn asking; if the human
+doesn't answer, assume "just understand it" and continue — never block.
+
+**Waypoint 4. Classify, then load the playbook.** [fact] `SKILL.md:182-188` — classify the repo
+during Orientation, then read `references/repo-playbooks.md` and follow **one** playbook.
+[fact] `repo-playbooks.md:3-6` reinforces it: follow the dominant type, don't read all of them; if
+the repo is a mix, name the pieces and make the rest `jump to` targets.
+
+**Waypoint 5. Announce the trail, then write it.** [fact] `SKILL.md:244-245` — tell the human `.kt/`
+is being created *before* creating it, and mention they may want to gitignore it.
+
+**Waypoint 6. Loop.** [fact] `SKILL.md:52-58` — DISCOVER → EXPLAIN → ASSESS → PROPOSE → CONFIRM,
+one stage per turn, then stop and wait. [fact] The stage may only be called done when its completion
+criterion (`SKILL.md:160-180`) is met.
+
+Exit: the human says `pause` (bookmark, no deliverable — `SKILL.md:308-311`) or `stop` (Flow B).
+
+### The speedrun variant
+
+[fact] `SKILL.md:271-302`. The gate at CONFIRM is removed and nothing else changes. Two clauses are
+load-bearing:
+
+- [fact] `:290-292` — read-only gets **stricter**, not looser: "Autonomy removes the human who would
+  have approved running a build, test, or script, so in a speedrun you never run them."
+- [fact] `:293-295` — genuine forks still stop the run (monorepo needing scoping, a destructive
+  action, evidence contradicting the stated goal).
+
+---
+
+## Flow B — `stop` → two artifacts → rendered page
+
+**Waypoint 1.** [fact] `SKILL.md:313-318` — before writing a word, read `references/synthesis.md`.
+
+**Waypoint 2. Coverage check.** [fact] `synthesis.md:6-14`. If only a couple of stages met their
+criteria, do **not** silently generate a polished document — it "manufactures exactly the artifact
+this skill exists to prevent, and it will outlive the session and be believed by people who weren't
+here." Offer three options: synthesize anyway, keep exploring, or pause.
+
+**Waypoint 3. Confidence filter.** [fact] `synthesis.md:16-26`. Sort every claim:
+
+- **Promote** `[fact]` and `[human]` into the body as settled statements.
+- **Drop** dead ends and anything that was only ever a guess.
+- **Carry** every surviving `[unknown]` and unpromoted `[inference]` into an explicit
+  "Assumptions & things to verify with a human" section.
+
+[fact] `:25-26`: "Never launder an inference into confident prose by dropping its tag."
+
+**Waypoint 4. Write `08-onboarding.md`.** [fact] Six-part shape at `synthesis.md:33-40`: what this
+system is · architecture map · domain glossary · one or two key flows · your first change ·
+assumptions & things to verify. [fact] `:42-43` sets the acceptance test — readable start to finish
+by someone who never ran the skill and has no access to the chat.
+
+**Waypoint 5. Build `onboarding.html`.** [fact] `synthesis.md:51-58`, four steps:
+
+1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
+2. Paste each file's **raw markdown verbatim** into its slot — `08` fills the `guide` slot, `00`–`07`
+   the `trail` slots. Blocks are inert so no escaping is needed, with one exception: a literal
+   `<\/script>` in the markdown must be written `<\/script>`.
+3. Delete the slot for any `.kt/` file that doesn't exist.
+4. Set the `<title>` and the `.kt-repo-name` span to the repo name. **Change nothing else.**
+
+[fact] The slots are at `study-page-template.html:170-204` — nine of them, each a
+`<script type="text/markdown">` with `data-id`, `data-label`, and `data-group`.
+[fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:146` (sidebar span).
+
+**Waypoint 6. Render — in the browser, no server.** [fact] The page's own pipeline:
+
+| Step | Where |
+| --- | --- |
+| Collect every markdown slot, strip leading newline | `:303-305` |
+| Drop slots still holding their `<!-- PASTE -->` comment | `:305` |
+| Group into "Curated guide" (08) and "Working trail" (00–07) | `:311-316` |
+| Build a nav link + a `<section>` card per file | `:317-330` |
+| Render markdown with the inline regex parser | `:206-298` |
+| Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:215` |
+| Per-file "Copy markdown" button | `:328` |
+| Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:247-249`, `:336-337` |
+| Clipboard write, with a `<textarea>` + `execCommand` fallback | `:341-346` |
+| Scroll-spy highlighting the active nav item | `:350` |
+| Live filter over files and headings | `:357` |
+
+**Waypoint 7.** [fact] `synthesis.md:63-64` — announce both outputs by name and mention the HTML
+opens straight in a browser, no server needed.
+
+---
+
+## The correction flow (short, and the most important one)
+
+[fact] `SKILL.md:87-90`. When the human corrects a claim, three things happen in the **same turn**:
+retag it as `[human]`, fix the affected `.kt/` file, and ask whether the correction invalidates
+anything else already said. [fact] The rationale is given: "A mental model built on a stale
+assumption gets more wrong the longer it stands."
+
+[inference] This is the only inbound edge into the trail from outside the repo, which is why
+`[human]` outranks `[fact]` in the filter at `synthesis.md:20`. Based on the tag definitions at
+`SKILL.md:80-82` and the promotion rule; no file states the ranking explicitly.
+
+## Open unknowns
+
+- [unknown] Whether the `npx skills@latest add` path has been run against this repo successfully —
+  the command is documented, but nothing in the repo records a verified install.
+</script>
+
+<script type="text/markdown" data-id="05-dependencies" data-label="05 · Dependencies" data-group="trail">
+# 05 · Dependencies & blast radius
+
+## External dependencies
+
+There is no dependency manifest, so these were found by reading, not by resolving a lockfile.
+
+| Dependency | Where it enters | What happens if it fails or changes |
+| --- | --- | --- |
+| **Claude Code** (the runtime) | The whole premise; format described at `README.md:27-29` | If the skill format changes — frontmatter keys, directory-name matching, `references/` loading — the skill stops triggering. Nothing in the repo would report the breakage; it just goes quiet. |
+| **`skills` CLI** (npm, `vercel-labs/skills`) | `README.md:61`, described at `:64-67` | [fact] Verified live: version **1.5.20**, repo `github.com/vercel-labs/skills`. It is the *documented primary install path*. If it changes its layout (`.agents/skills/` + symlinks), the install prose goes stale — the skill itself is unaffected, since `cp -r` still works. |
+| **GitHub raw + blob URLs** | 9 hardcoded `nitfolio` URLs, **all in `onboard-me/README.md`** | Renaming the repo or the owner breaks every image and link in the skill's README wherever it renders outside GitHub. See blast radius below. |
+| **img.shields.io** | 4 badges in `README.md`, 4 in `onboard-me/README.md` | Badges break; nothing functional. One badge encodes a fact that can go stale (`Repo_playbooks-13`, `onboard-me/README.md:14`). |
+| **oopsaididitagain.com** | `README.md:16`, `:162`; `onboard-me/README.md:21` | Dead link only. |
+| **Browser Clipboard API** | `study-page-template.html:341-346` | [fact] Already handled — falls back to a hidden `<textarea>` + `execCommand`. The study page has no other browser requirement and no network requirement at all. |
+
+[fact] **`SKILL.md`, `repo-playbooks.md`, and `synthesis.md` contain zero URLs** (grep count: 0 for
+each). Everything the agent actually loads is self-contained. This is a real property, not an
+accident of scale — it means a run works with no network and the skill survives being copied
+anywhere.
+
+## Repo state (verified 2026-07-27)
+
+[fact] Public · 0 stars · 0 forks · 0 open issues · 0 releases · 0 tags · last push
+`2026-07-27T06:41:09Z`.
+
+[fact] Consequence: there is **no `.skill` release asset**, and never has been in this repo's
+lifetime. `9a77940` removed the previously-committed bundle. Any doc telling a user to "download
+`onboard-me.skill`" would be pointing at nothing — which is exactly the drift corrected in `047333c`
+earlier today.
+
+[fact] Consequence: no external adoption signal exists. This resolves the Stage-1 unknown — the
+answer is "nobody yet", not "unmeasured".
+
+## Blast radius — what breaks if I change this
+
+Ordered by how much damage a careless edit does.
+
+### 1. `SKILL.md:3-10` — the `description` — **highest**
+
+[fact] It is the only trigger surface (`README.md:128-130`). Narrow it and the skill stops firing on
+cases it used to catch; broaden it and it hijacks unrelated conversations. [fact] The failure is
+**silent and invisible from the repo** — nothing tests it, and you only notice a skill that stopped
+triggering by its absence.
+
+### 2. Renaming the skill — **three places, one of them off-disk**
+
+[fact] Demonstrated by commit `00b7dd3` (`codebase-onboarding` → `onboard-me`). Three things must
+move together:
+
+1. The directory `onboard-me/`.
+2. `SKILL.md:2`'s `name:` — the platform requires it to match the directory.
+3. **Every already-installed copy.** [fact] On this machine `~/.claude/skills/onboard-me` is a
+   Windows *junction* pointing back into this repo, not a copy. A `git mv` breaks it, leaving a
+   dangling link that resolves to nothing.
+
+[fact] Point 3 is invisible from inside the repo and is not documented anywhere in it. On Unix the
+`skills` CLI creates symlinks (`README.md:64-67`), so the same hazard applies there. Anyone renaming
+a skill should expect to repair installs afterward.
+
+Also in scope for a rename: the 9 hardcoded `github.com/nitfolio/nirvajna-skills` URLs in
+`onboard-me/README.md`, plus every `onboard-me` mention across both READMEs.
+
+### 3. The evidence-tag vocabulary — **silent cosmetic break**
+
+[fact] `SKILL.md:74-82` defines `[fact]`, `[inference]`, `[unknown]`, `[human]`.
+[fact] `study-page-template.html:215` hard-codes exactly those four in a regex. Rename one, add a
+fifth, and every existing study page renders it as plain text with no error. Nothing links the two
+files; nothing checks them.
+
+### 4. The `.kt/` file names or numbering — **breaks the study page**
+
+[fact] `study-page-template.html:170-204` has exactly 9 slots keyed by `data-id`
+(`08-onboarding`, `00-progress` … `07-safe-contribution`). [fact] `SKILL.md:196-208` and
+`onboard-me/README.md:225-237` both document the same list. Renaming a `.kt/` file means editing
+three files, one of which is HTML.
+
+[fact] Partial mitigation: `:305` drops any slot that is still an unfilled comment, so a *missing*
+file degrades gracefully. A *renamed* one does not — its content simply never appears.
+
+### 5. Adding or removing a repo-type playbook — **5 stale counters**
+
+[fact] The number `13` is stated in five places, kept in sync by hand alone:
+
+- `README.md:48` — "Adapts to 13 repo types"
+- `README.md:118` — layout tree comment
+- `onboard-me/README.md:14` — the `Repo_playbooks-13` badge
+- `onboard-me/README.md:190-193` — the prose list of covered types
+- `onboard-me/README.md:359` — files tree comment
+
+Plus the contents list at `repo-playbooks.md:13-28`, which is numbered 1–14 (13 types + the generic
+fallback). [fact] All six currently agree — checked this session.
+
+### 6. Adding a ladder stage — **needs a completion criterion**
+
+[fact] `onboard-me/README.md:345-346` states the trap outright: "If you add one, give it a completion
+criterion — a stage without one gets declared done early." Downstream, a new stage likely wants a new
+`.kt/` file, which drags in item 4 above.
+
+### 7. Prose in `SKILL.md` generally — **cheap**
+
+[inference] Because the file is loaded whole and interpreted by a model rather than parsed, most
+edits fail soft: wording changes shift behaviour by degrees rather than breaking anything. Based on
+there being no parser, no schema, and no test anywhere in the repo. The dangerous edits are the
+structural ones above, not the wording.
+
+## What has no blast radius at all
+
+[fact] `assets/`, `LICENSE`, `.gitignore`, and both READMEs are inert at runtime — nothing the agent
+loads points at them. Editing them cannot change how a KT session behaves.
+
+## Open unknowns
+
+- [unknown] Whether Claude Code enforces the `name:`-equals-directory rule, or merely conventions it.
+  Not determinable from this repo; it is a platform behaviour.
+- [unknown] Whether `npx skills@latest add nitfolio/nirvajna-skills` has ever been run successfully
+  against this repo. The package exists and the command is well-formed, but nothing records a
+  verified install.
+</script>
+
+<script type="text/markdown" data-id="06-operations" data-label="06 · Operations" data-group="trail">
+# 06 · Operations
+
+## Build
+
+[fact] **There is none.** No `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, or `Makefile`
+— each checked individually. Nothing compiles, bundles, minifies, or generates. The files in the
+repo are the artifact.
+
+[fact] No test suite. No linter. No formatter config. No pre-commit hooks in the tree.
+
+## CI
+
+[fact] **There is none.** No `.github/` directory at all, so no workflows, no PR checks, no branch
+protection visible from the repo.
+
+[fact] Consequence: every consistency rule in this repo is enforced by hand. Nothing checks that
+`SKILL.md:2`'s `name` matches the directory, that the five playbook counters agree, that the study
+page's tag regex still matches the tag vocabulary, or that the two READMEs tell the same story.
+
+## Deploy / distribution
+
+[fact] **`main` is production, and it deploys on push.** Three consumption paths, all reading `main`
+directly:
+
+| Path | Where documented | What it reads |
+| --- | --- | --- |
+| `npx skills@latest add nitfolio/nirvajna-skills` | `README.md:61` | The repo at **`main`** — the command carries no ref, tag, or version |
+| `cp -r onboard-me ~/.claude/skills/` | `README.md:78-81` | Whatever the user has checked out |
+| Zip / `.skill` upload to claude.ai or Cowork | `README.md:99-104`, `onboard-me/README.md:60-63` | A hand-made archive |
+
+[fact] The 9 asset URLs in `onboard-me/README.md` are likewise pinned to `/main/`
+(`raw.githubusercontent.com/nitfolio/nirvajna-skills/main/…`).
+
+[fact] There are **0 tags and 0 releases**. So there is no version, no changelog, no pinning, and
+nothing to roll back to. A bad push is live immediately for anyone installing, and the only remedy is
+another push.
+
+[fact] The `.skill` bundle is *not* a build output of this repo — no such file is tracked, and
+`9a77940` deliberately removed the one that used to be. It is packaged ad hoc when someone needs it.
+
+## Configuration
+
+[fact] **There is none.** No config file of any kind is tracked.
+
+[fact] `.claude/settings.local.json` exists on this machine but is untracked, has one top-level key
+(`permissions`), and is ignored by the *user's global* gitignore (`~/.config/git/ignore:1`) rather
+than by this repo. It is a local Claude Code preference file, not project config.
+
+[fact] `.gitignore` contains two comment lines and **zero patterns**. Everything in the working tree
+is committed by default. This is deliberate: the comment says `.kt/` is kept on purpose as a worked
+example of the skill's output.
+
+[fact] No secrets exist in this repo to leak — no `.env`, no credentials, no tokens, no keys. The
+only sensitive-ish surface is `.claude/settings.local.json`, which is untracked and was inspected for
+shape only.
+
+## The one runtime "environment"
+
+[inference] The nearest thing to a deployment target is the user's skills directory. On this machine
+`~/.claude/skills/onboard-me` is a **Windows junction** into this repo, so edits here are live in
+every Claude Code session with no install step. Based on the junction observed during the `00b7dd3`
+rename, when `git mv` broke it and it had to be recreated.
+
+[fact] The `skills` CLI does the same thing on other platforms with symlinks — one canonical copy in
+`.agents/skills/`, symlinked into `.claude/skills/` and other agent directories (`README.md:64-67`).
+
+[fact] Operational consequence: **a rename or move in this repo silently breaks installed links**,
+and the break is invisible from inside the repo. `--copy` (`README.md:67`) trades liveness for
+immunity to this.
+
+## Fragile spots
+
+Named plainly, worst first.
+
+1. **Doc drift between the two READMEs.** [fact] This has already happened twice and is the repo's
+   demonstrated failure mode: `363b5ff` made `npx skills add` the primary install path in
+   `README.md` only, leaving `onboard-me/README.md` telling people to `cp -r` and to download a
+   non-existent `onboard-me.skill`. Both were corrected in `047333c` (2026-07-27). Nothing prevents a
+   third instance.
+2. **Five hand-synced playbook counters.** [fact] `README.md:48`, `README.md:118`,
+   `onboard-me/README.md:14`, `:190-193`, `:359` — all currently agree; nothing keeps them that way.
+3. **Tag vocabulary ↔ study-page regex.** [fact] `SKILL.md:74-82` vs
+   `study-page-template.html:215`. Drift here fails silently and cosmetically.
+4. **Installed junctions/symlinks break on rename.** See above; undocumented in the repo.
+5. **`main` has no safety net.** [fact] No CI, no tags, no releases, no protected branch, and the
+   install path reads `main` — so there is no gap between "committed" and "shipped".
+6. **Bus factor 1.** [inference] 21 commits, one author (`nitfolio <ntv.nitin@gmail.com>`), no
+   reviewers, no CI. Based on the full `git log` author breakdown.
+
+## Conventions worth matching
+
+[fact] Commit subjects are imperative, sentence-case, no prefix or scope — e.g. "Rename the
+codebase-onboarding skill to onboard-me", "Document the npx skills installer as the primary install
+path", "Enlarge the README wordmark to 640px". One exception: `6e83541` "wip: readme preview -
+brand hero, badges, mermaid ladder".
+
+[fact] Single branch `main`; every commit is on it. No merge commits, no PR history.
+
+## Open unknowns
+
+- [unknown] Whether branch protection or any GitHub-side setting exists — not visible from the repo,
+  and the repo API fields checked did not cover it.
+- [unknown] How the author packages a `.skill` bundle when one is needed. No script for it is tracked.
+</script>
+
+<script type="text/markdown" data-id="07-safe-contribution" data-label="07 · Safe contribution" data-group="trail">
+# 07 · Safe contribution
+
+## The house rules
+
+[fact] `README.md:140-147` states them for anyone adding a skill:
+
+- Keep it **self-contained** in its own folder.
+- Write the `SKILL.md` description as **trigger conditions**, not a summary of features.
+- Push reference material that only some runs need into `references/`, so `SKILL.md` stays lean.
+- Give any multi-stage process a checkable **"done when"** condition per stage — "vague criteria are
+  the single most common reason a skill stops early."
+- Add a `README.md` for humans, and a row to the skills table.
+
+[fact] `onboard-me/README.md:339-348` adds four ways to extend the existing skill: add a repo type,
+change the ladder, change the `.kt/` layout, tune the house style.
+
+## Recommended first change: add a repo-type playbook
+
+[fact] The repo invites exactly this at `onboard-me/README.md:341-343`.
+
+**Why it's the safest real change:**
+
+[fact] A new playbook section is inert until the Orientation classifier picks it. `SKILL.md:186-188`
+names the covered categories generically ("backend services, monorepos, frontends…") and does not
+enumerate them by number, so adding a 14th type cannot break an existing run.
+
+[inference] It also can't reach the two silent couplings from `02-architecture.md` — it touches
+neither the evidence-tag vocabulary nor the `.kt/` filenames. Based on those couplings living in
+`SKILL.md:74-82` and `study-page-template.html:170-204`, neither of which a playbook edits.
+
+**Where to work:** `onboard-me/references/repo-playbooks.md`.
+
+**Keep the shape.** [fact] Every existing playbook has the same five parts — copy one (e.g.
+`:130-152`) and fill them in:
+
+1. `**Recognize it:**` — the signals that classify a repo as this type
+2. `**Ladder emphasis:**` — where depth goes, and what "key flows" means for this kind of system
+3. `**Read first:**` — the files worth opening before anything else
+4. `**The KT must answer:**` — the questions a newcomer to this system always ends up asking
+5. `**Traps:**` — the ways a KT of this type goes wrong
+
+[fact] `repo-playbooks.md:8-11` explains why parts 2 and 4 exist: a playbook adapts the ladder but
+never replaces the core loop, the evidence tags, or the artifacts; and the must-answer list is the
+exit criterion for a good KT of that type, with unanswered items going to `00-progress.md` as
+`[unknown]`.
+
+**Then update the counters.** [fact] Five hand-synced places plus the contents list:
+
+| File | Line | What to change |
+| --- | --- | --- |
+| `onboard-me/references/repo-playbooks.md` | `13-28` | Add the new number to the contents list |
+| `README.md` | `48` | "Adapts to 13 repo types" |
+| `README.md` | `118` | Layout tree comment |
+| `onboard-me/README.md` | `14` | The `Repo_playbooks-13` badge URL |
+| `onboard-me/README.md` | `190-193` | The prose list of covered types |
+| `onboard-me/README.md` | `359` | Files tree comment |
+
+[fact] Keep the generic fallback last — `repo-playbooks.md:347` is numbered 14 today precisely
+because it is the "nothing fits" case.
+
+## How to verify it
+
+There is no test command. [fact] Nothing in the repo builds, tests, or lints — so verification is a
+consistency sweep plus one real run. **I did not run any of these** (`SKILL.md:290-292`: a speedrun
+never executes commands); they are for you.
+
+### 1. Structural checks (seconds, from the repo root)
+
+```bash
+# frontmatter name must equal the directory name
+head -3 onboard-me/SKILL.md          # expect: name: onboard-me
+
+# playbook count: numbered sections vs every claimed counter
+grep -c '^## [0-9]' onboard-me/references/repo-playbooks.md
+grep -rn 'repo-type playbooks\|repo types\|Repo_playbooks-' --include=*.md .
+
+# the silent coupling: tag vocabulary must match the study-page regex
+grep -n '^- \*\*\[' onboard-me/SKILL.md
+grep -n 'fact|inference|unknown|human' onboard-me/references/study-page-template.html
+
+# the .kt/ filenames documented in three places must agree
+grep -c 'data-id=' onboard-me/references/study-page-template.html   # expect: 9
+```
+
+[fact] Expected today: 14 numbered sections (13 types + fallback), all counters reading 13, the tag
+list and the regex both naming the same four tags, and 9 slots.
+
+### 2. The real end-to-end verification — run the skill
+
+[fact] The only way to check a prompt change actually works is to run it. `README.md:88-92`:
+
+```bash
+# install the local copy into a scratch project
+cp -r onboard-me <some-scratch-repo>/.claude/skills/
+
+# then, in Claude Code inside that repo:
+/onboard-me
+```
+
+Then confirm, in order: it asks the goal question once (`SKILL.md:30-45`), it classifies the repo and
+says which playbook it loaded (`SKILL.md:182-188`), it announces `.kt/` before creating it
+(`SKILL.md:244-245`), and — for a full check — `stop` produces both `08-onboarding.md` and
+`onboarding.html`.
+
+[fact] A new playbook is only exercised if the scratch repo actually *is* that type. Pick the test
+repo to match what you added, or the change goes untested.
+
+### 3. Check the study page renders
+
+[fact] `.kt/onboarding.html` is self-contained and needs no server (`synthesis.md:63-64`) — open it
+directly:
+
+```bash
+start .kt/onboarding.html      # Windows;  macOS: open,  Linux: xdg-open
+```
+
+Confirm the sidebar lists every file, the `[fact]`/`[inference]`/`[unknown]`/`[human]` tags are
+colour-coded, and the "Copy markdown" buttons work.
+
+### 4. Committing
+
+[fact] Match the existing convention: imperative, sentence-case subject, no prefix
+("Add a Rust workspace playbook"). Single branch `main`; no PR history exists, but note from
+`06-operations.md` that **`main` is what the installer reads** — there is no staging.
+
+## Other low-risk starting areas
+
+- [fact] **Wordmark width mismatch** — `README.md:6` says `width="640"`, `onboard-me/README.md:6`
+  says `565`. `da19904` enlarged only the root. Cosmetic, zero runtime impact, one-character-ish fix.
+- [fact] **Prose in `references/`** — `synthesis.md` and `repo-playbooks.md` are loaded on demand, so
+  edits there affect only the stage that reads them.
+- [fact] **A whole new skill** — the process is documented at `README.md:140-147`. Higher effort, but
+  it cannot affect `onboard-me` at all, since skills are independent folders.
+
+## What to avoid on a first change
+
+- [fact] **Editing `SKILL.md:3-10`, the `description`.** It is the sole trigger surface
+  (`README.md:128-130`) and its failure mode is a skill that silently stops firing.
+- [fact] **Renaming anything.** Three places must move together, one of them off-disk — see
+  `05-dependencies.md`. Installed junctions/symlinks break invisibly.
+- [fact] **Renaming a `.kt/` file or an evidence tag.** Both drift silently against
+  `study-page-template.html`, with no error to catch it.
+
+## Open unknowns
+
+- [unknown] Whether the author wants PRs or prefers issues first. `README.md:140` says "Issues and
+  pull requests are welcome" but there is no `CONTRIBUTING.md`, no PR template, and no PR history to
+  read a convention from.
+</script>
+
+<script>
+/* ---- tiny, dependency-free markdown renderer (block + inline) ---- */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function inline(s){
+  s = esc(s);
+  // code spans first, protected from other rules
+  const spans=[]; s=s.replace(/`([^`]+)`/g,(m,c)=>{spans.push("<code>"+c+"</code>");return "\u0000"+(spans.length-1)+"\u0000";});
+  s=s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  s=s.replace(/(^|[^*])\*([^*]+)\*/g,"$1<em>$2</em>");
+  s=s.replace(/\[(fact|inference|unknown|human)\]/g,'<span class="tag tag-$1">[$1]</span>');
+  s=s.replace(/\u0000(\d+)\u0000/g,(m,i)=>spans[i]);
+  return s;
+}
+
+function renderMarkdown(src){
+  // normalise, pull out fenced code blocks
+  const lines = src.replace(/\r\n?/g,"\n").split("\n");
+  let html="", i=0;
+  const flushList=(buf,ordered)=>{
+    if(!buf.length) return "";
+    const tag=ordered?"ol":"ul";
+    return "<"+tag+">"+buf.map(x=>"<li>"+inline(x)+"</li>").join("")+"</"+tag+">";
+  };
+  let listBuf=[], listOrdered=false;
+  const closeList=()=>{ if(listBuf.length){ html+=flushList(listBuf,listOrdered); listBuf=[]; } };
+
+  while(i<lines.length){
+    let ln=lines[i];
+
+    // fenced code
+    const fence=ln.match(/^```(.*)$/);
+    if(fence){
+      closeList();
+      const lang=fence[1].trim(); const code=[]; i++;
+      while(i<lines.length && !/^```/.test(lines[i])){ code.push(lines[i]); i++; }
+      i++; // skip closing fence
+      const raw=code.join("\n");
+      const langLabel = lang ? '<span class="lang">'+esc(lang)+'</span>' : '';
+      html+='<div class="codeblock">'+langLabel+
+            '<button class="copy-btn" data-copy-code>Copy</button>'+
+            '<pre><code>'+esc(raw)+'</code></pre>'+
+            '<textarea hidden>'+esc(raw)+'</textarea></div>';
+      continue;
+    }
+
+    // blank
+    if(/^\s*$/.test(ln)){ closeList(); i++; continue; }
+
+    // heading
+    const h=ln.match(/^(#{1,6})\s+(.*)$/);
+    if(h){ closeList(); const lvl=h[1].length; html+="<h"+lvl+">"+inline(h[2])+"</h"+lvl+">"; i++; continue; }
+
+    // hr
+    if(/^\s*([-*_])\1\1+\s*$/.test(ln)){ closeList(); html+="<hr>"; i++; continue; }
+
+    // blockquote (collapse consecutive)
+    if(/^\s*>\s?/.test(ln)){
+      closeList(); const q=[];
+      while(i<lines.length && /^\s*>\s?/.test(lines[i])){ q.push(lines[i].replace(/^\s*>\s?/,"")); i++; }
+      html+="<blockquote>"+renderMarkdown(q.join("\n"))+"</blockquote>"; continue;
+    }
+
+    // table (GFM): header row + separator row of ---|---
+    if(/\|/.test(ln) && i+1<lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[i+1]) && /\|/.test(lines[i+1])){
+      closeList();
+      const cells=r=>r.replace(/^\s*\|?|\|?\s*$/g,"").split("|").map(c=>c.trim());
+      const head=cells(ln); i+=2; const rows=[];
+      while(i<lines.length && /\|/.test(lines[i]) && !/^\s*$/.test(lines[i])){ rows.push(cells(lines[i])); i++; }
+      html+='<table><thead><tr>'+head.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"+
+            rows.map(r=>"<tr>"+r.map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>").join("")+"</tbody></table>";
+      continue;
+    }
+
+    // lists
+    const ul=ln.match(/^\s*[-*+]\s+(.*)$/);
+    const ol=ln.match(/^\s*\d+[.)]\s+(.*)$/);
+    if(ul||ol){
+      const ordered=!!ol;
+      if(listBuf.length && ordered!==listOrdered) closeList();
+      listOrdered=ordered; listBuf.push((ul?ul[1]:ol[1])); i++; continue;
+    }
+
+    // paragraph (gather until blank / block starter)
+    closeList();
+    const para=[ln]; i++;
+    while(i<lines.length && !/^\s*$/.test(lines[i]) && !/^(#{1,6}\s|```|\s*>|\s*[-*+]\s|\s*\d+[.)]\s)/.test(lines[i])
+          && !/^\s*([-*_])\1\1+\s*$/.test(lines[i])){ para.push(lines[i]); i++; }
+    html+="<p>"+inline(para.join(" "))+"</p>";
+  }
+  closeList();
+  return html;
+}
+
+/* ---- build the page ---- */
+(function(){
+  const blocks=[...document.querySelectorAll('script[type="text/markdown"]')]
+    .map(s=>({id:s.dataset.id,label:s.dataset.label,group:s.dataset.group,
+              md:s.textContent.replace(/^\n/,"").replace(/\s+$/,"")}))
+    .filter(b=>b.md && !/^<!--[\s\S]*-->$/.test(b.md.trim()));
+
+  const nav=document.getElementById("nav");
+  const content=document.getElementById("content");
+  const groups=[["guide","Curated guide"],["trail","Working trail"]];
+  const sections=[];
+
+  groups.forEach(([g,glabel])=>{
+    const gb=blocks.filter(b=>b.group===g);
+    if(!gb.length) return;
+    const gl=document.createElement("div"); gl.className="nav-group-label"; gl.textContent=glabel; nav.appendChild(gl);
+    gb.forEach(b=>{
+      const a=document.createElement("a"); a.href="#"+b.id; a.textContent=b.label;
+      a.dataset.target=b.id; if(g==="guide") a.className="feature"; nav.appendChild(a);
+
+      const sec=document.createElement("section");
+      sec.className="file"+(g==="guide"?" feature":""); sec.id=b.id;
+      sec.innerHTML=
+        '<div class="file-bar"><span class="name">'+b.label+'</span>'+
+        (g==="guide"?'<span class="badge">deliverable</span>':'<span class="badge">evidence</span>')+
+        '<button class="copy-btn" data-copy-file>Copy markdown</button></div>'+
+        '<div class="file-body md">'+renderMarkdown(b.md)+'</div>';
+      sec.querySelector("[data-copy-file]").addEventListener("click",e=>copy(e.target,b.md));
+      content.appendChild(sec); sections.push({id:b.id,label:b.label,el:sec,nav:a});
+    });
+  });
+
+  if(!sections.length){ document.getElementById("empty").style.display="block"; }
+
+  // per-code-block copy
+  content.querySelectorAll("[data-copy-code]").forEach(btn=>{
+    btn.addEventListener("click",()=>{ const ta=btn.parentElement.querySelector("textarea"); copy(btn,ta.value); });
+  });
+
+  function copy(btn,text){
+    const done=()=>{ const t=btn.textContent; btn.textContent="Copied"; btn.classList.add("done");
+      setTimeout(()=>{btn.textContent=t; btn.classList.remove("done");},1200); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(fallback); }
+    else fallback();
+    function fallback(){ const t=document.createElement("textarea"); t.value=text; document.body.appendChild(t);
+      t.select(); try{document.execCommand("copy");}catch(e){} t.remove(); done(); }
+  }
+
+  // scroll-spy
+  const spy=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      sections.forEach(s=>s.nav.classList.toggle("active",s.id===e.target.id)); } });
+  },{rootMargin:"-45% 0px -50% 0px"});
+  sections.forEach(s=>spy.observe(s.el));
+
+  // filter
+  document.getElementById("search").addEventListener("input",e=>{
+    const q=e.target.value.trim().toLowerCase(); let any=false;
+    sections.forEach(s=>{
+      const hit=!q || s.label.toLowerCase().includes(q) || s.el.textContent.toLowerCase().includes(q);
+      s.el.style.display=hit?"":"none"; s.nav.style.display=hit?"":"none"; if(hit) any=true;
+    });
+    document.getElementById("empty").style.display=any?"none":"block";
+  });
+})();
+</script>
+</body>
+</html>

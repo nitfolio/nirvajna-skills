@@ -397,6 +397,26 @@ reference.
 
 MIT — see [LICENSE](https://github.com/nitfolio/nirvajna-skills/blob/main/LICENSE).
 
+---
+
+## PS — what the finished report actually looks like
+
+This repo eats its own dog food. The
+[`.kt/`](https://github.com/nitfolio/nirvajna-skills/tree/main/.kt) directory at its root is a real
+trail the skill produced by running on *itself* — same ladder, same evidence tags, same honest
+unknowns, nothing tidied up afterwards.
+
+**[→ Open the study page](https://htmlpreview.github.io/?https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/.kt/onboarding.html)**
+— renders live in your browser. Or
+[grab the file](https://github.com/nitfolio/nirvajna-skills/blob/main/.kt/onboarding.html) and
+double-click it; it's fully self-contained, so no server and no internet needed.
+
+That page is exactly what `stop` produces: the curated
+[`08-onboarding.md`](https://github.com/nitfolio/nirvajna-skills/blob/main/.kt/08-onboarding.md)
+deliverable up top, and below it the whole working trail (`00`–`07`) holding the evidence behind
+every claim in it — including the assumptions the session refused to state as fact. It's the quickest
+way to see what a finished KT hands you before you run one yourself.
+
 <div align="center">
 <br>
 

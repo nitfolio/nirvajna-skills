@@ -406,8 +406,8 @@ This repo eats its own dog food. The
 trail the skill produced by running on *itself* — same ladder, same evidence tags, same honest
 unknowns, nothing tidied up afterwards.
 
-That page is exactly what `stop` produces: the curated
-[`08-onboarding.md`](https://github.com/nitfolio/nirvajna-skills/blob/main/.kt/08-onboarding.md)
+The study page is exactly what `stop` produces: the curated
+[`08-onboarding.md` / `onboarding.html`](https://htmlpreview.github.io/?https://raw.githubusercontent.com/nitfolio/nirvajna-skills/main/.kt/onboarding.html)
 deliverable up top, and below it the whole working trail (`00`–`07`) holding the evidence behind
 every claim in it — including the assumptions the session refused to state as fact. It's the quickest
 way to see what a finished KT hands you before you run one yourself.

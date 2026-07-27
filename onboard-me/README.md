@@ -44,7 +44,19 @@ survives the chat and the next person — or the next session — inherits it.
 
 ### Claude Code
 
-Copy the folder into a skills directory:
+One line, from inside the project you want it in:
+
+```bash
+npx skills@latest add nitfolio/nirvajna-skills
+```
+
+That uses the [`skills` CLI](https://github.com/vercel-labs/skills). Add `-g` to install for your
+user instead of the project, or `--copy` for real files rather than symlinks.
+
+<details>
+<summary><b>Or copy the folder by hand</b></summary>
+
+<br>
 
 ```bash
 # Personal — available in every project
@@ -54,13 +66,16 @@ cp -r onboard-me ~/.claude/skills/
 cp -r onboard-me <your-repo>/.claude/skills/
 ```
 
+</details>
+
 Restart Claude Code. The skill triggers on its own when you ask something that fits, or you can name
 it directly.
 
 ### Claude.ai / Cowork
 
-Upload `onboard-me.skill` (or zip the folder) in Settings → Capabilities → Skills. Then upload the
-repo you want to explore as a zip in the conversation.
+Zip the `onboard-me` folder (or package it as a `.skill` file) and upload it under Settings →
+Capabilities → Skills. Keep `references/` inside the archive — the skill reads those files at
+runtime. Then upload the repo you want to explore as a zip in the conversation.
 
 ### Verify it's installed
 

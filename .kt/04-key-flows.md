@@ -95,25 +95,25 @@ by someone who never ran the skill and has no access to the chat.
 3. Delete the slot for any `.kt/` file that doesn't exist.
 4. Set the `<title>` and the `.kt-repo-name` span to the repo name. **Change nothing else.**
 
-[fact] The slots are at `study-page-template.html:170-204` — nine of them, each a
+[fact] The slots are at `study-page-template.html:171-205` — nine of them, each a
 `<script type="text/markdown">` with `data-id`, `data-label`, and `data-group`.
-[fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:146` (sidebar span).
+[fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:147` (sidebar span).
 
 **Waypoint 6. Render — in the browser, no server.** [fact] The page's own pipeline:
 
 | Step | Where |
 | --- | --- |
-| Collect every markdown slot, strip leading newline | `:303-305` |
-| Drop slots still holding their `<!-- PASTE -->` comment | `:305` |
-| Group into "Curated guide" (08) and "Working trail" (00–07) | `:311-316` |
-| Build a nav link + a `<section>` card per file | `:317-330` |
-| Render markdown with the inline regex parser | `:206-298` |
-| Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:215` |
-| Per-file "Copy markdown" button | `:328` |
-| Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:247-249`, `:336-337` |
-| Clipboard write, with a `<textarea>` + `execCommand` fallback | `:341-346` |
-| Scroll-spy highlighting the active nav item | `:350` |
-| Live filter over files and headings | `:357` |
+| Collect every markdown slot, strip leading newline | `:311-314` |
+| Drop slots still holding their `<!-- PASTE -->` comment | `:314` |
+| Group into "Curated guide" (08) and "Working trail" (00–07) | `:321-324` |
+| Build a nav link + a `<section>` card per file | `:325-338` |
+| Render markdown with the inline regex parser | `:208-307` |
+| Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:218` |
+| Per-file "Copy markdown" button | `:334` |
+| Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:255-257`, `:344-345` |
+| Clipboard write, with a `<textarea>` + `execCommand` fallback | `:348-355` |
+| Scroll-spy highlighting the active nav item | `:358` |
+| Live filter over files and headings | `:365` |
 
 **Waypoint 7.** [fact] `synthesis.md:63-64` — announce both outputs by name and mention the HTML
 opens straight in a browser, no server needed.

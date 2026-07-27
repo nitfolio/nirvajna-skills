@@ -96,6 +96,7 @@
   .codeblock .lang{position:absolute; top:8px; right:64px; font-size:11px; color:var(--ink-faint);
     text-transform:uppercase; letter-spacing:.5px}
   .codeblock .copy-btn{position:absolute; top:6px; right:8px; padding:3px 9px; background:var(--panel)}
+  .codeblock .fence-note{margin-top:6px; font-size:12px; color:var(--ink-faint); line-height:1.5}
 
   /* Evidence tags: [fact] [inference] [unknown] [human] */
   .tag{font-weight:600}
@@ -213,10 +214,10 @@ mechanism. There is no import graph, no config, no registry. Four edges, all ori
 **Two couplings nothing enforces** — these are the interesting part of this architecture:
 
 1. **The HTML template is hard-coded to the evidence vocabulary.**
-   `study-page-template.html:215` regex-matches `[fact|inference|unknown|human]` to colour the tags.
+   `study-page-template.html:218` regex-matches `[fact|inference|unknown|human]` to colour the tags.
    Those four words are defined at `SKILL.md:74-82`. Rename one and the study page silently stops
    highlighting it — no error, and no build step that would catch it.
-2. **Unfilled slots hide themselves.** `study-page-template.html:305` drops any slot still containing
+2. **Unfilled slots hide themselves.** `study-page-template.html:314` drops any slot still containing
    its `<!-- PASTE … -->` comment, so a partial KT degrades gracefully.
 
 One deliberate asymmetry: the root README references `assets/` by relative path, the skill README by
@@ -294,8 +295,8 @@ Manual install alternative: `cp -r onboard-me ~/.claude/skills/` — **the whole
 | 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
 | 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
 | 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-40` |
-| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:170-204`, placeholders at `:36` and `:146` |
-| 6 | Browser render: collect slots `:303-305` → group and build cards `:311-330` → markdown parser `:206-298` → colour tags `:215` → copy buttons `:328`, `:336-337` → scroll-spy `:350` → live filter `:357` | `study-page-template.html` |
+| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
+| 6 | Browser render: collect slots `:311-314` → group and build cards `:321-338` → markdown parser `:208-307` → colour tags `:218` → copy buttons `:334`, `:344-345` → scroll-spy `:358` → live filter `:365` | `study-page-template.html` |
 | 7 | Announce both outputs; the HTML opens straight in a browser | `synthesis.md:63-64` |
 
 ### The correction flow — short, and the most important
@@ -657,7 +658,7 @@ These are the interesting bits of this architecture, because nothing enforces th
 
 **1. The HTML template is hard-coded to `SKILL.md`'s evidence vocabulary.**
 
-[fact] `study-page-template.html:215`:
+[fact] `study-page-template.html:218`:
 
 ```js
 s=s.replace(/\[(fact|inference|unknown|human)\]/g,'<span class="tag tag-$1">[$1]</span>');
@@ -669,7 +670,7 @@ that would catch it.
 
 **2. Unfilled slots hide themselves.**
 
-[fact] `study-page-template.html:305`:
+[fact] `study-page-template.html:314`:
 
 ```js
 .filter(b=>b.md && !/^<!--[\s\S]*-->$/.test(b.md.trim()));
@@ -893,25 +894,25 @@ by someone who never ran the skill and has no access to the chat.
 3. Delete the slot for any `.kt/` file that doesn't exist.
 4. Set the `<title>` and the `.kt-repo-name` span to the repo name. **Change nothing else.**
 
-[fact] The slots are at `study-page-template.html:170-204` — nine of them, each a
+[fact] The slots are at `study-page-template.html:171-205` — nine of them, each a
 `<script type="text/markdown">` with `data-id`, `data-label`, and `data-group`.
-[fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:146` (sidebar span).
+[fact] The two `REPO_NAME` placeholders are at `:36` (title) and `:147` (sidebar span).
 
 **Waypoint 6. Render — in the browser, no server.** [fact] The page's own pipeline:
 
 | Step | Where |
 | --- | --- |
-| Collect every markdown slot, strip leading newline | `:303-305` |
-| Drop slots still holding their `<!-- PASTE -->` comment | `:305` |
-| Group into "Curated guide" (08) and "Working trail" (00–07) | `:311-316` |
-| Build a nav link + a `<section>` card per file | `:317-330` |
-| Render markdown with the inline regex parser | `:206-298` |
-| Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:215` |
-| Per-file "Copy markdown" button | `:328` |
-| Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:247-249`, `:336-337` |
-| Clipboard write, with a `<textarea>` + `execCommand` fallback | `:341-346` |
-| Scroll-spy highlighting the active nav item | `:350` |
-| Live filter over files and headings | `:357` |
+| Collect every markdown slot, strip leading newline | `:311-314` |
+| Drop slots still holding their `<!-- PASTE -->` comment | `:314` |
+| Group into "Curated guide" (08) and "Working trail" (00–07) | `:321-324` |
+| Build a nav link + a `<section>` card per file | `:325-338` |
+| Render markdown with the inline regex parser | `:208-307` |
+| Colour `[fact]` / `[inference]` / `[unknown]` / `[human]` | `:218` |
+| Per-file "Copy markdown" button | `:334` |
+| Per-code-block "Copy" button (hidden `<textarea>` holds the raw text) | `:255-257`, `:344-345` |
+| Clipboard write, with a `<textarea>` + `execCommand` fallback | `:348-355` |
+| Scroll-spy highlighting the active nav item | `:358` |
+| Live filter over files and headings | `:365` |
 
 **Waypoint 7.** [fact] `synthesis.md:63-64` — announce both outputs by name and mention the HTML
 opens straight in a browser, no server needed.
@@ -949,7 +950,7 @@ There is no dependency manifest, so these were found by reading, not by resolvin
 | **GitHub raw + blob URLs** | 9 hardcoded `nitfolio` URLs, **all in `onboard-me/README.md`** | Renaming the repo or the owner breaks every image and link in the skill's README wherever it renders outside GitHub. See blast radius below. |
 | **img.shields.io** | 4 badges in `README.md`, 4 in `onboard-me/README.md` | Badges break; nothing functional. One badge encodes a fact that can go stale (`Repo_playbooks-13`, `onboard-me/README.md:14`). |
 | **oopsaididitagain.com** | `README.md:16`, `:162`; `onboard-me/README.md:21` | Dead link only. |
-| **Browser Clipboard API** | `study-page-template.html:341-346` | [fact] Already handled — falls back to a hidden `<textarea>` + `execCommand`. The study page has no other browser requirement and no network requirement at all. |
+| **Browser Clipboard API** | `study-page-template.html:348-355` | [fact] Already handled — falls back to a hidden `<textarea>` + `execCommand`. The study page has no other browser requirement and no network requirement at all. |
 
 [fact] **`SKILL.md`, `repo-playbooks.md`, and `synthesis.md` contain zero URLs** (grep count: 0 for
 each). Everything the agent actually loads is self-contained. This is a real property, not an
@@ -1001,18 +1002,18 @@ Also in scope for a rename: the 9 hardcoded `github.com/nitfolio/nirvajna-skills
 ### 3. The evidence-tag vocabulary — **silent cosmetic break**
 
 [fact] `SKILL.md:74-82` defines `[fact]`, `[inference]`, `[unknown]`, `[human]`.
-[fact] `study-page-template.html:215` hard-codes exactly those four in a regex. Rename one, add a
+[fact] `study-page-template.html:218` hard-codes exactly those four in a regex. Rename one, add a
 fifth, and every existing study page renders it as plain text with no error. Nothing links the two
 files; nothing checks them.
 
 ### 4. The `.kt/` file names or numbering — **breaks the study page**
 
-[fact] `study-page-template.html:170-204` has exactly 9 slots keyed by `data-id`
+[fact] `study-page-template.html:171-205` has exactly 9 slots keyed by `data-id`
 (`08-onboarding`, `00-progress` … `07-safe-contribution`). [fact] `SKILL.md:196-208` and
 `onboard-me/README.md:225-237` both document the same list. Renaming a `.kt/` file means editing
 three files, one of which is HTML.
 
-[fact] Partial mitigation: `:305` drops any slot that is still an unfilled comment, so a *missing*
+[fact] Partial mitigation: `:314` drops any slot that is still an unfilled comment, so a *missing*
 file degrades gracefully. A *renamed* one does not — its content simply never appears.
 
 ### 5. Adding or removing a repo-type playbook — **5 stale counters**
@@ -1138,7 +1139,7 @@ Named plainly, worst first.
 2. **Five hand-synced playbook counters.** [fact] `README.md:48`, `README.md:118`,
    `onboard-me/README.md:14`, `:190-193`, `:359` — all currently agree; nothing keeps them that way.
 3. **Tag vocabulary ↔ study-page regex.** [fact] `SKILL.md:74-82` vs
-   `study-page-template.html:215`. Drift here fails silently and cosmetically.
+   `study-page-template.html:218`. Drift here fails silently and cosmetically.
 4. **Installed junctions/symlinks break on rename.** See above; undocumented in the repo.
 5. **`main` has no safety net.** [fact] No CI, no tags, no releases, no protected branch, and the
    install path reads `main` — so there is no gap between "committed" and "shipped".
@@ -1190,7 +1191,7 @@ enumerate them by number, so adding a 14th type cannot break an existing run.
 
 [inference] It also can't reach the two silent couplings from `02-architecture.md` — it touches
 neither the evidence-tag vocabulary nor the `.kt/` filenames. Based on those couplings living in
-`SKILL.md:74-82` and `study-page-template.html:170-204`, neither of which a playbook edits.
+`SKILL.md:74-82` and `study-page-template.html:171-205`, neither of which a playbook edits.
 
 **Where to work:** `onboard-me/references/repo-playbooks.md`.
 
@@ -1352,9 +1353,16 @@ function renderMarkdown(src){
       i++; // skip closing fence
       const raw=code.join("\n");
       const langLabel = lang ? '<span class="lang">'+esc(lang)+'</span>' : '';
+      // This page ships no diagram renderer on purpose — it must stay offline and
+      // self-contained. Mermaid fences show as source, so say so and point somewhere useful.
+      const note = /^mermaid$/i.test(lang)
+        ? '<div class="fence-note">Diagram source — this page renders no diagrams. Copy it into '+
+          '<a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>, '+
+          'or read this file on GitHub, which renders mermaid natively.</div>'
+        : '';
       html+='<div class="codeblock">'+langLabel+
             '<button class="copy-btn" data-copy-code>Copy</button>'+
-            '<pre><code>'+esc(raw)+'</code></pre>'+
+            '<pre><code>'+esc(raw)+'</code></pre>'+note+
             '<textarea hidden>'+esc(raw)+'</textarea></div>';
       continue;
     }

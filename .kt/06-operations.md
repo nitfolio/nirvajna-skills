@@ -80,7 +80,7 @@ Named plainly, worst first.
 2. **Five hand-synced playbook counters.** [fact] `README.md:48`, `README.md:118`,
    `onboard-me/README.md:14`, `:190-193`, `:359` — all currently agree; nothing keeps them that way.
 3. **Tag vocabulary ↔ study-page regex.** [fact] `SKILL.md:74-82` vs
-   `study-page-template.html:215`. Drift here fails silently and cosmetically.
+   `study-page-template.html:218`. Drift here fails silently and cosmetically.
 4. **Installed junctions/symlinks break on rename.** See above; undocumented in the repo.
 5. **`main` has no safety net.** [fact] No CI, no tags, no releases, no protected branch, and the
    install path reads `main` — so there is no gap between "committed" and "shipped".

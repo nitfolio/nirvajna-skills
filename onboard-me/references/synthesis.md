@@ -33,7 +33,8 @@ handbook; the working trail (`00`–`07`) is already there for anyone who wants 
 ## Suggested shape
 
 1. **What this system is** — one paragraph a newcomer could repeat back in a standup.
-2. **Architecture map** — text or mermaid, at the level of modules/services.
+2. **Architecture map** — at the level of modules/services. Draw it in text by default: the study
+   page ships no diagram renderer, so a mermaid fence shows up there as source.
 3. **Domain glossary** — each term with a one-line meaning and where it lives.
 4. **One or two key flows** — traced end to end with real `file:line` waypoints.
 5. **Your first change** — a low-risk area, plus the exact commands to run and verify it.

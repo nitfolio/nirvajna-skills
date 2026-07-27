@@ -76,7 +76,7 @@ These are the interesting bits of this architecture, because nothing enforces th
 
 **1. The HTML template is hard-coded to `SKILL.md`'s evidence vocabulary.**
 
-[fact] `study-page-template.html:215`:
+[fact] `study-page-template.html:218`:
 
 ```js
 s=s.replace(/\[(fact|inference|unknown|human)\]/g,'<span class="tag tag-$1">[$1]</span>');
@@ -88,7 +88,7 @@ that would catch it.
 
 **2. Unfilled slots hide themselves.**
 
-[fact] `study-page-template.html:305`:
+[fact] `study-page-template.html:314`:
 
 ```js
 .filter(b=>b.md && !/^<!--[\s\S]*-->$/.test(b.md.trim()));

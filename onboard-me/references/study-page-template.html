@@ -126,6 +126,7 @@
   .codeblock .lang{position:absolute; top:8px; right:64px; font-size:11px; color:var(--ink-faint);
     text-transform:uppercase; letter-spacing:.5px}
   .codeblock .copy-btn{position:absolute; top:6px; right:8px; padding:3px 9px; background:var(--panel)}
+  .codeblock .fence-note{margin-top:6px; font-size:12px; color:var(--ink-faint); line-height:1.5}
 
   /* Evidence tags: [fact] [inference] [unknown] [human] */
   .tag{font-weight:600}
@@ -243,9 +244,16 @@ function renderMarkdown(src){
       i++; // skip closing fence
       const raw=code.join("\n");
       const langLabel = lang ? '<span class="lang">'+esc(lang)+'</span>' : '';
+      // This page ships no diagram renderer on purpose — it must stay offline and
+      // self-contained. Mermaid fences show as source, so say so and point somewhere useful.
+      const note = /^mermaid$/i.test(lang)
+        ? '<div class="fence-note">Diagram source — this page renders no diagrams. Copy it into '+
+          '<a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>, '+
+          'or read this file on GitHub, which renders mermaid natively.</div>'
+        : '';
       html+='<div class="codeblock">'+langLabel+
             '<button class="copy-btn" data-copy-code>Copy</button>'+
-            '<pre><code>'+esc(raw)+'</code></pre>'+
+            '<pre><code>'+esc(raw)+'</code></pre>'+note+
             '<textarea hidden>'+esc(raw)+'</textarea></div>';
       continue;
     }

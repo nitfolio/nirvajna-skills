@@ -11,7 +11,7 @@ There is no dependency manifest, so these were found by reading, not by resolvin
 | **GitHub raw + blob URLs** | 9 hardcoded `nitfolio` URLs, **all in `onboard-me/README.md`** | Renaming the repo or the owner breaks every image and link in the skill's README wherever it renders outside GitHub. See blast radius below. |
 | **img.shields.io** | 4 badges in `README.md`, 4 in `onboard-me/README.md` | Badges break; nothing functional. One badge encodes a fact that can go stale (`Repo_playbooks-13`, `onboard-me/README.md:14`). |
 | **oopsaididitagain.com** | `README.md:16`, `:162`; `onboard-me/README.md:21` | Dead link only. |
-| **Browser Clipboard API** | `study-page-template.html:341-346` | [fact] Already handled — falls back to a hidden `<textarea>` + `execCommand`. The study page has no other browser requirement and no network requirement at all. |
+| **Browser Clipboard API** | `study-page-template.html:348-355` | [fact] Already handled — falls back to a hidden `<textarea>` + `execCommand`. The study page has no other browser requirement and no network requirement at all. |
 
 [fact] **`SKILL.md`, `repo-playbooks.md`, and `synthesis.md` contain zero URLs** (grep count: 0 for
 each). Everything the agent actually loads is self-contained. This is a real property, not an
@@ -63,18 +63,18 @@ Also in scope for a rename: the 9 hardcoded `github.com/nitfolio/nirvajna-skills
 ### 3. The evidence-tag vocabulary — **silent cosmetic break**
 
 [fact] `SKILL.md:74-82` defines `[fact]`, `[inference]`, `[unknown]`, `[human]`.
-[fact] `study-page-template.html:215` hard-codes exactly those four in a regex. Rename one, add a
+[fact] `study-page-template.html:218` hard-codes exactly those four in a regex. Rename one, add a
 fifth, and every existing study page renders it as plain text with no error. Nothing links the two
 files; nothing checks them.
 
 ### 4. The `.kt/` file names or numbering — **breaks the study page**
 
-[fact] `study-page-template.html:170-204` has exactly 9 slots keyed by `data-id`
+[fact] `study-page-template.html:171-205` has exactly 9 slots keyed by `data-id`
 (`08-onboarding`, `00-progress` … `07-safe-contribution`). [fact] `SKILL.md:196-208` and
 `onboard-me/README.md:225-237` both document the same list. Renaming a `.kt/` file means editing
 three files, one of which is HTML.
 
-[fact] Partial mitigation: `:305` drops any slot that is still an unfilled comment, so a *missing*
+[fact] Partial mitigation: `:314` drops any slot that is still an unfilled comment, so a *missing*
 file degrades gracefully. A *renamed* one does not — its content simply never appears.
 
 ### 5. Adding or removing a repo-type playbook — **5 stale counters**

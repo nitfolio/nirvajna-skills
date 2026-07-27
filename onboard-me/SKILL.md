@@ -197,7 +197,7 @@ after a stage is actually done and evidence-backed.
 .kt/
 ├── 00-progress.md        ← source of truth: what's explored, what's next, open unknowns
 ├── 01-overview.md        ← system purpose, stack, repo map
-├── 02-architecture.md    ← modules/services + a text or mermaid diagram
+├── 02-architecture.md    ← modules/services + a diagram (see "Diagrams" below)
 ├── 03-domain-glossary.md ← business terms, each with a one-line meaning + where it lives
 ├── 04-key-flows.md       ← traced end-to-end flows with file:line waypoints
 ├── 05-dependencies.md    ← dependency notes + blast-radius warnings
@@ -206,6 +206,12 @@ after a stage is actually done and evidence-backed.
 ├── 08-onboarding.md      ← the clean, curated deliverable (produced on `stop` — see below)
 └── onboarding.html       ← self-contained study page bundling 00–08 (produced together with 08)
 ```
+
+**Diagrams: draw them in text by default.** An ASCII diagram renders identically everywhere — on
+GitHub, in a terminal, pasted into a chat, and in the `onboarding.html` study page. Mermaid renders
+natively on GitHub, but the study page deliberately ships no diagram renderer (it has to stay offline
+and self-contained), so a mermaid fence appears there as source. Reach for mermaid only when you know
+the reader is on GitHub; otherwise text is the safer default.
 
 Files `00`–`07` are the **working trail**: evidence-tagged, honest, full of `[unknown]`s — a record of
 the learning, for you mid-session and for anyone who wants to see the reasoning. Leave them raw; don't

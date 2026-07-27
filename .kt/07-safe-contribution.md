@@ -26,7 +26,7 @@ enumerate them by number, so adding a 14th type cannot break an existing run.
 
 [inference] It also can't reach the two silent couplings from `02-architecture.md` — it touches
 neither the evidence-tag vocabulary nor the `.kt/` filenames. Based on those couplings living in
-`SKILL.md:74-82` and `study-page-template.html:170-204`, neither of which a playbook edits.
+`SKILL.md:74-82` and `study-page-template.html:171-205`, neither of which a playbook edits.
 
 **Where to work:** `onboard-me/references/repo-playbooks.md`.
 

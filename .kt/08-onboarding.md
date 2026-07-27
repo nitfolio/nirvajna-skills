@@ -73,10 +73,10 @@ mechanism. There is no import graph, no config, no registry. Four edges, all ori
 **Two couplings nothing enforces** — these are the interesting part of this architecture:
 
 1. **The HTML template is hard-coded to the evidence vocabulary.**
-   `study-page-template.html:215` regex-matches `[fact|inference|unknown|human]` to colour the tags.
+   `study-page-template.html:218` regex-matches `[fact|inference|unknown|human]` to colour the tags.
    Those four words are defined at `SKILL.md:74-82`. Rename one and the study page silently stops
    highlighting it — no error, and no build step that would catch it.
-2. **Unfilled slots hide themselves.** `study-page-template.html:305` drops any slot still containing
+2. **Unfilled slots hide themselves.** `study-page-template.html:314` drops any slot still containing
    its `<!-- PASTE … -->` comment, so a partial KT degrades gracefully.
 
 One deliberate asymmetry: the root README references `assets/` by relative path, the skill README by
@@ -154,8 +154,8 @@ Manual install alternative: `cp -r onboard-me ~/.claude/skills/` — **the whole
 | 2 | **Coverage check** — thin exploration must not become a polished document | `synthesis.md:6-14` |
 | 3 | **Confidence filter** — promote `[fact]`/`[human]`, drop guesses, carry the rest | `synthesis.md:16-26` |
 | 4 | Write `08-onboarding.md` to the six-part shape | `synthesis.md:33-40` |
-| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:170-204`, placeholders at `:36` and `:146` |
-| 6 | Browser render: collect slots `:303-305` → group and build cards `:311-330` → markdown parser `:206-298` → colour tags `:215` → copy buttons `:328`, `:336-337` → scroll-spy `:350` → live filter `:357` | `study-page-template.html` |
+| 5 | Fill the template: paste raw markdown into 9 slots, delete slots for missing files, set `<title>` and `.kt-repo-name`, **change nothing else** | `synthesis.md:51-58`; slots at `study-page-template.html:171-205`, placeholders at `:36` and `:147` |
+| 6 | Browser render: collect slots `:311-314` → group and build cards `:321-338` → markdown parser `:208-307` → colour tags `:218` → copy buttons `:334`, `:344-345` → scroll-spy `:358` → live filter `:365` | `study-page-template.html` |
 | 7 | Announce both outputs; the HTML opens straight in a browser | `synthesis.md:63-64` |
 
 ### The correction flow — short, and the most important

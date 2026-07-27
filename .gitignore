@@ -4,3 +4,6 @@
 # Article drafts and their plan sit alongside the trail for convenience.
 # They are working material, not part of the skill or the published example.
 .kt/lin-articles/
+
+# Brainstorms and prior-art research for skills not yet built.
+research/

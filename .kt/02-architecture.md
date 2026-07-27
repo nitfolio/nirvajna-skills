@@ -29,7 +29,7 @@ purpose. Verified: the file is 2 lines and neither is a pattern.
 ```
 onboard-me/
 ├── SKILL.md          347 L  ── ALWAYS LOADED. The method.
-├── README.md         411 L  ── humans only; no runtime edge points at it
+├── README.md         426 L  ── humans only; no runtime edge points at it
 └── references/              ── ON DEMAND
     ├── repo-playbooks.md         360 L
     ├── synthesis.md               64 L

@@ -12,7 +12,8 @@ calls for it. No plugin, no config, no runtime."
 
 ## Stack
 
-[fact] **There is no code.** 12 tracked files: 6 Markdown/HTML documents and 4 PNGs.
+[fact] **There is no code.** 12 tracked source files: 6 Markdown/HTML documents, 4 PNGs, `LICENSE`,
+and `.gitignore`. (22 tracked in total once the `.kt/` trail this session produced was committed.)
 
 [fact] Absent, each checked individually: `package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`,
 `Makefile`, `.github/workflows`, `.github/`. There is no build, no test suite, no CI, no lockfile,
@@ -44,7 +45,7 @@ nirvajna-skills/
 ├── assets/                           4 PNGs: wordmark + logo, each light/dark
 └── onboard-me/                       the one skill
     ├── SKILL.md              347 L   always loaded — the method
-    ├── README.md             411 L   human docs — not loaded by the agent
+    ├── README.md             426 L   human docs — not loaded by the agent
     └── references/                   loaded on demand only
         ├── repo-playbooks.md        360 L
         ├── study-page-template.html 368 L

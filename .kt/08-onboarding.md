@@ -11,8 +11,9 @@ the working trail with the underlying evidence is in `.kt/00-progress.md` throug
 a guided knowledge-transfer skill that walks an engineer through an unfamiliar codebase one stage at
 a time, tagging every claim with its evidence.
 
-The thing to internalise before reading anything: **there is no code here.** Twelve tracked files —
-six Markdown/HTML documents and four PNGs. No build, no tests, no CI, no dependencies, no config.
+The thing to internalise before reading anything: **there is no code here.** Twelve tracked source
+files — six Markdown/HTML documents, four PNGs, `LICENSE`, and `.gitignore`. No build, no tests, no
+CI, no dependencies, no config. (The repo now also carries this KT trail in `.kt/`.)
 A skill is "a self-contained folder — a `SKILL.md` plus optional `references/`, `scripts/`, or
 `assets/` — that Claude Code loads when the situation calls for it. No plugin, no config, no runtime"
 (`README.md:27-29`). The repo is inert text; behaviour exists only when an agent loads it.
@@ -39,7 +40,7 @@ nirvajna-skills/
 ├── assets/                    4 PNGs, wordmark + logo, light/dark       (no runtime role)
 └── onboard-me/                THE PRODUCT
     ├── SKILL.md       347 L   ── ALWAYS LOADED. The method.
-    ├── README.md      411 L   ── humans only; nothing loads it at runtime
+    ├── README.md      426 L   ── humans only; nothing loads it at runtime
     └── references/            ── ON DEMAND
         ├── repo-playbooks.md         360 L
         ├── synthesis.md               64 L

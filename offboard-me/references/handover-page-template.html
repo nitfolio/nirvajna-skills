@@ -1,16 +1,16 @@
 <!doctype html>
 <!--
   ============================================================================
-  KT STUDY PAGE TEMPLATE  —  do not ship this comment block.
+  HANDOVER PAGE TEMPLATE  —  do not ship this comment block.
   ============================================================================
-  This is a self-contained, offline, single-file study page for a
-  `.kt/onboard/` trail. To produce `.kt/onboard/onboarding.html`, copy this
-  file and replace the CONTENT SLOTS below.
+  This is a self-contained, offline, single-file page for a `.kt/offboard/`
+  handover capture. To produce `.kt/offboard/handover.html`, copy this file
+  and replace the CONTENT SLOTS below.
 
   HOW TO FILL IT IN
   -----------------
   Near the bottom you will find one <script type="text/markdown"> block per
-  KT file. For each file that actually exists in `.kt/onboard/`:
+  file. For each file that actually exists in `.kt/offboard/`:
 
     - paste the file's RAW markdown VERBATIM between the script tags
       (script[type=text/markdown] is inert — no JS escaping needed);
@@ -19,11 +19,12 @@
     - keep the data-id / data-label / data-group attributes.
 
   Rules:
-    - DELETE the block for any KT file that was never created. The page adapts
+    - DELETE the block for any file that was never created. The page adapts
       to whatever blocks remain; empty sections must not appear.
     - Do NOT add secret values. These blocks mirror the already-redacted trail
       files — copy them as-is. If a redaction note is present, keep it.
-    - Also set the <title> and the .kt-repo-name span to the repo's name.
+    - Also set the <title> and the .kt-repo-name span to the repo's name, and
+      the .kt-subtitle span to the departing person's name / last day.
     - Change nothing else. The CSS + renderer below are complete; the page
       renders every block, builds the nav, and wires per-file / per-code-block
       copy buttons on load.
@@ -33,7 +34,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Onboarding — REPO_NAME</title>
+<title>Handover — REPO_NAME</title>
 <style>
   :root{
     --bg:#0f1115; --panel:#161922; --panel-2:#1c2029; --line:#2a2f3a;
@@ -145,15 +146,16 @@
 <div class="layout">
   <aside class="side">
     <h1><span class="kt-repo-name">REPO_NAME</span></h1>
-    <div class="sub">Onboarding &middot; KT study page</div>
+    <div class="sub"><span class="kt-subtitle">Handover &middot; DEPARTING_NAME, last day DATE</span></div>
     <input class="search" id="search" type="search" placeholder="Filter files & headings…" autocomplete="off">
     <nav class="nav" id="nav"></nav>
   </aside>
   <main class="main">
     <div class="wrap">
       <div class="doc-head">
-        <h1>Codebase onboarding</h1>
-        <p>The curated guide is up top. Below it is the working trail — the evidence behind every claim.
+        <h1>Knowledge handover</h1>
+        <p>The handover document is up top — start with its first section, the things nobody could
+           explain. Below it is the working trail: the full capture and the risk register behind it.
            Use the copy button on any card to grab its original markdown.</p>
       </div>
       <div id="content"></div>
@@ -163,45 +165,21 @@
 </div>
 
 <!-- ========================================================================
-     CONTENT SLOTS — paste each KT file's RAW markdown between the tags.
-     data-group is "guide" for 08 (featured) or "trail" for 00–07.
+     CONTENT SLOTS — paste each file's RAW markdown between the tags.
+     data-group is "guide" for 02 (the featured deliverable) or "trail".
      Delete any block whose file was not created.
      ===================================================================== -->
 
-<script type="text/markdown" data-id="08-onboarding" data-label="08 · Onboarding guide" data-group="guide">
-<!-- PASTE 08-onboarding.md HERE (verbatim). This is the featured deliverable. -->
+<script type="text/markdown" data-id="02-handover" data-label="02 · Handover" data-group="guide">
+<!-- PASTE 02-handover.md HERE (verbatim). This is the featured deliverable. -->
 </script>
 
-<script type="text/markdown" data-id="00-progress" data-label="00 · Progress" data-group="trail">
-<!-- PASTE 00-progress.md HERE (verbatim). -->
+<script type="text/markdown" data-id="00-risk-register" data-label="00 · Risk register" data-group="trail">
+<!-- PASTE 00-risk-register.md HERE (verbatim). -->
 </script>
 
-<script type="text/markdown" data-id="01-overview" data-label="01 · Overview" data-group="trail">
-<!-- PASTE 01-overview.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="02-architecture" data-label="02 · Architecture" data-group="trail">
-<!-- PASTE 02-architecture.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="03-domain-glossary" data-label="03 · Domain glossary" data-group="trail">
-<!-- PASTE 03-domain-glossary.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="04-key-flows" data-label="04 · Key flows" data-group="trail">
-<!-- PASTE 04-key-flows.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="05-dependencies" data-label="05 · Dependencies" data-group="trail">
-<!-- PASTE 05-dependencies.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="06-operations" data-label="06 · Operations" data-group="trail">
-<!-- PASTE 06-operations.md HERE (verbatim). -->
-</script>
-
-<script type="text/markdown" data-id="07-safe-contribution" data-label="07 · Safe contribution" data-group="trail">
-<!-- PASTE 07-safe-contribution.md HERE (verbatim). -->
+<script type="text/markdown" data-id="01-tribal-knowledge" data-label="01 · Tribal knowledge" data-group="trail">
+<!-- PASTE 01-tribal-knowledge.md HERE (verbatim). -->
 </script>
 
 <script>
@@ -315,7 +293,7 @@ function renderMarkdown(src){
 
   const nav=document.getElementById("nav");
   const content=document.getElementById("content");
-  const groups=[["guide","Curated guide"],["trail","Working trail"]];
+  const groups=[["guide","Handover document"],["trail","Capture and register"]];
   const sections=[];
 
   groups.forEach(([g,glabel])=>{

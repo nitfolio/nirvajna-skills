@@ -5,7 +5,7 @@ description: >-
   stage per turn, grounded in what the repo actually shows. Use when someone is
   onboarding to a codebase they don't know ("where do I start", "walk me through
   this repo"), doing due diligence or reverse-engineering a legacy system, or
-  resuming an in-progress KT (a `.kt/` directory exists, "where were we"). Prefer
+  resuming an in-progress KT (a `.kt/onboard/` trail exists, "where were we"). Prefer
   this over ad-hoc "explain this code" whenever the goal is understanding a whole
   system rather than one snippet.
 ---
@@ -118,9 +118,9 @@ the opposite of the goal.
 - **No usable git history** (exported tarball, SVN, shallow clone): say so plainly, then lean harder on
   structure, tests, and docs. Don't invent ownership or history you can't see.
 - **Repo arrived as an upload or read-only mount** (a zip in Claude.ai, a read-only directory): extract
-  or copy it to a writable working directory before exploring, and put `.kt/` there instead of the repo
-  root — tell the human where it lives so they can carry it back into the real repo. Uploaded archives
-  usually lack `.git/`, so the no-git-history fallback above applies too.
+  or copy it to a writable working directory before exploring, and put `.kt/onboard/` there instead of
+  the repo root — tell the human where it lives so they can carry it back into the real repo. Uploaded
+  archives usually lack `.git/`, so the no-git-history fallback above applies too.
 - **Very large repo / monorepo** (thousands of files, many services): don't try to hold it all. After a
   quick top-level survey, add a scoping turn — "this is large; which service or area should we KT first?"
   — and KT that slice. Note the rest as unexplored in `00-progress.md`.
@@ -137,7 +137,8 @@ You are reading someone else's unfamiliar repo, often one connected to real syst
   betrayal of what the human asked for.
 - **Never run anything that mutates state**: no commits, pushes, branch changes, migrations, seed
   scripts, deploys, `terraform apply`, or commands against a live database or cloud account.
-- **The one write exception is `.kt/`** — plus a working copy if the repo arrived read-only.
+- **The one write exception is `.kt/onboard/`** — plus a working copy if the repo arrived read-only.
+  Nothing outside that directory, including any sibling `.kt/` folder another skill's session left.
 - **Running builds, tests, or scripts executes code from a repo you don't yet understand.** It can
   hit the network, touch real services, or fail expensively. Propose it and let the human decide, or
   let them run it and paste the output. In Stage 7 you're describing *how* to verify a change, not
@@ -189,12 +190,12 @@ anything that fits none of them. If the repo is a mix, name the pieces and start
 
 ## Artifacts: leave a permanent onboarding trail
 
-KT should outlive the chat. As you complete stages, write findings to a `.kt/` directory at the repo
-root so the next person (or the next session) inherits the work. Create files incrementally — only
-after a stage is actually done and evidence-backed.
+KT should outlive the chat. As you complete stages, write findings to `.kt/onboard/` at the repo root
+so the next person (or the next session) inherits the work. Create files incrementally — only after a
+stage is actually done and evidence-backed.
 
 ```
-.kt/
+.kt/onboard/
 ├── 00-progress.md        ← source of truth: what's explored, what's next, open unknowns
 ├── 01-overview.md        ← system purpose, stack, repo map
 ├── 02-architecture.md    ← modules/services + a diagram (see "Diagrams" below)
@@ -247,17 +248,21 @@ everything in context or re-derive earlier findings — reread your own notes. K
 scoped to the current stage, and if the session runs very long, offering a `pause` beats degrading: a
 fresh session resuming from `00-progress.md` is sharper than a foggy one.
 
-Before creating `.kt/`, tell the human it's happening and mention they may want to gitignore it (or
-keep it — a curated `.kt/` can become real onboarding docs).
+Before creating `.kt/onboard/`, tell the human it's happening and mention they may want to gitignore
+it (or keep it — a curated trail can become real onboarding docs).
 
 **Stamp every `.kt/` file with the commit it was written against** — short hash and date, one line
 under the heading, saying its `file:line` citations are line numbers at that commit. Citations rot as
 the repo moves; the stamp turns a drifted claim into a checkable one and tells the next reader whether
 to verify against that commit or regenerate.
 
-**Resuming an existing `.kt/`?** Compare its stamp against `git rev-parse --short HEAD`. If they
-differ, say so in your first turn and re-verify the citations you build on — one can resolve to a real
-line and still point at the wrong thing.
+**Resuming an existing `.kt/onboard/`?** Compare its stamp against `git rev-parse --short HEAD`. If
+they differ, say so in your first turn and re-verify the citations you build on — one can resolve to a
+real line and still point at the wrong thing.
+
+If you find the numbered files loose in `.kt/` itself rather than in `.kt/onboard/`, that's a trail
+from an older version of this skill. Offer to move them into `.kt/onboard/` before resuming; if the
+human would rather not, continue in place and keep writing where the files already are.
 
 ## The human's controls
 

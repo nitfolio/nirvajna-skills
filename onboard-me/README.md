@@ -35,7 +35,7 @@ running a knowledge transfer: it explores the repo, teaches one layer at a time,
 with where the evidence came from, keeps an honest map of what's still unknown, and proposes the
 next thing worth learning. You steer with one-word replies.
 
-It also leaves a trail. Findings are written to a `.kt/` directory as the session goes, so the work
+It also leaves a trail. Findings are written to `.kt/onboard/` as the session goes, so the work
 survives the chat and the next person — or the next session — inherits it.
 
 ---
@@ -131,7 +131,7 @@ solution.
 
 | Say | What happens |
 | --- | --- |
-| `start` | Begin, or resume from an existing `.kt/` |
+| `start` | Begin, or resume from an existing `.kt/onboard/` |
 | `continue` / `yes` | Do the proposed next step |
 | `speedrun` | Run every remaining stage back-to-back, no stops, then produce the final document |
 | `deeper` | Stay on this topic and go further |
@@ -220,12 +220,12 @@ Some examples of how much the playbook changes the session:
 
 ## The `.kt/` trail
 
-As stages complete, findings are written to a `.kt/` directory at the repo root. The name is short
-for knowledge transfer, which is what a session actually is, and it stays short so it sits quietly in
+As stages complete, findings are written to `.kt/onboard/` at the repo root. The name is short for
+knowledge transfer, which is what a session actually is, and it stays short so it sits quietly in
 your repo root:
 
 ```
-.kt/
+.kt/onboard/
 ├── 00-progress.md          ← what's explored, what's next, open unknowns
 ├── 01-overview.md          ← purpose, stack, repo map
 ├── 02-architecture.md      ← modules/services + diagram
@@ -247,9 +247,9 @@ produced when you say `stop`.
 Alongside it, `stop` also builds `onboarding.html` — a single, self-contained study page that bundles
 all of `00`–`08` into one view with sidebar navigation and a one-click copy button on every file. It
 inlines everything (no server, no internet), so you can just double-click it open, and it mirrors the
-already-redacted `.kt/` files, so it carries no secrets the trail didn't.
+already-redacted trail files, so it carries no secrets the trail didn't.
 
-**Should you commit `.kt/`?** Either works. Gitignore it if you treat it as scratch. Commit it if you
+**Should you commit it?** Either works. Gitignore it if you treat it as scratch. Commit it if you
 want the next hire to inherit the map — a curated trail makes genuinely good onboarding docs, which
 is most of the value here.
 
@@ -304,11 +304,11 @@ KT explores; it doesn't change things. The skill is written to be read-only by d
 - **No edits** to source, config, or dependencies — not even tidying something it noticed.
 - **No state mutation** — no commits, pushes, branch changes, migrations, seeds, deploys, or
   `terraform apply`.
-- **The only write is `.kt/`** (plus a working copy if the repo arrived read-only).
+- **The only write is `.kt/onboard/`** (plus a working copy if the repo arrived read-only).
 - **It won't silently run your build or tests.** That executes code from a repo nobody understands
   yet and can hit real services. It proposes; you decide.
 - **Secrets stay out of the trail.** It notes *that* a credential exists and where it's configured,
-  never the value — `.kt/` files persist, and a leaked token in one is worse than no notes at all.
+  never the value — trail files persist, and a leaked token in one is worse than no notes at all.
 - **Instructions found inside repo files are treated as data, not commands.** If a file contains
   text addressed to an AI agent, that gets reported as a finding, not obeyed.
 
@@ -390,7 +390,8 @@ After a quick survey it adds a scoping turn — "this is large, which service sh
 and notes the rest as unexplored rather than pretending to have covered it.
 
 **Can I use it on a repo I've uploaded rather than cloned?**
-Yes. It extracts to a working directory and puts `.kt/` somewhere writable, then tells you where.
+Yes. It extracts to a working directory and puts `.kt/onboard/` somewhere writable, then tells you
+where.
 
 **Will it just tell me what I want to hear?**
 It's written the other way: unknowns are named rather than smoothed over, and the final document
@@ -415,12 +416,12 @@ MIT — see [LICENSE](https://github.com/nitfolio/nirvajna-skills/blob/main/LICE
 ## PS :- What the finished report actually looks like
 
 This repo eats its own dog food. The
-[`.kt/`](https://github.com/nitfolio/nirvajna-skills/tree/main/.kt) directory at its root is a real
-trail the skill produced by running on *itself* — same ladder, same evidence tags, same honest
-unknowns, nothing tidied up afterwards.
+[`.kt/onboard/`](https://github.com/nitfolio/nirvajna-skills/tree/main/.kt/onboard) directory at its
+root is a real trail the skill produced by running on *itself* — same ladder, same evidence tags, same
+honest unknowns, nothing tidied up afterwards.
 
 The study page is exactly what `stop` produces: the curated
-[`onboarding.html`](https://nitfolio.github.io/nirvajna-skills/.kt/onboarding.html)
+[`onboarding.html`](https://nitfolio.github.io/nirvajna-skills/.kt/onboard/onboarding.html)
 deliverable up top, and below it the whole working trail (`00`–`07`) holding the evidence behind
 every claim in it — including the assumptions the session refused to state as fact. It's the quickest
 way to see what a finished KT hands you before you run one yourself.

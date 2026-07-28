@@ -56,21 +56,21 @@ is invisible without reading the target.
 
 ## 5. Build the offline study page (`onboarding.html`)
 
-Once `08-onboarding.md` is written, always also produce `.kt/onboarding.html` — a single, self-contained
-page that bundles the whole trail (`00`–`08`) into one place a newcomer can study, with a one-click copy
-button on every file. Build it from the template, don't hand-roll it:
+Once `08-onboarding.md` is written, always also produce `.kt/onboard/onboarding.html` — a single,
+self-contained page that bundles the whole trail (`00`–`08`) into one place a newcomer can study, with
+a one-click copy button on every file. Build it from the template, don't hand-roll it:
 
-1. Copy `references/study-page-template.html` to `.kt/onboarding.html`.
+1. Copy `references/study-page-template.html` to `.kt/onboard/onboarding.html`.
 2. It has one `<script type="text/markdown">` slot per KT file. Into each slot, paste that file's **raw
    markdown verbatim** — `08-onboarding.md` fills the featured "guide" slot; `00`–`07` fill the "trail"
    slots. The blocks are inert, so no escaping is needed (the only exception: if the markdown literally
    contains `</script>`, write it `<\/script>`).
-3. **Delete the slot for any `.kt/` file that doesn't exist** — a partial KT (or a paused-then-stopped
+3. **Delete the slot for any trail file that doesn't exist** — a partial KT (or a paused-then-stopped
    one) should never render empty sections.
 4. Set the page `<title>` and the `.kt-repo-name` span to the repo's name. Change nothing else — the
    CSS, the markdown renderer, the nav, and the copy buttons are complete in the template.
 
-The page mirrors the `.kt/` files exactly, which means the secrets rule carries over untouched: those
+The page mirrors the trail files exactly, which means the secrets rule carries over untouched: those
 files are already redacted, so paste them as-is and never reintroduce a secret value while filling the
 template. When you announce `stop` is done, name both outputs — `08-onboarding.md` and `onboarding.html`
 — and mention the HTML opens straight in a browser, no server needed.

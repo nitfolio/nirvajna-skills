@@ -1,9 +1,6 @@
-# The .kt/ knowledge-transfer trail is intentionally committed in this repo —
-# it doubles as a worked example of the onboard-me skill's output.
+# The .kt/ trail is intentionally committed in this repo — .kt/onboard/ doubles
+# as a worked example of the onboard-me skill's output.
 
-# Article drafts and their plan sit alongside the trail for convenience.
-# They are working material, not part of the skill or the published example.
-.kt/lin-articles/
-
-# Brainstorms and prior-art research for skills not yet built.
+# Working material: brainstorms, prior-art research for skills not yet built,
+# and the article drafts kept for reference.
 research/

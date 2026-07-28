@@ -11,7 +11,7 @@
 **Skills that make [Claude Code](https://docs.claude.com/en/docs/claude-code) do the tedious part properly.**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-4A86D8?style=flat-square&labelColor=141312)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-1-FF4A17?style=flat-square&labelColor=141312)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-2-FF4A17?style=flat-square&labelColor=141312)](#-skills)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-ready-4A86D8?style=flat-square&labelColor=141312)](https://docs.claude.com/en/docs/claude-code)
 [![Website](https://img.shields.io/badge/oopsaididitagain.com-FF4A17?style=flat-square&labelColor=141312)](https://oopsaididitagain.com/)
 
@@ -45,9 +45,29 @@ Guided, evidence-based knowledge transfer for an unfamiliar codebase. Explores t
 per turn**, tags every claim with its evidence, keeps an honest map of what's still unknown, and
 proposes the next step — you steer with one-word replies.
 
-Adapts to 13 repo types, leaves a resumable `.kt/` trail, and finishes with a curated onboarding
-document plus a self-contained HTML study page. Say `speedrun` to run the whole ladder without
-stopping.
+Adapts to 13 repo types, leaves a resumable trail in `.kt/onboard/`, and finishes with a curated
+onboarding document plus a self-contained HTML study page. Say `speedrun` to run the whole ladder
+without stopping.
+
+</td>
+</tr>
+<tr>
+<td width="220" valign="top">
+
+### [`offboard-me`](offboard-me)
+
+`knowledge capture`
+
+</td>
+<td valign="top">
+
+The inverse: capture what leaves with a departing engineer. Scans the repo to work out what **only
+they** can answer — sole authorship, uncommented magic values, marked workarounds, unmerged branches —
+then interviews them one area per turn against whatever time is left.
+
+Never asks a bare question: it offers its own reading first, so their job is to confirm or correct
+rather than recall. Leaves a resumable trail in `.kt/offboard/`, and ends with a handover document
+that **leads with what nobody could explain** instead of burying it.
 
 </td>
 </tr>
@@ -118,9 +138,24 @@ nirvajna-skills/
 │       ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
 │       ├── synthesis.md              ← how the final onboarding doc gets built
 │       └── study-page-template.html  ← the shell for the `onboarding.html` study page
-├── your-skill-2/               ← each new skill is a sibling folder, same shape
-├── your-skill-3/
+├── offboard-me/
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── risk-signals.md             ← 11 scan signals, the traps, and how to rank
+│       ├── synthesis.md                ← how the handover document gets built
+│       └── handover-page-template.html ← the shell for the `handover.html` page
+├── your-skill-3/               ← each new skill is a sibling folder, same shape
 └── your-skill-n/
+```
+
+Each skill writes its findings to its own folder under `.kt/` in the repo you point it at, so two
+sessions never collide and neither skill needs the other to have run:
+
+```text
+.kt/
+├── onboard/    ← 00-progress.md … 08-onboarding.md + onboarding.html
+└── offboard/   ← 00-risk-register.md, 01-tribal-knowledge.md, 02-handover.md + handover.html
 ```
 
 <details>

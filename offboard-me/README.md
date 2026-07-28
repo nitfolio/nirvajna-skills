@@ -52,11 +52,13 @@ receives it. Here, **the repo is the question generator and the human is the evi
 One line, from inside the project:
 
 ```bash
-npx skills@latest add nitfolio/nirvajna-skills
+npx skills@latest add nitfolio/nirvajna-skills --skill offboard-me
 ```
 
 That uses the [`skills` CLI](https://github.com/vercel-labs/skills). Add `-g` to install for your user
 instead of the project, or `--copy` for real files rather than symlinks.
+
+Drop the `--skill` flag to be shown everything in the repo and pick from the list.
 
 <details>
 <summary><b>Or copy the folder by hand</b></summary>
@@ -460,6 +462,42 @@ progressive disclosure, pruning for predictability) come from the same repo's `w
 ## License
 
 MIT — see [LICENSE](https://github.com/nitfolio/nirvajna-skills/blob/main/LICENSE).
+
+---
+
+## PS :- What the finished handover actually looks like
+
+**Nothing to click yet.** This skill has not been run against a real departure, so there is no
+published capture in this repo to point you at — and a page of invented output would be worth less
+than saying so. What follows is the shape `stop` produces, not a sample of one.
+
+Two files are written as the session goes. `00-risk-register.md` is the live list: every scanned risk
+with its rank, its `file:line`, and its state — *open*, *answered*, *deferred*, or *unrecoverable*.
+`01-tribal-knowledge.md` is the raw exchange, each answer tagged and attached to the evidence that
+prompted the question, hedges left exactly as spoken.
+
+`02-handover.md` is the one a successor reads on day one, and its running order is the point:
+
+```
+1. Gone for good              ← what nobody, including the author, could explain
+2. Where the author and the code disagree   ← both sides, unresolved
+3. Live threads               ← in-flight work: state, deadline, who owns it now
+4. Landmines                  ← what it is, why it's there, what breaks if you change it
+5. Operating this             ← what pages, what it means, the manual steps
+6. Why it's like this         ← decisions, and the "we already tried that" list
+7. People and access          ← named humans per dependency; where keys live, who rotates them
+8. Not covered                ← deferred items, and what was never scanned
+```
+
+Sections 1 and 2 lead — especially when they're short, because a two-line *gone for good* section is
+a two-line warning that would otherwise cost someone a week. It opens with three numbers (answered,
+deferred, unrecoverable) and the commit it was written against, so a reader knows how much of the
+system it actually covers before trusting a word of it. Alongside it, `handover.html` bundles all
+three files into one offline page.
+
+The honest caveat: expect that register to still have open items at the end. This runs against
+someone's last day, not until the work is finished, and a document that pretended otherwise would be
+the least useful thing in the folder.
 
 <div align="center">
 <br>

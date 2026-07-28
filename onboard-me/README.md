@@ -47,11 +47,13 @@ survives the chat and the next person — or the next session — inherits it.
 One line, from inside the project you want it in:
 
 ```bash
-npx skills@latest add nitfolio/nirvajna-skills
+npx skills@latest add nitfolio/nirvajna-skills --skill onboard-me
 ```
 
 That uses the [`skills` CLI](https://github.com/vercel-labs/skills). Add `-g` to install for your
 user instead of the project, or `--copy` for real files rather than symlinks.
+
+Drop the `--skill` flag to be shown everything in the repo and pick from the list.
 
 <details>
 <summary><b>Or copy the folder by hand</b></summary>

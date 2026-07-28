@@ -75,13 +75,20 @@ that **leads with what nobody could explain** instead of burying it.
 
 ## ✦ Install
 
-**1. Add the skill.** The one-liner, from inside the project you want it in:
+**1. Add the skills.** The one-liner, from inside the project you want them in:
 
 ```bash
 npx skills@latest add nitfolio/nirvajna-skills
 ```
 
-That uses the [`skills` CLI](https://github.com/vercel-labs/skills). It keeps one canonical copy in
+That shows you what's in the repo and lets you pick. For one skill without the prompt, name it:
+
+```bash
+npx skills@latest add nitfolio/nirvajna-skills --skill onboard-me
+npx skills@latest add nitfolio/nirvajna-skills --skill offboard-me
+```
+
+Either uses the [`skills` CLI](https://github.com/vercel-labs/skills). It keeps one canonical copy in
 `.agents/skills/` and symlinks it into `.claude/skills/` — plus every other agent directory it finds,
 so Codex, Cursor, Gemini CLI and the rest pick it up from the same source. Add `-g` to install for
 your user instead of the project, or `--copy` if you'd rather have real files than symlinks.

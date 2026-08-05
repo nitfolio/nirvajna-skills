@@ -75,8 +75,9 @@ cp -r offboard-me <your-repo>/.claude/skills/
 
 </details>
 
-Restart Claude Code. The skill triggers on its own when you ask something that fits, or name it
-directly.
+Restart Claude Code. Invoke the skill by name — `/offboard-me`. It won't fire automatically from
+natural language; that's deliberate, so a capture like this only starts when you and the departing
+person actually mean to run one.
 
 ### Claude.ai / Cowork
 
@@ -87,16 +88,15 @@ Capabilities → Skills. Keep `references/` inside the archive — the skill rea
 
 ## Quick start
 
-Open a session in the repo, with the departing engineer present, and say any of:
+Open a session in the repo, with the departing engineer present, and invoke the skill directly:
 
 ```
-Dana leaves on Friday — help us capture what she knows
-run a handover on this repo
-offboarding: I'm taking over this service
-capture the tribal knowledge before I go
-OR
-invoke directly by /offboard-me
+/offboard-me
 ```
+
+(Natural language like "Dana leaves on Friday — help us capture what she knows" won't trigger it
+anymore — invocation is by name only, on purpose: a capture like this should only start when you and
+the departing person actually mean to run one.)
 
 It asks two questions once, then scans:
 
@@ -258,22 +258,28 @@ By **exclusivity × cost**, with two adjustments worth knowing:
 
 ## The `.kt/` trail
 
-Findings are written to `.kt/offboard/` at the repo root:
+Findings are written to `.kt/offboard/` at the repo root, namespaced per departure so a second person
+leaving next year doesn't overwrite the first person's register:
 
 ```
 .kt/offboard/
-├── 00-risk-register.md     ← the live register: every item + state. Updated every turn.
-├── 01-tribal-knowledge.md  ← the capture: Q&A by area, evidence-tagged, hedges intact
-├── 02-handover.md          ← the curated successor document (only on `stop`)
-└── handover.html           ← self-contained page bundling 00–02
+├── INDEX.md                    ← one line per capture session, newest first
+└── dana-2026-03-04/            ← <name>-<date>, from the departing engineer's name and start date
+    ├── 00-risk-register.md     ← the live register: every item + state. Updated every turn.
+    ├── 01-tribal-knowledge.md  ← the capture: Q&A by area, evidence-tagged, hedges intact
+    ├── 02-handover.md          ← the curated successor document (only on `stop`)
+    └── handover.html           ← self-contained page bundling 00–02
 ```
 
-That directory is the only thing the skill writes. If a sibling folder from another kind of session
-sits alongside it under `.kt/`, it is left untouched.
+`.kt/offboard/` is the only thing the skill writes — specifically `INDEX.md` and its own session's
+subfolder, never another departing engineer's. If a sibling folder from another kind of session sits
+alongside it under `.kt/`, it is left untouched.
 
 **`00-risk-register.md` is the source of truth and updates every turn.** There's no separate progress
-file, because the register *is* the progress — every item carries its own state. That's what makes a
-session resumable across days, which matters when the budget is "an hour a day until Friday".
+file, because the register *is* the progress — every item carries its own state. `INDEX.md` is what
+makes multi-session state legible: it points a fresh `start` at the right folder, so a session is
+resumable across days (the budget is often "an hour a day until Friday") *and* across departures
+years apart.
 
 Unrecoverable items and conflicts sit at the **top** of the register. They're the two things a
 successor must see on day one, and the two things every other handover artifact leaves out.
@@ -283,13 +289,17 @@ the questions.** Those are, by definition, things nobody could resolve by readin
 departing author is the last chance to close them. It's read-only and entirely optional: a bonus when
 it's there, nothing missing when it isn't.
 
+**Should you commit it?** Think harder here than for an onboarding trail: this one tends to hold more
+operationally sensitive material — vendor contacts, where access lives, exactly how production is
+fragile. The skill asks before creating the directory and flags that you may want to gitignore it.
+
 ---
 
 ## Your controls
 
 | Say | What happens |
 | --- | --- |
-| `start` | Begin, or resume from `00-risk-register.md` |
+| `start` | Begin a new capture, or resume — checks `INDEX.md`, asks which session if more than one is open |
 | `continue` / `yes` | Take the proposed next area |
 | `deeper` | Stay on this answer and follow it further |
 | `park` | Matters, but there's no time — records it as **deferred** |
@@ -335,7 +345,8 @@ questions can't be mistaken for a capture.
   described. It's written down as a finding; the successor makes the change with the register in hand.
 - **No state mutation** — no commits, pushes, branch changes, migrations, seeds, deploys, or
   `terraform apply`.
-- **The only write is `.kt/`** (plus a working copy if the repo arrived read-only).
+- **The only write is `.kt/offboard/`** — specifically `INDEX.md` and its own session subfolder
+  (plus a working copy if the repo arrived read-only).
 - **It won't run your build, tests, or scripts.** This matters more here than in an ordinary code
   walkthrough: the person in the room may still hold production access, which makes "just run it and
   see" unusually easy to say yes to.
@@ -423,9 +434,12 @@ the references are pulled in only when a run needs them.
 ## FAQ
 
 **Does it work if the repo has no git history?**
-Partly, and it says so. The history-based signals (sole authorship, exclusivity, reverts, in-flight
-work) all go dark. The code-shape signals — marked workarounds, magic values, operational docs — still
-work, and the skill leans much harder on the human's own sense of what's unusual.
+Partly, and it says so — for a shallow clone, an exported tarball, or no `.git` at all. The
+history-based signals (sole authorship, exclusivity, reverts, in-flight work) all go dark. The
+code-shape signals — marked workarounds, magic values, operational docs — still work, and the skill
+leans much harder on the human's own sense of what's unusual. With no `.git`, the register also falls
+back to a date-only stamp instead of a commit hash, and resuming means re-verifying citations by hand
+rather than diffing against `git rev-parse`.
 
 **What if they only have twenty minutes?**
 That's a supported answer, and it changes the session rather than breaking it. You'll get the top of

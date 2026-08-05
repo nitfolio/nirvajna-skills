@@ -8,6 +8,7 @@ description: >-
   resuming an in-progress KT (a `.kt/onboard/` trail exists, "where were we"). Prefer
   this over ad-hoc "explain this code" whenever the goal is understanding a whole
   system rather than one snippet.
+disable-model-invocation: true
 ---
 
 # Codebase Knowledge Transfer (KT)
@@ -113,19 +114,9 @@ surrounding range rather than the whole thing; for a directory, list it before o
 Reading widely and shallowly is how a session ends up out of context with a vague mental model —
 the opposite of the goal.
 
-**When the repo fights back**, adapt instead of guessing:
-
-- **No usable git history** (exported tarball, SVN, shallow clone): say so plainly, then lean harder on
-  structure, tests, and docs. Don't invent ownership or history you can't see.
-- **Repo arrived as an upload or read-only mount** (a zip in Claude.ai, a read-only directory): extract
-  or copy it to a writable working directory before exploring, and put `.kt/onboard/` there instead of
-  the repo root — tell the human where it lives so they can carry it back into the real repo. Uploaded
-  archives usually lack `.git/`, so the no-git-history fallback above applies too.
-- **Very large repo / monorepo** (thousands of files, many services): don't try to hold it all. After a
-  quick top-level survey, add a scoping turn — "this is large; which service or area should we KT first?"
-  — and KT that slice. Note the rest as unexplored in `00-progress.md`.
-- **Generated, vendored, or build output** (`node_modules/`, `dist/`, `vendor/`, `*.pb.go`): skip it as
-  source of truth; it's noise, not architecture.
+**When the repo fights back** — no usable git history, an uploaded or read-only repo, a huge monorepo,
+or generated/vendored output — adapt instead of guessing. Read **`references/repo-edge-cases.md`** the
+moment you hit one; it covers all four and how to route around each.
 
 ## Boundaries: KT explores, it doesn't change things
 
@@ -254,11 +245,15 @@ it (or keep it — a curated trail can become real onboarding docs).
 **Stamp every `.kt/` file with the commit it was written against** — short hash and date, one line
 under the heading, saying its `file:line` citations are line numbers at that commit. Citations rot as
 the repo moves; the stamp turns a drifted claim into a checkable one and tells the next reader whether
-to verify against that commit or regenerate.
+to verify against that commit or regenerate. **No `.git` at all** (`git rev-parse --short HEAD` fails
+outright, not just a shallow or thin history): stamp the date alone and say so in the stamp line
+("no git — date-only stamp"), so a reader knows commit-based verification isn't available here.
 
-**Resuming an existing `.kt/onboard/`?** Compare its stamp against `git rev-parse --short HEAD`. If
-they differ, say so in your first turn and re-verify the citations you build on — one can resolve to a
-real line and still point at the wrong thing.
+**Resuming an existing `.kt/onboard/`?** If the stamp carries a commit hash, compare it against
+`git rev-parse --short HEAD`; if they differ, say so in your first turn and re-verify the citations
+you build on — one can resolve to a real line and still point at the wrong thing. If the stamp is
+date-only (no git), you can't check drift mechanically — say so, and spot-check a handful of
+citations by hand before trusting the rest.
 
 If you find the numbered files loose in `.kt/` itself rather than in `.kt/onboard/`, that's a trail
 from an older version of this skill. Offer to move them into `.kt/onboard/` before resuming; if the
@@ -292,12 +287,10 @@ follow their lead when they do.
 
 `speedrun` is a standing `continue` — the human grants it once and you run the entire ladder end to
 end without pausing between stages, finishing by producing `08-onboarding.md`. It is the same session
-at the same rigor; the only thing removed is the per-turn gate. Nothing in the method relaxes: still
-DISCOVER → EXPLAIN → ASSESS for every stage, still an evidence tag on every non-obvious claim, still
-honest `[unknown]`s, still the `.kt/` files written incrementally as each stage completes, still each
-completion criterion checked before a stage is called done. A speedrun that quietly lowers the bar to
-go faster has missed the point — the human traded their turn-by-turn confirmation for speed, not for a
-shallower map.
+at the same rigor: every rule above — the core loop, evidence tags, each stage's completion criterion,
+incremental `.kt/` writes — still applies in full; the only thing removed is the per-turn gate. A
+speedrun that quietly lowers the bar to go faster has missed the point — the human traded their
+turn-by-turn confirmation for speed, not for a shallower map.
 
 How it runs:
 

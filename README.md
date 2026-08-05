@@ -112,11 +112,16 @@ cp -r your-skill-name <your-repo>/.claude/skills/
 
 **2. Start Claude Code.** That's the whole install.
 
-**3. Use it.** Skills trigger on their own when relevant, or invoke one explicitly:
+**3. Use it.** Invoke a skill by name:
 
 ```text
 /your-skill-name
 ```
+
+`onboard-me` and `offboard-me` are both invoke-by-name only (`disable-model-invocation: true`) — a
+long KT session or a departure capture is something you opt into, not something that should fire from
+an offhand sentence. A skill without that flag can also trigger on its own when the situation matches
+its description.
 
 <details>
 <summary><b>Using these on claude.ai or Cowork</b></summary>
@@ -143,6 +148,7 @@ nirvajna-skills/
 │   ├── README.md               ← human-facing usage docs
 │   └── references/             ← loaded on demand, only when a run needs them
 │       ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
+│       ├── repo-edge-cases.md        ← no git history, uploaded/read-only repos, monorepos, generated code
 │       ├── synthesis.md              ← how the final onboarding doc gets built
 │       └── study-page-template.html  ← the shell for the `onboarding.html` study page
 ├── offboard-me/
@@ -162,7 +168,9 @@ sessions never collide and neither skill needs the other to have run:
 ```text
 .kt/
 ├── onboard/    ← 00-progress.md … 08-onboarding.md + onboarding.html
-└── offboard/   ← 00-risk-register.md, 01-tribal-knowledge.md, 02-handover.md + handover.html
+└── offboard/   ← INDEX.md + one <name>-<date>/ subfolder per capture, so a second departure
+                  next year doesn't overwrite the first (00-risk-register.md, 01-tribal-knowledge.md,
+                  02-handover.md + handover.html, per subfolder)
 ```
 
 <details>
@@ -170,9 +178,12 @@ sessions never collide and neither skill needs the other to have run:
 
 <br>
 
-`SKILL.md` frontmatter carries the `name` and `description`. **The description is the only thing
-that makes a skill trigger**, so it's written as a list of the situations that should reach for it —
-not as a feature summary. Keep it specific when you edit one.
+`SKILL.md` frontmatter carries the `name` and `description`, which together are what makes a skill
+trigger on its own — so the description is written as a list of the situations that should reach for
+it, not as a feature summary. Keep it specific when you edit one. Set `disable-model-invocation: true`
+on a skill that should only ever start by explicit name (a long, stateful session isn't something to
+trip into from an offhand sentence); the description still documents when to reach for it, it just no
+longer triggers that on its own.
 
 Everything in `references/` is loaded *on demand*. That keeps `SKILL.md` lean enough to stay in
 context for the whole run, while the heavy material is one read away when a run actually needs it.

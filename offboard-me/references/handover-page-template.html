@@ -3,14 +3,16 @@
   ============================================================================
   HANDOVER PAGE TEMPLATE  —  do not ship this comment block.
   ============================================================================
-  This is a self-contained, offline, single-file page for a `.kt/offboard/`
-  handover capture. To produce `.kt/offboard/handover.html`, copy this file
-  and replace the CONTENT SLOTS below.
+  This is a self-contained, offline, single-file page for a
+  `.kt/offboard/<slug>-<date>/` handover capture. To produce that session's
+  `handover.html`, copy this file into the session's own folder (alongside
+  `00-risk-register.md`, `01-tribal-knowledge.md`, `02-handover.md`) and
+  replace the CONTENT SLOTS below.
 
   HOW TO FILL IT IN
   -----------------
   Near the bottom you will find one <script type="text/markdown"> block per
-  file. For each file that actually exists in `.kt/offboard/`:
+  file. For each file that actually exists in this session's folder:
 
     - paste the file's RAW markdown VERBATIM between the script tags
       (script[type=text/markdown] is inert — no JS escaping needed);

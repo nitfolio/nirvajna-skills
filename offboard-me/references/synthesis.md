@@ -68,7 +68,7 @@ Sections 1 and 2 go first even when they're short — especially when they're sh
 Section 6's failed-experiment list is the cheapest thing in the document to write and the most
 expensive thing in it to rediscover. Don't let it get trimmed for length.
 
-Keep the whole thing lean. The raw trail in `09` is there for anyone who wants the full exchange.
+Keep the whole thing lean. The raw trail in `01-tribal-knowledge.md` is there for anyone who wants the full exchange.
 
 ## 4. Stamp the commit
 
@@ -101,11 +101,13 @@ If they decline or there's no time, note in the document that it wasn't reviewed
 
 ## 7. Build the offline page (`handover.html`)
 
-Once `02-handover.md` is written, always also produce `.kt/offboard/handover.html` — a single
-self-contained page bundling the deliverable, the register, and the capture, with a one-click copy
-button on every file. Build it from the template rather than hand-rolling it:
+Once `02-handover.md` is written, always also produce `handover.html` in this session's own
+`.kt/offboard/<slug>-<date>/` folder — a single self-contained page bundling the deliverable, the
+register, and the capture, with a one-click copy button on every file. Build it from the template
+rather than hand-rolling it:
 
-1. Copy `references/handover-page-template.html` to `.kt/offboard/handover.html`.
+1. Copy `references/handover-page-template.html` to `handover.html` inside this session's folder,
+   alongside `00-risk-register.md`, `01-tribal-knowledge.md`, and `02-handover.md`.
 2. It has three `<script type="text/markdown">` slots. Paste each file's **raw markdown verbatim** —
    `02-handover.md` fills the featured slot, `00-risk-register.md` and `01-tribal-knowledge.md` fill
    the trail slots. The blocks are inert, so nothing needs escaping (the one exception: literal

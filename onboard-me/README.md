@@ -70,8 +70,9 @@ cp -r onboard-me <your-repo>/.claude/skills/
 
 </details>
 
-Restart Claude Code. The skill triggers on its own when you ask something that fits, or you can name
-it directly.
+Restart Claude Code. Invoke the skill by name — `/onboard-me`. It won't fire automatically from
+natural language; that's deliberate, so a long, stateful KT session is something you opt into rather
+than trip into.
 
 ### Claude.ai / Cowork
 
@@ -87,16 +88,15 @@ Ask: *"what skills do you have available?"* — `onboard-me` should be listed.
 
 ## Quick start
 
-Open a session in the repo you want to learn, and say any of:
+Open a session in the repo you want to learn and invoke the skill directly:
 
 ```
-help me understand this repo
-where do I start with this codebase
-walk me through this project
-run a KT on this repo
-OR
-invoke directly by /onboard-me
+/onboard-me
 ```
+
+(Natural language like "help me understand this repo" or "where do I start with this codebase" won't
+trigger it anymore — invocation is by name only, on purpose: KT is a long, stateful session worth
+opening deliberately.)
 
 Claude asks one question — **why** you're here — then begins. That answer shapes everything after,
 so it's worth answering properly:
@@ -361,6 +361,7 @@ onboard-me/
 ├── README.md                     ← this file
 └── references/
     ├── repo-playbooks.md         ← 13 repo-type playbooks + generic fallback
+    ├── repo-edge-cases.md        ← no git history, uploaded/read-only repos, monorepos, generated code
     ├── synthesis.md              ← how the final onboarding doc gets built
     └── study-page-template.html  ← the shell for the `onboarding.html` study page
 ```
@@ -379,13 +380,20 @@ It matters across time, which is why **every `.kt/` file records the commit it w
 That turns a drifted citation from a wrong claim into a checkable one: check out that commit to verify
 it, or just re-run the skill to regenerate the trail against current source.
 
+**No `.git` at all?** The stamp falls back to date-only ("no git — date-only stamp") instead of
+failing outright. There's no commit hash to diff on resume, so re-verifying a citation means checking
+it by hand rather than a mechanical `git rev-parse` comparison — the skill says this plainly rather
+than skipping the check silently.
+
 ---
 
 ## FAQ
 
 **Does it work on a repo with no git history?**
-Yes. It says so plainly and leans harder on structure, tests, and docs rather than inventing
-ownership it can't see.
+Yes — for a shallow clone, an exported tarball, or a repo with no `.git` at all. It says so plainly,
+leans harder on structure, tests, and docs rather than inventing ownership it can't see, and falls
+back to a date-only stamp (see [Citations and the commit stamp](#citations-and-the-commit-stamp))
+instead of failing on the commit hash.
 
 **What about a huge monorepo?**
 After a quick survey it adds a scoping turn — "this is large, which service should we KT first?" —

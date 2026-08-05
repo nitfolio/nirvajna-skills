@@ -9,6 +9,7 @@ description: >-
   an in-progress capture (a `.kt/offboard/` trail exists). Also use after
   someone has already left, to establish what was lost. Prefer this over an ad-hoc
   handover doc whenever the knowledge lives in a person rather than in the repo.
+disable-model-invocation: true
 ---
 
 # Departing-Engineer Knowledge Capture
@@ -59,7 +60,8 @@ Ask both together in the opening turn, then don't ask again:
 1. **Who's here?** The departing engineer alone, or with the successor sitting in? If a successor is
    present, address answers to *them* and let them ask follow-ups — a capture with the inheritor in
    the room is worth several written documents. If nobody has been named as successor, note it: that
-   is itself a finding for the risk register.
+   is itself a finding for the risk register. Get the departing engineer's name here too — it names
+   their session folder (see Artifacts), so a second departure next year doesn't overwrite this one.
 2. **How much time is there — total, and today?** "Two hours this afternoon", "an hour a day until
    Friday", "we have twenty minutes". This is the single most important input to the session, because
    it decides how far down the ranked register you will get. Everything below the line gets flagged,
@@ -185,8 +187,9 @@ systems, in a session where the one person who understands it is on their way ou
   it down as a finding; let the successor make the change with the register in hand.
 - **Never run anything that mutates state** — no commits, pushes, branch changes, migrations, seeds,
   deploys, or `terraform apply`.
-- **The only write is `.kt/offboard/`** (plus a working copy if the repo arrived read-only). Nothing
-  outside that directory, including any sibling `.kt/` folder another skill's session left.
+- **The only write is `.kt/offboard/`** — specifically `INDEX.md` and your own session's subfolder
+  (plus a working copy if the repo arrived read-only). Nothing outside that, including another
+  departing engineer's subfolder or a sibling `.kt/onboard/` trail.
 - **Don't run builds, tests, or scripts on your own.** Propose; let a human decide. This matters more
   here than in an ordinary code walkthrough: the person present may still hold production access,
   which makes an offhand "just run it and see" unusually easy to say yes to and unusually expensive
@@ -246,11 +249,22 @@ Write to `.kt/offboard/` at the repo root. That directory is yours alone: a repo
 
 ```
 .kt/offboard/
-├── 00-risk-register.md      ← the live register: every item + state. Updated every turn.
-├── 01-tribal-knowledge.md   ← the capture: Q&A by area, evidence-tagged, hedges intact
-├── 02-handover.md           ← the curated successor document (produced on `stop`)
-└── handover.html            ← self-contained page bundling 00–02
+├── INDEX.md                       ← one line per capture session, newest first
+└── <slug>-<yyyy-mm-dd>/           ← this session's folder — see naming below
+    ├── 00-risk-register.md        ← the live register: every item + state. Updated every turn.
+    ├── 01-tribal-knowledge.md     ← the capture: Q&A by area, evidence-tagged, hedges intact
+    ├── 02-handover.md             ← the curated successor document (produced on `stop`)
+    └── handover.html              ← self-contained page bundling 00–02
 ```
+
+**A repo outlives any one departure.** Namespace each capture by `<slug>-<yyyy-mm-dd>`, where `<slug>`
+is the departing engineer's name from the opening turn (lowercase, spaces to hyphens) and the date is
+when the session started. That way a second person leaving next year doesn't silently overwrite the
+first person's register — both stay on record. If no name was given yet, use `unnamed-<date>` and
+rename the folder the moment one is offered. **Update `INDEX.md` in the same turn** you create or
+finish a session folder — a bullet per session like `- **<name>** — started <date> — <status> —
+<folder>/`, so a fresh `start` can tell at a glance whether it's a new capture or a resume, and which
+folder to resume into.
 
 `00` and `01` are the **working trail** — raw, evidence-tagged, written as you go. `02-handover.md` is
 different: it's the distilled document a successor reads on day one, and it's only written at the end
@@ -258,7 +272,8 @@ different: it's the distilled document a successor reads on day one, and it's on
 
 **`00-risk-register.md` is the source of truth and updates every turn.** There's no separate progress
 file: the register *is* the progress, because every item carries its own state. That's what makes the
-session resumable — a fresh session reads it and knows exactly what's still open. A workable shape:
+session resumable — `INDEX.md` points you to the right folder, and the register there says exactly
+what's still open. A workable shape:
 
 ```
 # Handover risk register
@@ -283,15 +298,30 @@ Departing: <name> · Budget: <time> · Commit: <short hash> · Updated: <date>
 Put **unrecoverable and conflicts at the top**. They are the two things a successor must see on day
 one, and they're the two things every other handover artifact leaves out.
 
+Before creating `.kt/offboard/`, tell the human it's happening and mention they may want to gitignore
+it — this trail tends to hold more operationally sensitive material than an onboarding one ever does
+(vendor contacts, where access lives, exactly how production is fragile).
+
 **Stamp every file with the commit it was written against** (`git rev-parse --short HEAD`) and the
-date. Citations rot; the stamp turns a drifted claim into a checkable one.
+date. Citations rot; the stamp turns a drifted claim into a checkable one. **No `.git` at all**
+(`git rev-parse` fails outright, not just a shallow or thin history): stamp the date alone and say so
+in the stamp line ("no git — date-only stamp") — and mention it to the human, since it also means the
+scan in `references/risk-signals.md` is leaning entirely on code-shape signals, not history.
+
+**Resuming an existing session?** If the stamp carries a commit hash, compare it against `git
+rev-parse --short HEAD`; if they differ, say so in your first turn and re-verify the citations you
+build on before asking about them — and if the departing engineer is no longer reachable to confirm a
+drifted reading, flag that explicitly in the register rather than silently trusting an old citation.
+If the stamp is date-only (no git), you can't check drift mechanically — say so, and re-verify by
+hand before building further questions on an old citation.
 
 ## The human's controls
 
 State the menu once at the start, then don't repeat all of it — end each turn with the assessment, one
 proposal, and the two or three controls that fit the moment.
 
-- **start** — begin, or resume from `00-risk-register.md`
+- **start** — begin a new capture, or resume one — check `INDEX.md` first; if more than one session
+  is open, ask which, or match by the name given this turn
 - **continue** / **yes** — take the proposed next area
 - **deeper** — stay on this answer and follow it further
 - **park** — this matters but there's no time; record it as *deferred*

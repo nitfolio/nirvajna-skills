@@ -11,7 +11,7 @@
 **Skills that make [Claude Code](https://docs.claude.com/en/docs/claude-code) do the tedious part properly.**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-4A86D8?style=flat-square&labelColor=141312)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-2-FF4A17?style=flat-square&labelColor=141312)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-3-FF4A17?style=flat-square&labelColor=141312)](#-skills)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-ready-4A86D8?style=flat-square&labelColor=141312)](https://docs.claude.com/en/docs/claude-code)
 [![Website](https://img.shields.io/badge/oopsaididitagain.com-FF4A17?style=flat-square&labelColor=141312)](https://oopsaididitagain.com/)
 
@@ -71,6 +71,27 @@ that **leads with what nobody could explain** instead of burying it.
 
 </td>
 </tr>
+<tr>
+<td width="220" valign="top">
+
+### [`rebuild-me`](rebuild-me)
+
+`specification`
+
+</td>
+<td valign="top">
+
+The third direction: capture what the software **does**, so someone can build it again from scratch.
+Reads the source, strips every trace of how it's implemented, and produces one markdown file a
+stranger can rebuild from in a different language, framework, and architecture — same features, same
+rules, same edge cases.
+
+Declares a compatibility boundary first (who observes this, at what fidelity), tags every behavior
+with whether the rebuild must reproduce it, and closes with an acceptance checklist. Runs unattended
+by default; leaves a resumable trail in `.kt/rebuild/`.
+
+</td>
+</tr>
 </table>
 
 ## ✦ Install
@@ -86,6 +107,7 @@ That shows you what's in the repo and lets you pick. For one skill without the p
 ```bash
 npx skills@latest add nitfolio/nirvajna-skills --skill onboard-me
 npx skills@latest add nitfolio/nirvajna-skills --skill offboard-me
+npx skills@latest add nitfolio/nirvajna-skills --skill rebuild-me
 ```
 
 Either uses the [`skills` CLI](https://github.com/vercel-labs/skills). It keeps one canonical copy in
@@ -118,7 +140,7 @@ cp -r your-skill-name <your-repo>/.claude/skills/
 /your-skill-name
 ```
 
-`onboard-me` and `offboard-me` are both invoke-by-name only (`disable-model-invocation: true`) — a
+`onboard-me`, `offboard-me`, and `rebuild-me` are all invoke-by-name only (`disable-model-invocation: true`) — a
 long KT session or a departure capture is something you opt into, not something that should fire from
 an offhand sentence. A skill without that flag can also trigger on its own when the situation matches
 its description.
@@ -158,19 +180,29 @@ nirvajna-skills/
 │       ├── risk-signals.md             ← 11 scan signals, the traps, and how to rank
 │       ├── synthesis.md                ← how the handover document gets built
 │       └── handover-page-template.html ← the shell for the `handover.html` page
-├── your-skill-3/               ← each new skill is a sibling folder, same shape
-└── your-skill-n/
+├── rebuild-me/
+│   ├── SKILL.md
+│   ├── README.md
+│   └── references/
+│       ├── obligation-rulings.md       ← what goes in the spec, what stays behind, per category
+│       ├── behavior-index.md           ← the enumeration pass + the coverage denominator
+│       ├── system-type-playbooks.md    ← 15 system types + generic fallback
+│       ├── edge-cases.md               ← when the repo fights back
+│       └── synthesis.md                ← how `rebuild.md` gets written and verified
+└── your-skill-n/               ← each new skill is a sibling folder, same shape
 ```
 
 Each skill writes its findings to its own folder under `.kt/` in the repo you point it at, so two
-sessions never collide and neither skill needs the other to have run:
+sessions never collide and no skill needs the others to have run:
 
 ```text
 .kt/
 ├── onboard/    ← 00-progress.md … 08-onboarding.md + onboarding.html
-└── offboard/   ← INDEX.md + one <name>-<date>/ subfolder per capture, so a second departure
-                  next year doesn't overwrite the first (00-risk-register.md, 01-tribal-knowledge.md,
-                  02-handover.md + handover.html, per subfolder)
+├── offboard/   ← INDEX.md + one <name>-<date>/ subfolder per capture, so a second departure
+│                 next year doesn't overwrite the first (00-risk-register.md, 01-tribal-knowledge.md,
+│                 02-handover.md + handover.html, per subfolder)
+└── rebuild/    ← INDEX.md + one <target-slug>/ subfolder per system specified
+                  (00-boundary.md … 07-suspect-and-unknown.md + rebuild.md)
 ```
 
 <details>
